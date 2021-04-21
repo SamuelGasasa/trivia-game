@@ -12,31 +12,19 @@ module.exports = {
         type: Sequelize.STRING,
       },
       quality_of_life_index: {
-        type: Sequelize.INTEGER,
-      },
-      purchasing_power_index: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       safety_index: {
-        type: Sequelize.INTEGER,
-      },
-      healthcare_index: {
-        type: Sequelize.INTEGER,
-      },
-      cost_of_living_index: {
-        type: Sequelize.INTEGER,
-      },
-      property_price_to_income_ratio: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       traffic_commute_time_index: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       pollution_index: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       climate_index: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       created_at: {
         allowNull: false,

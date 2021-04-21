@@ -12,25 +12,16 @@ module.exports = {
         type: Sequelize.STRING,
       },
       area_km2: {
-        type: Sequelize.INTEGER,
-      },
-      area_mi2: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       population: {
         type: Sequelize.INTEGER,
       },
       density_pop_to_km2: {
+        type: Sequelize.FLOAT,
+      },
+      rank: {
         type: Sequelize.INTEGER,
-      },
-      density_pop_to_mi2: {
-        type: Sequelize.INTEGER,
-      },
-      date: {
-        type: Sequelize.DATE,
-      },
-      population_source: {
-        type: Sequelize.STRING,
       },
       created_at: {
         allowNull: false,

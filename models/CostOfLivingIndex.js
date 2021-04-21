@@ -14,12 +14,8 @@ module.exports = (sequelize, DataTypes) => {
   CostOfLivingIndex.init(
     {
       country: DataTypes.STRING,
-      cost_of_living_index: DataTypes.INTEGER,
-      rent_index: DataTypes.INTEGER,
-      cost_of_living_plus_rent_index: DataTypes.INTEGER,
-      groceries_index: DataTypes.INTEGER,
-      restaurant_price_index: DataTypes.INTEGER,
-      local_purchasing_power_index: DataTypes.INTEGER,
+      cost_of_living_index: DataTypes.FLOAT,
+      restaurant_price_index: DataTypes.FLOAT,
     },
     {
       sequelize,
