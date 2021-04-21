@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
       area_km2: DataTypes.FLOAT,
       population: DataTypes.INTEGER,
       density_pop_to_km2: DataTypes.FLOAT,
-      rank: DataTypes.INTEGER,
     },
     {
       sequelize,

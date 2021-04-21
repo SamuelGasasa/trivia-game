@@ -20,9 +20,6 @@ module.exports = {
       density_pop_to_km2: {
         type: Sequelize.FLOAT,
       },
-      rank: {
-        type: Sequelize.INTEGER,
-      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
