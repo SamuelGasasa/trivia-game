@@ -17,6 +17,14 @@ module.exports = {
       continent: {
         type: Sequelize.STRING,
       },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {

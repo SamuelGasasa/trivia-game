@@ -29,6 +29,14 @@ module.exports = {
       climate_index: {
         type: Sequelize.FLOAT,
       },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
