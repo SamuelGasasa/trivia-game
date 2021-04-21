@@ -14,16 +14,16 @@ module.exports = (sequelize, DataTypes) => {
   CountriesAgeStructure.init(
     {
       country: DataTypes.STRING,
-      age_0_14_years: DataTypes.INTEGER,
-      age_15_64_years: DataTypes.INTEGER,
-      age_above_65_years: DataTypes.INTEGER,
+      age_0_14_years: DataTypes.FLOAT,
+      age_15_64_years: DataTypes.FLOAT,
+      age_above_65_years: DataTypes.FLOAT,
     },
     {
       sequelize,
       modelName: "CountriesAgeStructure",
       tableName: "countries_age_structures",
       underscored: true,
-    }
+    },
   );
   return CountriesAgeStructure;
 };

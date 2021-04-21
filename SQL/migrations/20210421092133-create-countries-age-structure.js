@@ -12,13 +12,13 @@ module.exports = {
         type: Sequelize.STRING,
       },
       age_0_14_years: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       age_15_64_years: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       age_above_65_years: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       created_at: {
         allowNull: false,
