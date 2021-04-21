@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert(
-      "countries_age_structure",
+      "countries_age_structures",
       [
         {
           Country: "Japan",
@@ -1157,6 +1157,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("countries_age_structure", null, {});
+    await queryInterface.bulkDelete("countries_age_structures", null, {});
   },
 };
