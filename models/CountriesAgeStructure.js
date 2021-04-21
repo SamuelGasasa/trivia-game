@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class scoreboard extends Model {
+  class CountriesAgeStructure extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,16 +11,19 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  scoreboard.init(
+  CountriesAgeStructure.init(
     {
-      player: DataTypes.STRING,
-      score: DataTypes.INTEGER,
-      date: DataTypes.DATE,
+      country: DataTypes.STRING,
+      age_0_14_years: DataTypes.INTEGER,
+      age_15_64_years: DataTypes.INTEGER,
+      age_above_65_years: DataTypes.INTEGER,
     },
     {
       sequelize,
-      modelName: "scoreboard",
+      modelName: "CountriesAgeStructure",
+      tableName: "countries_age_structures",
+      underscored: true,
     }
   );
-  return scoreboard;
+  return CountriesAgeStructure;
 };

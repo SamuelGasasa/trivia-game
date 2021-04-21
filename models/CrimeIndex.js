@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class population_density extends Model {
+  class CrimeIndex extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,21 +11,18 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  population_density.init(
+  CrimeIndex.init(
     {
       country: DataTypes.STRING,
-      area_km2: DataTypes.Integer,
-      area_mi2: DataTypes.Integer,
-      population: DataTypes.Integer,
-      density_pop_to_km2: DataTypes.Integer,
-      density_pop_to_mi2: DataTypes.Integer,
-      date: DataTypes.DATE,
-      population_source: DataTypes.STRING,
+      crime_index: DataTypes.INTEGER,
+      safety_index: DataTypes.INTEGER,
     },
     {
       sequelize,
-      modelName: "population_density",
+      modelName: "CrimeIndex",
+      tableName: "crime_index",
+      underscored: true,
     }
   );
-  return population_density;
+  return CrimeIndex;
 };
