@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       question: DataTypes.STRING,
       type: DataTypes.INTEGER,
-      avg_rating: DataTypes.INTEGER,
+      avg_rating: DataTypes.FLOAT,
       rating_count: DataTypes.INTEGER,
       right_answer: DataTypes.STRING,
       wrong_1: DataTypes.STRING,
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Question",
       tableName: "questions",
       underscored: true,
-    }
+    },
   );
   return Question;
 };
