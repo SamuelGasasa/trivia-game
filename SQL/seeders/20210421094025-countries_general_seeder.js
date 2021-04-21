@@ -207,7 +207,7 @@ module.exports = {
         },
         {
           country: "Bosnia & Herzegovina",
-          literacy: "",
+          literacy: null,
           phones: 215.4,
           birthrate: 8.77,
           created_at: new Date(),
@@ -424,7 +424,7 @@ module.exports = {
         {
           country: "Cyprus",
           literacy: 97.6,
-          phones: "",
+          phones: null,
           birthrate: 12.56,
           created_at: new Date(),
           updated_at: new Date(),
@@ -472,7 +472,7 @@ module.exports = {
         {
           country: "East Timor",
           literacy: 58.6,
-          phones: "",
+          phones: null,
           birthrate: 26.99,
           created_at: new Date(),
           updated_at: new Date(),
@@ -535,7 +535,7 @@ module.exports = {
         },
         {
           country: "Faroe Islands",
-          literacy: "",
+          literacy: null,
           phones: 503.8,
           birthrate: 14.05,
           created_at: new Date(),
@@ -599,7 +599,7 @@ module.exports = {
         },
         {
           country: "Gaza Strip",
-          literacy: "",
+          literacy: null,
           phones: 244.3,
           birthrate: 39.45,
           created_at: new Date(),
@@ -631,7 +631,7 @@ module.exports = {
         },
         {
           country: "Gibraltar",
-          literacy: "",
+          literacy: null,
           phones: 877.7,
           birthrate: 10.74,
           created_at: new Date(),
@@ -647,7 +647,7 @@ module.exports = {
         },
         {
           country: "Greenland",
-          literacy: "",
+          literacy: null,
           phones: 448.9,
           birthrate: 15.93,
           created_at: new Date(),
@@ -687,7 +687,7 @@ module.exports = {
         },
         {
           country: "Guernsey",
-          literacy: "",
+          literacy: null,
           phones: 842.4,
           birthrate: 8.81,
           created_at: new Date(),
@@ -799,7 +799,7 @@ module.exports = {
         },
         {
           country: "Isle of Man",
-          literacy: "",
+          literacy: null,
           phones: 676,
           birthrate: 11.05,
           created_at: new Date(),
@@ -839,7 +839,7 @@ module.exports = {
         },
         {
           country: "Jersey",
-          literacy: "",
+          literacy: null,
           phones: 811.3,
           birthrate: 9.3,
           created_at: new Date(),
@@ -871,7 +871,7 @@ module.exports = {
         },
         {
           country: "Kiribati",
-          literacy: "",
+          literacy: null,
           phones: 42.7,
           birthrate: 30.65,
           created_at: new Date(),
@@ -991,7 +991,7 @@ module.exports = {
         },
         {
           country: "Macedonia",
-          literacy: "",
+          literacy: null,
           phones: 260,
           birthrate: 12.02,
           created_at: new Date(),
@@ -1079,7 +1079,7 @@ module.exports = {
         },
         {
           country: "Mayotte",
-          literacy: "",
+          literacy: null,
           phones: 49.7,
           birthrate: 40.95,
           created_at: new Date(),
@@ -1128,7 +1128,7 @@ module.exports = {
         {
           country: "Montserrat",
           literacy: 97,
-          phones: "",
+          phones: null,
           birthrate: 17.59,
           created_at: new Date(),
           updated_at: new Date(),
@@ -1159,7 +1159,7 @@ module.exports = {
         },
         {
           country: "Nauru",
-          literacy: "",
+          literacy: null,
           phones: 143,
           birthrate: 24.76,
           created_at: new Date(),
@@ -1457,7 +1457,7 @@ module.exports = {
           country: "Serbia",
           literacy: 93,
           phones: 285.8,
-          birthrate: "",
+          birthrate: null,
           created_at: new Date(),
           updated_at: new Date(),
         },
@@ -1487,7 +1487,7 @@ module.exports = {
         },
         {
           country: "Slovakia",
-          literacy: "",
+          literacy: null,
           phones: 220.1,
           birthrate: 10.65,
           created_at: new Date(),
@@ -1503,7 +1503,7 @@ module.exports = {
         },
         {
           country: "Solomon Islands",
-          literacy: "",
+          literacy: null,
           phones: 13.4,
           birthrate: 30.01,
           created_at: new Date(),
@@ -1679,7 +1679,7 @@ module.exports = {
         },
         {
           country: "Tuvalu",
-          literacy: "",
+          literacy: null,
           phones: 59.3,
           birthrate: 22.18,
           created_at: new Date(),
@@ -1767,7 +1767,7 @@ module.exports = {
         },
         {
           country: "Virgin Islands",
-          literacy: "",
+          literacy: null,
           phones: 652.8,
           birthrate: 13.96,
           created_at: new Date(),
@@ -1777,13 +1777,13 @@ module.exports = {
           country: "Wallis and Futuna",
           literacy: 50,
           phones: 118.6,
-          birthrate: "",
+          birthrate: null,
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
           country: "West Bank",
-          literacy: "",
+          literacy: null,
           phones: 145.2,
           birthrate: 31.67,
           created_at: new Date(),
@@ -1791,9 +1791,9 @@ module.exports = {
         },
         {
           country: "Western Sahara",
-          literacy: "",
-          phones: "",
-          birthrate: "",
+          literacy: null,
+          phones: null,
+          birthrate: null,
           created_at: new Date(),
           updated_at: new Date(),
         },
@@ -1822,7 +1822,7 @@ module.exports = {
           updated_at: new Date(),
         },
       ],
-      {}
+      {},
     );
   },
 

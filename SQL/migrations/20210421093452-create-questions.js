@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       avg_rating: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       rating_count: {
         type: Sequelize.INTEGER,
