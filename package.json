@@ -8,6 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "mysql2": "^2.2.5",
     "node": "^15.14.0",
     "sequelize": "^6.6.2"
