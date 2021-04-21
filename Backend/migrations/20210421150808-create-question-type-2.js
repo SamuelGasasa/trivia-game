@@ -14,9 +14,6 @@ module.exports = {
       field: {
         type: Sequelize.STRING,
       },
-      country: {
-        type: Sequelize.STRING,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

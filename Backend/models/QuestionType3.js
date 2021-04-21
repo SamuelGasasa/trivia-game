@@ -14,10 +14,8 @@ module.exports = (sequelize, DataTypes) => {
   QuestionType3.init(
     {
       question: DataTypes.STRING,
-      country1: DataTypes.STRING,
       operator: DataTypes.BOOLEAN,
       field: DataTypes.STRING,
-      country2: DataTypes.STRING,
     },
     {
       sequelize,

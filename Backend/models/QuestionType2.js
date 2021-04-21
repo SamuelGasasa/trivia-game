@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       question: DataTypes.STRING,
       field: DataTypes.STRING,
-      country: DataTypes.STRING,
     },
     {
       sequelize,

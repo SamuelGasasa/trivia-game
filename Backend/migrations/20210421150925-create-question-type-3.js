@@ -1,39 +1,33 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('question-type3', {
+    await queryInterface.createTable("question-type3", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       question: {
-        type: Sequelize.STRING
-      },
-      country1: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       operator: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       field: {
-        type: Sequelize.STRING
-      },
-      country2: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('question-type3');
-  }
+    await queryInterface.dropTable("question-type3");
+  },
 };
