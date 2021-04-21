@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.hasOne(models.Capital, { foreignKey: "country" });
-      this.hasOne(models.CostOfLiving, { foreignKey: "country" });
+      this.hasOne(models.CostOfLivingIndex, { foreignKey: "country" });
       this.hasOne(models.CountriesAgeStructure, { foreignKey: "country" });
       this.hasOne(models.PopulationDensity, { foreignKey: "country" });
       this.hasOne(models.QualityOfLife, { foreignKey: "country" });
