@@ -12,22 +12,10 @@ module.exports = {
         type: Sequelize.STRING,
       },
       cost_of_living_index: {
-        type: Sequelize.INTEGER,
-      },
-      rent_index: {
-        type: Sequelize.INTEGER,
-      },
-      cost_of_living_plus_rent_index: {
-        type: Sequelize.INTEGER,
-      },
-      groceries_index: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       restaurant_price_index: {
-        type: Sequelize.INTEGER,
-      },
-      local_purchasing_power_index: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       created_at: {
         allowNull: false,

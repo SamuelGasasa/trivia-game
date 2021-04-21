@@ -14,15 +14,11 @@ module.exports = (sequelize, DataTypes) => {
   QualityOfLife.init(
     {
       country: DataTypes.STRING,
-      quality_of_life_index: DataTypes.INTEGER,
-      purchasing_power_index: DataTypes.INTEGER,
-      safety_index: DataTypes.INTEGER,
-      healthcare_index: DataTypes.INTEGER,
-      cost_of_living_index: DataTypes.INTEGER,
-      property_price_to_income_ratio: DataTypes.INTEGER,
-      traffic_commute_time_index: DataTypes.INTEGER,
-      pollution_index: DataTypes.INTEGER,
-      climate_index: DataTypes.INTEGER,
+      quality_of_life_index: DataTypes.FLOAT,
+      safety_index: DataTypes.FLOAT,
+      traffic_commute_time_index: DataTypes.FLOAT,
+      pollution_index: DataTypes.FLOAT,
+      climate_index: DataTypes.FLOAT,
     },
     {
       sequelize,

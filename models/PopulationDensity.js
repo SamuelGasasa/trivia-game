@@ -14,13 +14,10 @@ module.exports = (sequelize, DataTypes) => {
   PopulationDensity.init(
     {
       country: DataTypes.STRING,
-      area_km2: DataTypes.Integer,
-      area_mi2: DataTypes.Integer,
-      population: DataTypes.Integer,
-      density_pop_to_km2: DataTypes.Integer,
-      density_pop_to_mi2: DataTypes.Integer,
-      date: DataTypes.DATE,
-      population_source: DataTypes.STRING,
+      area_km2: DataTypes.FLOAT,
+      population: DataTypes.INTEGER,
+      density_pop_to_km2: DataTypes.FLOAT,
+      rank: DataTypes.INTEGER,
     },
     {
       sequelize,
