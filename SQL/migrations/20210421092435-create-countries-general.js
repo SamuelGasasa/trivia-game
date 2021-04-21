@@ -12,13 +12,13 @@ module.exports = {
         type: Sequelize.STRING,
       },
       literacy: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       phones: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       birthrate: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       created_at: {
         allowNull: false,
