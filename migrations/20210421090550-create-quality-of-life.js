@@ -17,6 +17,9 @@ module.exports = {
       safety_index: {
         type: Sequelize.FLOAT,
       },
+      crime_index: {
+        type: Sequelize.FLOAT,
+      },
       traffic_commute_time_index: {
         type: Sequelize.FLOAT,
       },

@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       country: DataTypes.STRING,
       quality_of_life_index: DataTypes.FLOAT,
       safety_index: DataTypes.FLOAT,
+      crime_index: DataTypes.FLOAT,
       traffic_commute_time_index: DataTypes.FLOAT,
       pollution_index: DataTypes.FLOAT,
       climate_index: DataTypes.FLOAT,
