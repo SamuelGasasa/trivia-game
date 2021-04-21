@@ -1,33 +1,33 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('healthcare_indices', {
+    await queryInterface.createTable("healthcare_index", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       country: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       healthcare_index: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       healthcare_exp_index: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('healthcare_indices');
-  }
+    await queryInterface.dropTable("healthcare_index");
+  },
 };

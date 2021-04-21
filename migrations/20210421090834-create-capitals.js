@@ -1,33 +1,33 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('capitals', {
+    await queryInterface.createTable("capitals", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       country: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       capital: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
-      continet: {
-        type: Sequelize.STRING
+      continent: {
+        type: Sequelize.STRING,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('capitals');
-  }
+    await queryInterface.dropTable("capitals");
+  },
 };

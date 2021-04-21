@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class cost_of_living_index_by_country extends Model {
+  class CostOfLivingIndex extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  cost_of_living_index_by_country.init(
+  CostOfLivingIndex.init(
     {
       country: DataTypes.STRING,
       cost_of_living_index: DataTypes.INTEGER,
@@ -23,9 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "cost_of_living_index_by_country",
+      modelName: "CostOfLivingIndex",
+      tableName: "cost_of_living_index",
       underscored: true,
-    },
+    }
   );
-  return cost_of_living_index_by_country;
+  return CostOfLivingIndex;
 };
