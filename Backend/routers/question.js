@@ -1,10 +1,33 @@
 const models = require("../models");
+const { Op } = require("sequelize");
+const sequelize = require("Sequelize");
 const express = require("express");
 const question = express();
 question.use(express.json());
 
-question.get("/generate", (req, res) => {
-  res.send("this is the question");
+question.get("/generate", async (req, res) => {
+  // const typeNumber = Math.floor(Math.random() * 3) + 1;
+  const typeNumber = 1;
+  const tableToCommunicate = "QuestionType" + typeNumber;
+  const questionData = await models[tableToCommunicate].findOne({});
+  const field = questionData.toJSON().field;
+  console.log(field);
+  switch (typeNumber) {
+    case 1:
+      const possibleAnswers = await models.CountryGeneral.findAll({
+        where: field,
+        limit: 4,
+      });
+      console.log(possibleAnswers);
+      break;
+
+    default:
+      break;
+  }
+  const questionToSend = {
+    question: questionData.toJSON().question,
+  };
+  res.send(questionToSend);
 });
 
 question.post("/save", (req, res) => {
