@@ -4,8 +4,6 @@ module.exports = {
     await queryInterface.createTable("countries_age_structures", {
       id: {
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
       },
       country: {

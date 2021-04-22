@@ -2013,7 +2013,10 @@ module.exports = {
           created_at: new Date(),
           updated_at: new Date(),
         },
-      ],
+      ].map((data, i) => {
+        data.id = i + 1;
+        return data;
+      }),
       {}
     );
   },

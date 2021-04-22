@@ -11,10 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(models.Capital, { foreignKey: "country" });
       this.hasOne(models.CostOfLivingIndex, { foreignKey: "country" });
       this.hasOne(models.CountriesAgeStructure, { foreignKey: "country" });
-      this.hasOne(models.PopulationDensity, {
-        foreignKey: "country",
-        foreignKeyConstraint: true,
-      });
+      this.hasOne(models.PopulationDensity, { foreignKey: "country" });
       this.hasOne(models.QualityOfLife, { foreignKey: "country" });
     }
   }

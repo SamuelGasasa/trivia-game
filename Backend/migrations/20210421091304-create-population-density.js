@@ -4,8 +4,6 @@ module.exports = {
     await queryInterface.createTable("population_densities", {
       id: {
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
       },
       country: {
