@@ -14,60 +14,22 @@ const sequelize = new Sequelize(
   {
     host: "127.0.0.1",
     dialect: "mysql",
-  },
+  }
 );
 
-question.get("/generate1", async (req, res) => {
-  // const typeNumber = Math.floor(Math.random() * 3) + 1;
+question.get("/generate", async (req, res) => {
   const typeNumber = 1;
   const tableToCommunicate = "QuestionType" + typeNumber;
-  const questionData = await models[tableToCommunicate].findOne({});
-  const field = questionData.toJSON().field;
-  let dataToSend = { question: questionData.toJSON().question };
-  console.log(field);
-  switch (typeNumber) {
-    case 1:
-      const { operator } = questionData.toJSON();
-      dataToSend.answers = await sequelize.query(
-        "WITH answers AS (SELECT country, " +
-          field +
-          " FROM population_densities ORDER BY RAND () LIMIT 4 ) SELECT * from answers ORDER BY population " +
-          (operator ? "DESC" : "ASC"),
-        {
-          type: sequelize.QueryTypes.SELECT,
-        },
-      );
-      dataToSend.answers.forEach((value, index) =>
-        index === 0 ? (value.right = true) : (value.right = false),
-      );
-
-      // const questions = await sequelize.query(
-      //   "SELECT population FROM example LIMIT 4",
-      //   { type: QueryTypes.SELECT },
-      // );
-      // console.log(questions);
-      // const possibleAnswers = await models.CountryGeneral.findAll({
-      //   where: field,
-      //   limit: 4,
-      // });
-      // console.log(possibleAnswers);
-      break;
-
-    default:
-      break;
-  }
-  res.send(dataToSend);
-});
-
-question.get("/generate2", async (req, res) => {
-  const typeNumber = 1;
-  const tableToCommunicate = "QuestionType" + typeNumber;
-  const questionData = await models[tableToCommunicate].findOne({});
+  const questionData = await models[tableToCommunicate].findOne({
+    order: [sequelize.random()],
+  });
   const { question, field, table, operator } = questionData.toJSON();
-  let countries = await models.CountryGeneral.findAll({
+  const isGeneral = table === "CountriesGeneral";
+  let answers = [];
+  let query = {
     include: [
       {
-        model: models.PopulationDensity,
+        model: models[table],
         where: {
           population: { [Op.ne]: null },
         },
@@ -76,12 +38,26 @@ question.get("/generate2", async (req, res) => {
     ],
     order: [sequelize.random()],
     limit: 4,
-  });
+  };
+  isGeneral && delete query.include;
+  let countries = await models.CountryGeneral.findAll(query);
 
-  let answers = await Promise.all(
-    countries.map(async (country) => country.getPopulationDensity()),
+  if (!isGeneral)
+    answers = await Promise.all(
+      countries.map(async (country) => country["get" + table]())
+    );
+  else answers = countries;
+
+  let filteredAnswers = answers.map((value) => {
+    return { country: value.country, field: value[field] };
+  });
+  filteredAnswers = filteredAnswers.sort((a, b) =>
+    operator ? b.field - a.field : a.field - b.field
   );
-  res.send(answers);
+  filteredAnswers.forEach((value, index) =>
+    index === 0 ? (value.right = true) : (value.right = false)
+  );
+  res.send({ question: question, answers: filteredAnswers });
 });
 
 question.post("/save", (req, res) => {
