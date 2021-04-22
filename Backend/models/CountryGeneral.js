@@ -8,13 +8,26 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasOne(models.Capital, { foreignKey: "country" });
-      this.hasOne(models.CostOfLivingIndex, { foreignKey: "country" });
-      this.hasOne(models.CountriesAgeStructure, { foreignKey: "country" });
-      this.hasOne(models.PopulationDensity, {
+      this.hasOne(models.Capital, {
+        sourceKey: "country",
         foreignKey: "country",
       });
-      this.hasOne(models.QualityOfLife, { foreignKey: "country" });
+      this.hasOne(models.CostOfLivingIndex, {
+        sourceKey: "country",
+        foreignKey: "country",
+      });
+      this.hasOne(models.CountriesAgeStructure, {
+        sourceKey: "country",
+        foreignKey: "country",
+      });
+      this.hasOne(models.PopulationDensity, {
+        sourceKey: "country",
+        foreignKey: "country",
+      });
+      this.hasOne(models.QualityOfLife, {
+        sourceKey: "country",
+        foreignKey: "country",
+      });
     }
   }
   CountryGeneral.init(
