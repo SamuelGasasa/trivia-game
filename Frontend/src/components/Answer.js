@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function Answer() {
-    return (
-        <div>
-            
-        </div>
-    )
+  return <div>answer</div>;
 }
 
-export default Answer
+export default Answer;

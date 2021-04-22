@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function Scoreboard() {
-    return (
-        <div>
-            
-        </div>
-    )
+  return <div>Scoreboard</div>;
 }
 
-export default Scoreboard
+export default Scoreboard;

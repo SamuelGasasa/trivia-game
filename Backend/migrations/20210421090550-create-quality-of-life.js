@@ -9,6 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       country: {
+        allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
       },
       quality_of_life_index: {

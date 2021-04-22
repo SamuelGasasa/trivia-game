@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
   {
     host: "127.0.0.1",
     dialect: "mysql",
-  },
+  }
 );
 
 question.get("/generate", async (req, res) => {
@@ -61,5 +61,18 @@ question.put("/rank?id&rank", (req, res) => {
   const { id } = req.query;
   const { rank } = req.query;
   models.SavedQuestion.find({}).then((data) => console.log(data));
+});
+
+question.get("/test", (req, res) => {
+  // models.CountryGeneral.findOne().then(async (country) => {
+  //   const population = await country.getPopulationDensity();
+  //   res.send(population);
+  // });
+  models.PopulationDensity.findOne({
+    where: { country: "Afghanistan" },
+  }).then(async (country) => {
+    const general = await country.getCountryGeneral();
+    res.send(general);
+  });
 });
 module.exports = question;

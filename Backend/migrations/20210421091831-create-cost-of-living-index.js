@@ -9,6 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       country: {
+        allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
       },
       cost_of_living_index: {
