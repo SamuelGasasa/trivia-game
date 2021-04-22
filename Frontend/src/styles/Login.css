@@ -15,7 +15,7 @@
   padding: 2rem;
   font-size: 5rem;
   font-weight: 1000;
-  text-shadow: tomato;
+  text-shadow: 1px 1px 0px tomato;
 }
 #name {
   display: block;
@@ -28,6 +28,9 @@
   background-color: rgb(120, 212, 212);
   color: tomato;
   font-weight: 800;
+}
+a {
+  text-decoration: none;
 }
 #submit {
   display: block;
