@@ -18,21 +18,18 @@ const sequelize = new Sequelize(
 );
 
 question.get("/generate", async (req, res) => {
-  const typeNumber = 1;
+  const typeNumber = Math.floor(Math.random() * 2) + 1;
   const tableToCommunicate = "QuestionType" + typeNumber;
   const questionData = await models[tableToCommunicate].findOne({
     order: [sequelize.random()],
   });
-  const { question, field, table, operator } = questionData.toJSON();
+  let { question, field, table, operator } = questionData.toJSON();
   const isGeneral = table === "CountriesGeneral";
   let answers = [];
   let query = {
     include: [
       {
         model: models[table],
-        where: {
-          population: { [Op.ne]: null },
-        },
         required: true,
       },
     ],
@@ -57,6 +54,9 @@ question.get("/generate", async (req, res) => {
   filteredAnswers.forEach((value, index) =>
     index === 0 ? (value.right = true) : (value.right = false)
   );
+  if (typeNumber === 2)
+    question = question + " " + filteredAnswers[0].country + "?";
+
   res.send({ question: question, answers: filteredAnswers });
 });
 
