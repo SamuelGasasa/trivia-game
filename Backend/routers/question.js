@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
   {
     host: "127.0.0.1",
     dialect: "mysql",
-  }
+  },
 );
 
 question.get("/generate1", async (req, res) => {
@@ -35,10 +35,10 @@ question.get("/generate1", async (req, res) => {
           (operator ? "DESC" : "ASC"),
         {
           type: sequelize.QueryTypes.SELECT,
-        }
+        },
       );
       dataToSend.answers.forEach((value, index) =>
-        index === 0 ? (value.right = true) : (value.right = false)
+        index === 0 ? (value.right = true) : (value.right = false),
       );
 
       // const questions = await sequelize.query(
@@ -68,11 +68,10 @@ question.get("/generate2", async (req, res) => {
     include: [
       {
         model: models.PopulationDensity,
-        as: "model",
         where: {
-          population: null,
+          population: { [Op.ne]: null },
         },
-        required: false,
+        required: true,
       },
     ],
     order: [sequelize.random()],
@@ -80,7 +79,7 @@ question.get("/generate2", async (req, res) => {
   });
 
   let answers = await Promise.all(
-    countries.map(async (country) => country.getPopulationDensity())
+    countries.map(async (country) => country.getPopulationDensity()),
   );
   res.send(answers);
 });
