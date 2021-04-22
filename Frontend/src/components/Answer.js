@@ -21,7 +21,9 @@ function Answer(props) {
         ? props.answer.country
         : props.answer.type === 2
         ? props.answer.field
-        : "fix me"}
+        : props.answer.right
+        ? "TRUE"
+        : "FALSE"}
     </button>
   );
 }
