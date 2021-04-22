@@ -10,6 +10,7 @@ function Answer(props) {
 
   return (
     <button
+      className="answer"
       onClick={() => {
         handleClick();
       }}

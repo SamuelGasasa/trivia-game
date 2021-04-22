@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // import axios from "axios";
 import Question from "./Question";
 import Answer from "./Answer";
+import "../styles/QuestionPage.css";
 
 function QuestionPage() {
   const [counter, setCounter] = useState(1);
@@ -14,19 +15,21 @@ function QuestionPage() {
   });
 
   return (
-    <div>
-      <h1>Question {counter}</h1>
+    <div className="question-page">
+      <h1 id="header">Question {counter}</h1>
       <Question question={question} />
-      {answers.map((answer, i) => {
-        return (
-          <Answer
-            key={i}
-            answer={answer}
-            counter={counter}
-            changeCounter={setCounter}
-          />
-        );
-      })}
+      <div id="answer-container">
+        {answers.map((answer, i) => {
+          return (
+            <Answer
+              key={i}
+              answer={answer}
+              counter={counter}
+              changeCounter={setCounter}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
