@@ -6,21 +6,21 @@ module.exports = {
       "question-type3",
       [
         {
-          question: "Are there more people in X than in Y?",
+          question: "Are there more people in XXX than in YYY?",
           operator: true,
           field: "population",
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
-          question: "Is X larger than Y?",
+          question: "Is XXX larger than YYY?",
           operator: true,
           field: "area_km2",
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
-          question: "Does X have a higher population density than Y?",
+          question: "Does XXX have a higher population density than YYY?",
           operator: true,
           field: "density_pop_to_km2",
           created_at: new Date(),
@@ -28,14 +28,15 @@ module.exports = {
         },
         {
           question:
-            "Is the quality of life in X higher than the quality of life in Y?",
+            "Is the quality of life in XXX higher than the quality of life in YYY?",
           operator: true,
           field: "quality_of_life_index",
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
-          question: "Is the crime rate of X higher than the crime rate in Y?",
+          question:
+            "Is the crime rate of XXX higher than the crime rate in YYY?",
           operator: true,
           field: "crime_index",
           created_at: new Date(),
@@ -43,14 +44,14 @@ module.exports = {
         },
         {
           question:
-            "Are restaurants in X more expensive than restaurants in Y?",
+            "Are restaurants in XXX more expensive than restaurants in YYY?",
           operator: true,
           field: "restaurant_price_index",
           created_at: new Date(),
           updated_at: new Date(),
         },
       ],
-      {}
+      {},
     );
   },
 

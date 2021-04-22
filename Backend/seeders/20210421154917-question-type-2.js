@@ -6,21 +6,21 @@ module.exports = {
       "question-type2",
       [
         {
-          question: "What is the capital of",
+          question: "What is the capital of XXX?",
           field: "capital",
           table: "Capital",
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
-          question: "How many people live in",
+          question: "How many people live in XXX?",
           field: "population",
           table: "PopulationDensity",
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
-          question: "In what continent is",
+          question: "In what continent is XXX?",
           field: "continent",
           table: "Capital",
           created_at: new Date(),
