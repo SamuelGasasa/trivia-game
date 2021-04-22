@@ -50,7 +50,7 @@ question.get("/generate", async (req, res) => {
   else answers = countries;
 
   let filteredAnswers = answers.map((value) => {
-    return { country: value.country, field: value[field] };
+    return { country: value.country, field: value[field], type: typeNumber };
   });
   filteredAnswers = filteredAnswers.sort((a, b) =>
     operator ? b.field - a.field : a.field - b.field

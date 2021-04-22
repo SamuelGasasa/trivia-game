@@ -14,6 +14,7 @@ function QuestionPage() {
 
   useEffect(() => {
     axios.get("http://localhost:3001/question/generate").then((allData) => {
+      console.log(allData.data);
       setQuestion(allData.data.question);
       setAnswers(allData.data.answers);
     });

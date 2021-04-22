@@ -1,5 +1,4 @@
 import React from "react";
-// import axios from "axios";
 
 function Answer(props) {
   const handleClick = (selectedAnswer) => {
@@ -18,7 +17,11 @@ function Answer(props) {
         handleClick(props.answer);
       }}
     >
-      {props.answer.country}
+      {props.answer.type === 1
+        ? props.answer.country
+        : props.answer.type === 2
+        ? props.answer.field
+        : "fix me"}
     </button>
   );
 }
