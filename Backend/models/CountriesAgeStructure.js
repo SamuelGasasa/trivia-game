@@ -8,8 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsTo(models.CountryGeneral, { foreignKey: "country" });
-    }
+      this.belongsTo(models.CountryGeneral, {
+        foreignKey: "country",
+        targetKey: "country",
+      });    }
   }
   CountriesAgeStructure.init(
     {

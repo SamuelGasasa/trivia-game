@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.CountryGeneral, {
         foreignKey: "country",
-        foreignKeyConstraint: true,
+        targetKey: "country",
       });
     }
   }
