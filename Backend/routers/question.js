@@ -81,7 +81,16 @@ question.get("/generate2", async (req, res) => {
   let answers = await Promise.all(
     countries.map(async (country) => country.getPopulationDensity())
   );
-  res.send(answers);
+  let filteredAnswers = answers.map((value) => {
+    return { country: value.country, field: value[field] };
+  });
+  filteredAnswers = filteredAnswers.sort((a, b) =>
+    operator ? a.population - b.population : b.population - a.population
+  );
+  filteredAnswers.forEach((value, index) =>
+    index === 0 ? (value.right = true) : (value.right = false)
+  );
+  res.send({ question: question, answers: filteredAnswers });
 });
 
 question.post("/save", (req, res) => {
