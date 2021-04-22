@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
-// import axios from "axios";
+import axios from "axios";
 import Question from "./Question";
 import Answer from "./Answer";
 import "../styles/QuestionPage.css";
 
 function QuestionPage() {
   const [counter, setCounter] = useState(1);
-  const answers = [1, 2, 3, 4];
-  const question = "this is a question";
+  const [answers, setAnswers] = useState([]);
+  const [question, setQuestion] = useState("");
+  const [points, setPoints] = useState(0);
 
   useEffect(() => {
-    //add axios to answers
-    //add axios to question
-  });
+    axios.get("http://localhost:3001/question/generate").then((allData) => {
+      setQuestion(allData.data.question);
+      setAnswers(allData.data.answers);
+    });
+  }, [counter]);
 
   return (
     <div className="question-page">
       <h1 id="header">Question {counter}</h1>
+      <div>points: {points}</div>
       <Question question={question} />
       <div id="answer-container">
         {answers.map((answer, i) => {
@@ -25,7 +29,9 @@ function QuestionPage() {
               key={i}
               answer={answer}
               counter={counter}
-              changeCounter={setCounter}
+              setCounter={setCounter}
+              points={points}
+              setPoints={setPoints}
             />
           );
         })}

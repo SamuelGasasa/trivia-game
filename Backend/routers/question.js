@@ -2,7 +2,6 @@ const models = require("../models");
 const { Op } = require("sequelize");
 const Sequelize = require("sequelize");
 const express = require("express");
-const { QueryTypes } = require("sequelize");
 const question = express();
 require("dotenv").config();
 question.use(express.json());
