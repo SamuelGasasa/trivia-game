@@ -97,7 +97,11 @@ question.get("/generate3", async (req, res) => {
   filteredAnswers.forEach((value, index) =>
     index === 0 ? (value.right = true) : (value.right = false)
   );
-
+  if (typeNumber === 3) {
+    const index = Math.floor(Math.random() * 2);
+    question = question.replace("XXX", filteredAnswers[index].country);
+    question = question.replace("YYY", filteredAnswers[1 - index].country);
+  }
   res.send({ question: question, answers: filteredAnswers });
 });
 
