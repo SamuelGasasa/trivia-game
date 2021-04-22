@@ -20,6 +20,10 @@ const sequelize = new Sequelize(
 question.get("/generate", async (req, res) => {
   // const typeNumber = Math.floor(Math.random() * 3) + 1;
   const typeNumber = 1;
+  models.CountryGeneral.findOne({}).then(async (table) => {
+    const population = await table.getPopulationDensity();
+    console.log(population);
+  });
   const tableToCommunicate = "QuestionType" + typeNumber;
   const questionData = await models[tableToCommunicate].findOne({});
   const field = questionData.toJSON().field;
@@ -27,7 +31,7 @@ question.get("/generate", async (req, res) => {
   switch (typeNumber) {
     case 1:
       sequelize
-        .query("SELECT population FROM `example` LIMIT 4", {
+        .query("SELECT " + field + " FROM `example` ORDER BY RAND () LIMIT 4", {
           type: sequelize.QueryTypes.SELECT,
         })
         .then((res) => console.log(res));
