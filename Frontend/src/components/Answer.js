@@ -1,7 +1,22 @@
 import React from "react";
+import axios from "axios";
 
-function Answer() {
-  return <div>answer</div>;
+function Answer(props) {
+  const handleClick = () => {
+    // axios.post("/", props.answer).then(() => {
+    //   props.changeCounter(props.counter + 1);
+    // });
+  };
+
+  return (
+    <button
+      onClick={() => {
+        handleClick();
+      }}
+    >
+      {props.answer}
+    </button>
+  );
 }
 
 export default Answer;
