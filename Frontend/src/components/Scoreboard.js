@@ -13,20 +13,22 @@ function Scoreboard() {
   });
   return (
     <table>
-      <tr>
-        <th>name</th>
-        <th>score</th>
-        <th>date</th>
-      </tr>
-      {table.map((user) => {
-        return (
-          <tr>
-            <td>{user.name}</td>
-            <td>{user.score}</td>
-            <td>{user.createdAt}</td>
-          </tr>
-        );
-      })}
+      <tbody>
+        <tr>
+          <th>name</th>
+          <th>score</th>
+          <th>date</th>
+        </tr>
+        {table.map((user, i) => {
+          return (
+            <tr key={i}>
+              <td>{user.name}</td>
+              <td>{user.score}</td>
+              <td>{user.createdAt}</td>
+            </tr>
+          );
+        })}
+      </tbody>
     </table>
   );
 }

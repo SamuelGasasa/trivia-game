@@ -5,6 +5,8 @@ function Answer(props) {
   const handleClick = (selectedAnswer) => {
     if (selectedAnswer.right) {
       props.setPoints(props.points + 100);
+    } else {
+      props.setLives(props.lives - 1);
     }
     props.setCounter(props.counter + 1);
   };
