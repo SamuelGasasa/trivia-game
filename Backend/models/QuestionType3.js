@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       question: DataTypes.STRING,
       operator: DataTypes.BOOLEAN,
       field: DataTypes.STRING,
+      table: DataTypes.STRING,
     },
     {
       sequelize,

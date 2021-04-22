@@ -17,24 +17,30 @@ const sequelize = new Sequelize(
   }
 );
 
-question.get("/generate", async (req, res) => {
+question.get("/generate1", async (req, res) => {
   // const typeNumber = Math.floor(Math.random() * 3) + 1;
   const typeNumber = 1;
-  models.CountryGeneral.findOne({}).then(async (table) => {
-    const population = await table.getPopulationDensity();
-    console.log(population);
-  });
   const tableToCommunicate = "QuestionType" + typeNumber;
   const questionData = await models[tableToCommunicate].findOne({});
   const field = questionData.toJSON().field;
+  let dataToSend = { question: questionData.toJSON().question };
   console.log(field);
   switch (typeNumber) {
     case 1:
-      sequelize
-        .query("SELECT " + field + " FROM `example` ORDER BY RAND () LIMIT 4", {
+      const { operator } = questionData.toJSON();
+      dataToSend.answers = await sequelize.query(
+        "WITH answers AS (SELECT country, " +
+          field +
+          " FROM population_densities ORDER BY RAND () LIMIT 4 ) SELECT * from answers ORDER BY population " +
+          (operator ? "DESC" : "ASC"),
+        {
           type: sequelize.QueryTypes.SELECT,
-        })
-        .then((res) => console.log(res));
+        }
+      );
+      dataToSend.answers.forEach((value, index) =>
+        index === 0 ? (value.right = true) : (value.right = false)
+      );
+
       // const questions = await sequelize.query(
       //   "SELECT population FROM example LIMIT 4",
       //   { type: QueryTypes.SELECT },
@@ -50,10 +56,33 @@ question.get("/generate", async (req, res) => {
     default:
       break;
   }
-  const questionToSend = {
-    question: questionData.toJSON().question,
-  };
-  res.send(questionToSend);
+  res.send(dataToSend);
+});
+
+question.get("/generate2", async (req, res) => {
+  const typeNumber = 1;
+  const tableToCommunicate = "QuestionType" + typeNumber;
+  const questionData = await models[tableToCommunicate].findOne({});
+  const { question, field, table, operator } = questionData.toJSON();
+  let countries = await models.CountryGeneral.findAll({
+    include: [
+      {
+        model: models.PopulationDensity,
+        as: "model",
+        where: {
+          population: null,
+        },
+        required: false,
+      },
+    ],
+    order: [sequelize.random()],
+    limit: 4,
+  });
+
+  let answers = await Promise.all(
+    countries.map(async (country) => country.getPopulationDensity())
+  );
+  res.send(answers);
 });
 
 question.post("/save", (req, res) => {
@@ -67,10 +96,4 @@ question.put("/rank?id&rank", (req, res) => {
   models.SavedQuestion.find({}).then((data) => console.log(data));
 });
 
-question.get("/test", (req, res) => {
-  models.CountryGeneral.findOne().then(async (country) => {
-    const population = await country.getPopulationDensity();
-    res.send(population);
-  });
-});
 module.exports = question;

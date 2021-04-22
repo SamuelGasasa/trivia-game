@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       question: DataTypes.STRING,
       field: DataTypes.STRING,
+      table: DataTypes.STRING,
+
     },
     {
       sequelize,
