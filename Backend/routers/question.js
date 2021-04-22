@@ -22,7 +22,7 @@ function shuffle(array) {
 }
 
 question.get("/generate", async (req, res) => {
-  const typeNumber = Math.floor(Math.random() * 2) + 1;
+  const typeNumber = Math.floor(Math.random() * 3) + 1;
   const tableToCommunicate = "QuestionType" + typeNumber;
   const questionData = await models[tableToCommunicate].findOne({
     order: [sequelize.random()],
@@ -40,7 +40,7 @@ question.get("/generate", async (req, res) => {
     order: [sequelize.random()],
     limit: 4,
   };
-  isGeneral && delete query.include;
+  if (typeNumber === 3) isGeneral && delete query.include;
   let countries = await models.CountryGeneral.findAll(query);
 
   if (!isGeneral)
@@ -58,8 +58,17 @@ question.get("/generate", async (req, res) => {
   filteredAnswers.forEach((value, index) =>
     index === 0 ? (value.right = true) : (value.right = false),
   );
-  if (typeNumber === 2)
+  if (typeNumber === 2 || typeNumber === 3) {
     question = question.replace("XXX", filteredAnswers[0].country);
+  }
+
+  if (typeNumber === 3) {
+    shuffle(filteredAnswers);
+
+    const index = Math.floor(Math.random() * 2);
+    question = question.replace("XXX", filteredAnswers[index].country);
+    question = question.replace("YYY", filteredAnswers[1 - index].country);
+  }
 
   res.send({ question: question, answers: filteredAnswers });
 });
