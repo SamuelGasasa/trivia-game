@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
-import Question from "./components/Question";
+import Scoreboard from "./components/Scoreboard";
 import QuestionPage from "./components/QuestionPage";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/question" component={QuestionPage} />
+          <Route exact path="/scoreboard" component={Scoreboard} />
         </Switch>
       </div>
     </Router>
