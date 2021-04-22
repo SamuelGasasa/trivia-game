@@ -17,7 +17,7 @@ const sequelize = new Sequelize(
 );
 
 function shuffle(array) {
-  array.sort(() => Math.random() - 0.5);
+  return array.sort(() => Math.random() - 0.5);
 }
 
 question.get("/generate", async (req, res) => {
@@ -69,7 +69,7 @@ question.get("/generate", async (req, res) => {
     question = question.replace("YYY", filteredAnswers[1 - index].country);
   }
 
-  res.send({ question: question, answers: filteredAnswers });
+  res.send({ question: question, answers: shuffle(filteredAnswers) });
 });
 
 question.post("/save", (req, res) => {
