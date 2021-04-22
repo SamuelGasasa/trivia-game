@@ -1,26 +1,29 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { Link } from "react-router-dom";
+// import axios from "axios";
+import "../styles/Login.css";
 
 function Login() {
   const [name, setName] = useState("");
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    //need to add axios to leader board
+  };
 
   return (
     <div className="login-page">
-      <h1>LOG-IN</h1>
-      <form
-        onSubmit={() => {
-          handleSubmit();
-        }}
-      >
-        <input
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          id="name"
-        />
-        <submit>log-in</submit>
-      </form>
+      <h1 id="form-headline">LOG-IN</h1>
+      <input
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+        id="name"
+        placeholder="Enter your name"
+      />
+      <Link exact="true" to="/question">
+        <button id="submit" onClick={() => handleSubmit()}>
+          Log-in
+        </button>
+      </Link>
     </div>
   );
 }
