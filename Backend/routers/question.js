@@ -68,15 +68,9 @@ question.put("/rank?id&rank", (req, res) => {
 });
 
 question.get("/test", (req, res) => {
-  // models.CountryGeneral.findOne().then(async (country) => {
-  //   const population = await country.getPopulationDensity();
-  //   res.send(population);
-  // });
-  models.PopulationDensity.findOne({
-    where: { country: "Afghanistan" },
-  }).then(async (country) => {
-    const general = await country.getCountryGeneral();
-    res.send(general);
+  models.CountryGeneral.findOne().then(async (country) => {
+    const population = await country.getPopulationDensity();
+    res.send(population);
   });
 });
 module.exports = question;
