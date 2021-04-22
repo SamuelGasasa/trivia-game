@@ -14,8 +14,12 @@ const sequelize = new Sequelize(
   {
     host: "127.0.0.1",
     dialect: "mysql",
-  }
+  },
 );
+
+function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
 
 question.get("/generate", async (req, res) => {
   const typeNumber = Math.floor(Math.random() * 2) + 1;
@@ -41,7 +45,7 @@ question.get("/generate", async (req, res) => {
 
   if (!isGeneral)
     answers = await Promise.all(
-      countries.map(async (country) => country["get" + table]())
+      countries.map(async (country) => country["get" + table]()),
     );
   else answers = countries;
 
@@ -49,10 +53,10 @@ question.get("/generate", async (req, res) => {
     return { country: value.country, field: value[field] };
   });
   filteredAnswers = filteredAnswers.sort((a, b) =>
-    operator ? b.field - a.field : a.field - b.field
+    operator ? b.field - a.field : a.field - b.field,
   );
   filteredAnswers.forEach((value, index) =>
-    index === 0 ? (value.right = true) : (value.right = false)
+    index === 0 ? (value.right = true) : (value.right = false),
   );
   if (typeNumber === 2)
     question = question.replace("XXX", filteredAnswers[0].country);
@@ -84,7 +88,7 @@ question.get("/generate3", async (req, res) => {
 
   if (!isGeneral)
     answers = await Promise.all(
-      countries.map(async (country) => country["get" + table]())
+      countries.map(async (country) => country["get" + table]()),
     );
   else answers = countries;
 
@@ -92,11 +96,14 @@ question.get("/generate3", async (req, res) => {
     return { country: value.country, field: value[field] };
   });
   filteredAnswers = filteredAnswers.sort((a, b) =>
-    operator ? b.field - a.field : a.field - b.field
+    operator ? b.field - a.field : a.field - b.field,
   );
   filteredAnswers.forEach((value, index) =>
-    index === 0 ? (value.right = true) : (value.right = false)
+    index === 0 ? (value.right = true) : (value.right = false),
   );
+
+  shuffle(filteredAnswers);
+
   if (typeNumber === 3) {
     const index = Math.floor(Math.random() * 2);
     question = question.replace("XXX", filteredAnswers[index].country);
