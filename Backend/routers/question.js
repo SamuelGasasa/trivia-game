@@ -68,11 +68,10 @@ question.get("/generate2", async (req, res) => {
     include: [
       {
         model: models.PopulationDensity,
-        as: "model",
         where: {
-          population: null,
+          population: { [Op.ne]: null },
         },
-        required: false,
+        required: true,
       },
     ],
     order: [sequelize.random()],
