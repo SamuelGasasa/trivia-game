@@ -62,12 +62,16 @@ question.get("/generate1", async (req, res) => {
 question.get("/generate2", async (req, res) => {
   const typeNumber = 1;
   const tableToCommunicate = "QuestionType" + typeNumber;
-  const questionData = await models[tableToCommunicate].findOne({});
+  const questionData = await models[tableToCommunicate].findOne({
+    order: [sequelize.random()],
+  });
   const { question, field, table, operator } = questionData.toJSON();
-  let countries = await models.CountryGeneral.findAll({
+  const isGeneral = table === "CountriesGeneral";
+  let answers = [];
+  let query = {
     include: [
       {
-        model: models.PopulationDensity,
+        model: models[table],
         where: {
           population: { [Op.ne]: null },
         },
@@ -76,16 +80,22 @@ question.get("/generate2", async (req, res) => {
     ],
     order: [sequelize.random()],
     limit: 4,
-  });
+  };
+  isGeneral && delete query.include;
+  console.log(query);
+  let countries = await models.CountryGeneral.findAll(query);
 
-  let answers = await Promise.all(
-    countries.map(async (country) => country.getPopulationDensity())
-  );
+  if (!isGeneral)
+    answers = await Promise.all(
+      countries.map(async (country) => country["get" + table]())
+    );
+  else answers = countries;
+
   let filteredAnswers = answers.map((value) => {
     return { country: value.country, field: value[field] };
   });
   filteredAnswers = filteredAnswers.sort((a, b) =>
-    operator ? a.population - b.population : b.population - a.population
+    operator ? b.field - a.field : a.field - b.field
   );
   filteredAnswers.forEach((value, index) =>
     index === 0 ? (value.right = true) : (value.right = false)
