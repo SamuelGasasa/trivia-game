@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import "../styles/Login.css";
 
 function Login() {
   const [name, setName] = useState("");
-
+  // useEffect(async () => {
+  //   const question = await axios.get("/question/generate");
+  //   console.log(question);
+  // }, []);
   const handleSubmit = () => {
     //need to add axios to leader board
   };
