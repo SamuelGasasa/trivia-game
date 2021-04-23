@@ -88,7 +88,7 @@ question.get("/generate", async (req, res) => {
   }
 
   res.send({
-    question: "questionsafsa",
+    question: question,
     answers: shuffle(filteredAnswers),
   });
 });
@@ -147,7 +147,6 @@ question.get("/savedQuestion", async (req, res) => {
   const savedQuestion = await models.SavedQuestion.findAll({}).then((data) => {
     return (data = data.map((question) => question.toJSON()));
   });
-  console.log(9 % 3 == false);
   res.send(savedQuestion);
 });
 
