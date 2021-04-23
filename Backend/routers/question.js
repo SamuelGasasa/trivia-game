@@ -21,6 +21,10 @@ function shuffle(array) {
 }
 
 question.get("/generate", async (req, res) => {
+  await models.TempRightAnswer.destroy({
+    where: {},
+    truncate: true,
+  });
   const typeNumber = Math.floor(Math.random() * 3) + 1;
   const tableToCommunicate = "QuestionType" + typeNumber;
   const questionData = await models[tableToCommunicate].findOne({
@@ -60,37 +64,42 @@ question.get("/generate", async (req, res) => {
   );
   if (typeNumber === 1) {
     filteredAnswers = filteredAnswers.map((value) => {
-      return { answer: value.country, type: value.type, right: value.right };
+      return { answer: value.country, type: value.type };
     });
   }
   if (typeNumber === 2) {
     question = question.replace("XXX", filteredAnswers[0].country);
     filteredAnswers = filteredAnswers.map((value) => {
-      return { answer: value.field, type: value.type, right: value.right };
+      return { answer: value.field, type: value.type };
     });
   }
-
   if (typeNumber === 3) {
     shuffle(filteredAnswers);
     const isStatementTrue = filteredAnswers[0].field > filteredAnswers[1].field;
     question = question.replace("XXX", filteredAnswers[0].country);
     question = question.replace("YYY", filteredAnswers[1].country);
-    filteredAnswers = filteredAnswers.map((value) => {
+    filteredAnswers = filteredAnswers.map((value, i) => {
       return {
-        right: isStatementTrue,
+        answer: i === 0 ? String(isStatementTrue) : String(!isStatementTrue),
         type: value.type,
-        field: value.field,
-        country: value.country,
       };
     });
-    filteredAnswers[0].answer = "true";
-    filteredAnswers[1].answer = "false";
   }
+  models.TempRightAnswer.create({
+    answer: filteredAnswers[0].answer,
+    created_at: new Date(),
+    updated_at: new Date(),
+  });
 
   res.send({
     question: question,
     answers: shuffle(filteredAnswers),
   });
+});
+
+question.get("/check", async (req, res) => {
+  const rightAnswer = await models.TempRightAnswer.findOne({});
+  res.send({ answer: rightAnswer.answer });
 });
 
 question.post("/save", async (req, res) => {
