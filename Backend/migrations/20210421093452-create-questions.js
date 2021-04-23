@@ -32,6 +32,9 @@ module.exports = {
       wrong_3: {
         type: Sequelize.STRING,
       },
+      used: {
+        type: Sequelize.BOOLEAN,
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,

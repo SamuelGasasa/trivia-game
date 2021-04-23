@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       wrong_1: DataTypes.STRING,
       wrong_2: DataTypes.STRING,
       wrong_3: DataTypes.STRING,
+      used: { type: DataTypes.BOOLEAN, defaultValue: true },
     },
     {
       sequelize,
