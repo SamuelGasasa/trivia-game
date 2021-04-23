@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { Redirect } from "react-router";
+import React from "react";
 
 function Answer(props) {
   const handleClick = (selectedAnswer) => {

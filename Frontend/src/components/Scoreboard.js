@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 function Scoreboard() {
@@ -13,24 +14,29 @@ function Scoreboard() {
     );
   });
   return (
-    <table>
-      <tbody>
-        <tr>
-          <th>name</th>
-          <th>score</th>
-          <th>date</th>
-        </tr>
-        {scores.map((user, i) => {
-          return (
-            <tr key={i}>
-              <td>{user.player}</td>
-              <td>{user.score}</td>
-              <td>{user.date}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <>
+      <table>
+        <tbody>
+          <tr>
+            <th>name</th>
+            <th>score</th>
+            <th>date</th>
+          </tr>
+          {scores.map((user, i) => {
+            return (
+              <tr key={i}>
+                <td>{user.player}</td>
+                <td>{user.score}</td>
+                <td>{user.date}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <Link exact="true" to="/">
+        try Again
+      </Link>
+    </>
   );
 }
 

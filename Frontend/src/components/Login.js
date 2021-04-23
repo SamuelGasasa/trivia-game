@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 // import axios from "axios";
 import "../styles/Login.css";
 
-function Login() {
+function Login(props) {
   const [name, setName] = useState("");
 
   const handleSubmit = () => {
-    //need to add axios to leader board
+    props.setUser(name);
   };
 
   return (

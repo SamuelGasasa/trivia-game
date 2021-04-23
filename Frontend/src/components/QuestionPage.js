@@ -6,20 +6,27 @@ import "../styles/QuestionPage.css";
 import { Redirect } from "react-router";
 import RatingPage from "./RatingPage";
 
-function QuestionPage() {
+function QuestionPage(props) {
   const [counter, setCounter] = useState(1);
   const [answers, setAnswers] = useState([]);
   const [question, setQuestion] = useState("");
   const [points, setPoints] = useState(0);
   const [lives, setLives] = useState(3);
   const [answered, setAnswered] = useState(false);
+
   useEffect(() => {
     axios.get("/question/generate").then((allData) => {
-      console.log(allData.data);
       setQuestion(allData.data.question);
       setAnswers(allData.data.answers);
     });
   }, [counter]);
+
+  useEffect(() => {
+    if (lives === 0) {
+      axios.post("/scoreboard", { player: props.user, score: points });
+    }
+  }, [lives]);
+
   const sendRate = (rating) => {
     setAnswered(false);
     setCounter(counter + 1);
@@ -42,8 +49,6 @@ function QuestionPage() {
         }
       }
     });
-    console.log(rightAnswer);
-    console.log(wrongAnswers);
     axios.post("/question/save", {
       question: question,
       type: answers[0].type,
