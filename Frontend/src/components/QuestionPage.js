@@ -20,7 +20,47 @@ function QuestionPage() {
       setAnswers(allData.data.answers);
     });
   }, [counter]);
+  const sendRate = () => {
+    setAnswered(false);
+    setCounter(counter + 1);
+    //add to sql
+    // const rightAnswer = answers.filter((ans) => {
+    //   return (ans.right = true);
+    // });
+    // console.log(
+    //   "🚀 ~ file: QuestionPage.js ~ line 30 ~ rightAnswer ~ rightAnswer",
+    //   rightAnswer
+    // );
 
+    // const wrongAnswers = answers.filter((ans) => {
+    //   return (ans.right = false);
+    // });
+    let wrongAnswers = [];
+    let rightAnswer;
+    answers.forEach((answer) => {
+      if (answer.right) {
+        rightAnswer = answer;
+        console.log(
+          "🚀 ~ file: QuestionPage.js ~ line 43 ~ answers.forEach ~ rightAnswer",
+          rightAnswer
+        );
+      } else {
+        wrongAnswers.push(answer);
+      }
+    });
+    console.log(
+      "🚀 ~ file: QuestionPage.js ~ line 35 ~ wrongAnswers ~ wrongAnswers",
+      wrongAnswers
+    );
+    axios.post("/question/save", {
+      question: question,
+      type: answers[0].type,
+      right_answer: rightAnswer,
+      wrong_1: wrongAnswers[0],
+      wrong_2: wrongAnswers[1] || null,
+      wrong_3: wrongAnswers[2] || null,
+    });
+  };
   return (
     <div className="question-page">
       {lives === 0 && <Redirect to="/scoreboard" />}
@@ -46,7 +86,14 @@ function QuestionPage() {
           );
         })}
       </div>
-      {answered && <RatingPage setAnswered={setAnswered} />}
+      {answered && (
+        <RatingPage
+          setAnswered={setAnswered}
+          counter={counter}
+          setCounter={setCounter}
+          sendRate={sendRate}
+        />
+      )}
     </div>
   );
 }

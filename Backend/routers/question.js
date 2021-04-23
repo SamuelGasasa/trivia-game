@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
   {
     host: "127.0.0.1",
     dialect: "mysql",
-  },
+  }
 );
 
 function shuffle(array) {
@@ -45,7 +45,7 @@ question.get("/generate", async (req, res) => {
 
   if (!isGeneral)
     answers = await Promise.all(
-      countries.map(async (country) => country["get" + table]()),
+      countries.map(async (country) => country["get" + table]())
     );
   else answers = countries;
 
@@ -53,10 +53,10 @@ question.get("/generate", async (req, res) => {
     return { country: value.country, field: value[field], type: typeNumber };
   });
   filteredAnswers = filteredAnswers.sort((a, b) =>
-    operator ? b.field - a.field : a.field - b.field,
+    operator ? b.field - a.field : a.field - b.field
   );
   filteredAnswers.forEach((value, index) =>
-    index === 0 ? (value.right = true) : (value.right = false),
+    index === 0 ? (value.right = true) : (value.right = false)
   );
   if (typeNumber === 1) {
     filteredAnswers = filteredAnswers.map((value) => {
@@ -91,6 +91,7 @@ question.get("/generate", async (req, res) => {
 });
 
 question.post("/save", (req, res) => {
+  console.log("im here");
   const body = req.body;
   const savedQuestion = models.SavedQuestion.findOne({}).then((data) => {
     if (data) data.toJSON();
@@ -125,7 +126,7 @@ question.post("/save", (req, res) => {
         "wrong_2",
         "wrong_3",
       ],
-    },
+    }
   );
   res.send("Added");
 });

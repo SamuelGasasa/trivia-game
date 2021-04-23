@@ -14,10 +14,9 @@ function Answer(props) {
     props.setAnswered(true);
     if (!props.answered) {
       setTimeout(() => {
-        props.setCounter(props.counter + 1);
+        props.answered || props.setCounter(props.counter + 1);
         props.setAnswered(false);
-      }, 6000);
-      console.log("false");
+      }, 3000);
     }
   };
   return (

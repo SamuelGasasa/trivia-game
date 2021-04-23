@@ -19,7 +19,7 @@ function Login() {
         id="name"
         placeholder="Enter your name"
       />
-      <Link exact="true" to="/question">
+      <Link exact="true" to="/quiz">
         <button id="submit" onClick={() => handleSubmit()}>
           Log-in
         </button>
