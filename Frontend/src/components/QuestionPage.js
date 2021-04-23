@@ -4,6 +4,7 @@ import Question from "./Question";
 import Answer from "./Answer";
 import "../styles/QuestionPage.css";
 import { Redirect } from "react-router";
+import RatingPage from "./RatingPage";
 
 function QuestionPage() {
   const [counter, setCounter] = useState(1);
@@ -11,7 +12,7 @@ function QuestionPage() {
   const [question, setQuestion] = useState("");
   const [points, setPoints] = useState(0);
   const [lives, setLives] = useState(3);
-
+  const [answered, setAnswered] = useState(false);
   useEffect(() => {
     axios.get("/question/generate").then((allData) => {
       console.log(allData.data);
@@ -39,10 +40,13 @@ function QuestionPage() {
               setPoints={setPoints}
               lives={lives}
               setLives={setLives}
+              setAnswered={setAnswered}
+              answered={answered}
             />
           );
         })}
       </div>
+      {answered && <RatingPage setAnswered={setAnswered} />}
     </div>
   );
 }

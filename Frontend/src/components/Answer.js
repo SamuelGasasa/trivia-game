@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Redirect } from "react-router";
 
 function Answer(props) {
   const handleClick = (selectedAnswer) => {
@@ -10,9 +11,15 @@ function Answer(props) {
     } else {
       props.setLives(props.lives - 1);
     }
-    props.setCounter(props.counter + 1);
+    props.setAnswered(true);
+    if (!props.answered) {
+      setTimeout(() => {
+        props.setCounter(props.counter + 1);
+        props.setAnswered(false);
+      }, 6000);
+      console.log("false");
+    }
   };
-
   return (
     <button
       className="answer"
