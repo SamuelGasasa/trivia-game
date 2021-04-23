@@ -90,19 +90,20 @@ question.get("/generate", async (req, res) => {
   res.send({ question: question, answers: shuffle(filteredAnswers) });
 });
 
-question.post("/save", (req, res) => {
+question.post("/save", async (req, res) => {
   console.log("im here");
   const body = req.body;
-  const savedQuestion = models.SavedQuestion.findOne({}).then((data) => {
+  let savedQuestion = await models.SavedQuestion.findOne({}).then((data) => {
     if (data) data.toJSON();
   });
-  if (!savedQuestion.rating_count) {
-    savedQuestion.avg_rating = 0;
-    savedQuestion.rating_count = 0;
+  if (!savedQuestion) {
+    savedQuestion = { avg_rating: 0, rating_count: 0 };
   }
   const avgRating =
-    (savedQuestion.avg_rating * savedQuestion.rating_count + body.rating) /
+    (savedQuestion.avg_rating * savedQuestion.rating_count +
+      Number(body.rating)) /
     (savedQuestion.rating_count + 1);
+  console.log(avgRating);
 
   models.SavedQuestion.create(
     {

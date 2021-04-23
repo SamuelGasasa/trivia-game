@@ -20,21 +20,9 @@ function QuestionPage() {
       setAnswers(allData.data.answers);
     });
   }, [counter]);
-  const sendRate = () => {
+  const sendRate = (rating) => {
     setAnswered(false);
     setCounter(counter + 1);
-    //add to sql
-    // const rightAnswer = answers.filter((ans) => {
-    //   return (ans.right = true);
-    // });
-    // console.log(
-    //   "🚀 ~ file: QuestionPage.js ~ line 30 ~ rightAnswer ~ rightAnswer",
-    //   rightAnswer
-    // );
-
-    // const wrongAnswers = answers.filter((ans) => {
-    //   return (ans.right = false);
-    // });
     let wrongAnswers = [];
     let rightAnswer;
     answers.forEach((answer) => {
@@ -55,10 +43,11 @@ function QuestionPage() {
     axios.post("/question/save", {
       question: question,
       type: answers[0].type,
-      right_answer: rightAnswer,
-      wrong_1: wrongAnswers[0],
-      wrong_2: wrongAnswers[1] || null,
-      wrong_3: wrongAnswers[2] || null,
+      rating: rating,
+      rightAnswer: rightAnswer.answer,
+      wrongOne: wrongAnswers[0].answer,
+      wrongTwo: wrongAnswers[1].answer || null,
+      wrongThree: wrongAnswers[2].answer || null,
     });
   };
   return (

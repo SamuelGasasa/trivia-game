@@ -18,19 +18,19 @@ function RatingPage({ setAnswered, counter, setCounter, sendRate }) {
         no
       </button>
       <div id="rating-stars">
-        <p id="1" onClick={() => sendRate()}>
+        <p id="1" onClick={() => sendRate(1)}>
           ⭐
         </p>
-        <p id="2" onClick={() => sendRate()}>
+        <p id="2" onClick={() => sendRate(2)}>
           ⭐
         </p>
-        <p id="3" onClick={() => sendRate()}>
+        <p id="3" onClick={() => sendRate(3)}>
           ⭐
         </p>
-        <p id="4" onClick={() => sendRate()}>
+        <p id="4" onClick={() => sendRate(4)}>
           ⭐
         </p>
-        <p id="5" onClick={() => sendRate()}>
+        <p id="5" onClick={() => sendRate(5)}>
           ⭐
         </p>
       </div>
