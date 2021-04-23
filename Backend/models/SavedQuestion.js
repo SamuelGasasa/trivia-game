@@ -18,9 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       avg_rating: DataTypes.FLOAT,
       rating_count: DataTypes.INTEGER,
       right_answer: DataTypes.STRING,
-      wrong_1: DataTypes.STRING,
-      wrong_2: DataTypes.STRING,
-      wrong_3: DataTypes.STRING,
+      wrong_answers: DataTypes.STRING,
       used: { type: DataTypes.BOOLEAN, defaultValue: true },
     },
     {

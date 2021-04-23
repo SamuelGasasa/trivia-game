@@ -23,13 +23,7 @@ module.exports = {
       right_answer: {
         type: Sequelize.STRING,
       },
-      wrong_1: {
-        type: Sequelize.STRING,
-      },
-      wrong_2: {
-        type: Sequelize.STRING,
-      },
-      wrong_3: {
+      wrong_answers: {
         type: Sequelize.STRING,
       },
       used: {

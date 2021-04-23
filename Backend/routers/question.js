@@ -109,9 +109,9 @@ question.post("/save", async (req, res) => {
         avg_rating: body.rating,
         rating_count: 1,
         right_answer: body.rightAnswer,
-        wrong_1: body.wrongOne,
-        wrong_2: body.wrongTwo,
-        wrong_3: body.wrongThree,
+        wrong_answers:
+          body.wrongOne + "," + body.wrongTwo + "," + body.wrongThree,
+        used: true,
       },
       {
         fields: [
@@ -120,9 +120,8 @@ question.post("/save", async (req, res) => {
           "rating_count",
           "avg_rating",
           "right_answer",
-          "wrong_1",
-          "wrong_2",
-          "wrong_3",
+          "wrong_answers",
+          "used",
         ],
       }
     );
@@ -144,19 +143,38 @@ question.post("/save", async (req, res) => {
 });
 
 question.get("/savedQuestion", async (req, res) => {
-  const savedQuestion = await models.SavedQuestion.findOne({
+  let savedQuestion = await models.SavedQuestion.findOne({
     where: { used: false },
     order: [sequelize.random()],
-  }).then((question) => question.toJSON());
+  });
+  if (!savedQuestion) return res.send("empty");
+  savedQuestion = savedQuestion.toJSON();
   models.SavedQuestion.update(
     { used: true },
     { where: { id: savedQuestion.id } }
   );
-  res.send(savedQuestion);
+  let answers = [
+    {
+      answer: savedQuestion.right_answer,
+      type: savedQuestion.type,
+      right: true,
+    },
+  ];
+  let wrongAnswersArray = savedQuestion.wrong_answers.split(",");
+  wrongAnswersArray = wrongAnswersArray.filter((value) => value !== "null");
+  answers = answers.concat(
+    wrongAnswersArray.map((answer) => {
+      return { answer: answer, type: savedQuestion.type, right: false };
+    })
+  );
+  res.send({ question: savedQuestion.question, answers: shuffle(answers) });
 });
 
 question.patch("/resetSaved", (req, res) => {
-  models.SavedQuestion.update({ used: false });
+  models.SavedQuestion.update(
+    { used: false },
+    { where: { used: { [Op.not]: false } } }
+  );
 });
 
 module.exports = question;

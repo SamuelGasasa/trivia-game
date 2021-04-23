@@ -15,7 +15,17 @@ function QuestionPage(props) {
   const [answered, setAnswered] = useState(false);
 
   useEffect(() => {
+    // if (counter % 3 == 0)
+    //   axios.get("/question/savedQuestion").then((allData) => {
+    //     console.log(allData);
+    //     if (allData !== "empty") {
+    //       setQuestion(allData.data.question);
+    //       setAnswers(allData.data.answers);
+    //     }
+    //   });
+    // else
     axios.get("/question/generate").then((allData) => {
+      console.log(allData);
       setQuestion(allData.data.question);
       setAnswers(allData.data.answers);
     });
