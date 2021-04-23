@@ -26,28 +26,32 @@ function QuestionPage() {
     let wrongAnswers = [];
     let rightAnswer;
     answers.forEach((answer) => {
-      if (answer.right) {
-        rightAnswer = answer;
-        console.log(
-          "🚀 ~ file: QuestionPage.js ~ line 43 ~ answers.forEach ~ rightAnswer",
-          rightAnswer
-        );
+      if (answer.type !== 3) {
+        if (answer.right) {
+          rightAnswer = answer;
+        } else {
+          wrongAnswers.push(answer);
+        }
       } else {
-        wrongAnswers.push(answer);
+        if (answer.answer === String(answer.right)) {
+          rightAnswer = answer;
+        } else {
+          wrongAnswers.push(answer);
+          wrongAnswers[1] = { answer: null };
+          wrongAnswers[2] = { answer: null };
+        }
       }
     });
-    console.log(
-      "🚀 ~ file: QuestionPage.js ~ line 35 ~ wrongAnswers ~ wrongAnswers",
-      wrongAnswers
-    );
+    console.log(rightAnswer);
+    console.log(wrongAnswers);
     axios.post("/question/save", {
       question: question,
       type: answers[0].type,
       rating: rating,
       rightAnswer: rightAnswer.answer,
       wrongOne: wrongAnswers[0].answer,
-      wrongTwo: wrongAnswers[1].answer || null,
-      wrongThree: wrongAnswers[2].answer || null,
+      wrongTwo: wrongAnswers[1].answer,
+      wrongThree: wrongAnswers[2].answer,
     });
   };
   return (
@@ -57,24 +61,26 @@ function QuestionPage() {
       <div>lives: {lives}</div>
       <div>points: {points}</div>
       <Question question={question} />
-      <div id="answer-container">
-        {answers.map((answer, i) => {
-          return (
-            <Answer
-              key={i}
-              answer={answer}
-              counter={counter}
-              setCounter={setCounter}
-              points={points}
-              setPoints={setPoints}
-              lives={lives}
-              setLives={setLives}
-              setAnswered={setAnswered}
-              answered={answered}
-            />
-          );
-        })}
-      </div>
+      {!answered && (
+        <div id="answer-container">
+          {answers.map((answer, i) => {
+            return (
+              <Answer
+                key={i}
+                answer={answer}
+                counter={counter}
+                setCounter={setCounter}
+                points={points}
+                setPoints={setPoints}
+                lives={lives}
+                setLives={setLives}
+                setAnswered={setAnswered}
+                answered={answered}
+              />
+            );
+          })}
+        </div>
+      )}
       {answered && (
         <RatingPage
           setAnswered={setAnswered}
