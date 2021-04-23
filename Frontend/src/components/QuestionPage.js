@@ -13,7 +13,7 @@ function QuestionPage() {
   const [lives, setLives] = useState(3);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/question/generate").then((allData) => {
+    axios.get("/question/generate").then((allData) => {
       console.log(allData.data);
       setQuestion(allData.data.question);
       setAnswers(allData.data.answers);
