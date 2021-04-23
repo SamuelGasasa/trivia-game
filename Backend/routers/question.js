@@ -91,7 +91,6 @@ question.get("/generate", async (req, res) => {
 });
 
 question.post("/save", async (req, res) => {
-  console.log("im here");
   const body = req.body;
   let savedQuestion = await models.SavedQuestion.findOne({}).then((data) => {
     if (data) data.toJSON();

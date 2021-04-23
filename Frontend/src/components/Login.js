@@ -19,11 +19,13 @@ function Login(props) {
         id="name"
         placeholder="Enter your name"
       />
-      <Link exact="true" to="/quiz">
-        <button id="submit" onClick={() => handleSubmit()}>
-          Log-in
-        </button>
-      </Link>
+      {name.length >= 1 && (
+        <Link exact="true" to="/quiz">
+          <button id="submit" onClick={() => handleSubmit()}>
+            Log-in
+          </button>
+        </Link>
+      )}
     </div>
   );
 }

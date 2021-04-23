@@ -37,12 +37,13 @@
   color: rgb(120, 228, 228);
   font-size: 2rem;
   border-radius: 0.5rem;
+  cursor: pointer;
 }
 .answer:hover {
   background-color: rgb(120, 228, 228);
   color: teal;
   border: wheat;
-  transform: translateY(-10px);
+  transform: translateY(-7px);
   padding: 3px;
 }
 
