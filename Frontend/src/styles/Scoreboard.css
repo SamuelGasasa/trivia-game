@@ -1,0 +1,40 @@
+#scoreboard {
+  background-image: linear-gradient(
+    45deg,
+    rgb(68, 68, 173),
+    turquoise,
+    rgb(36, 168, 36)
+  );
+  height: 100vh;
+  text-align: center;
+  font-size: 2rem;
+}
+#table {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5%;
+  color: black;
+}
+.table-row:nth-child(even) {
+  background-color: rgba(0, 128, 128, 0.233);
+}
+.table-row {
+  text-align: left;
+}
+#table-head {
+  text-align: center;
+}
+#redirect {
+  font-weight: 1000;
+  font-size: 3rem;
+  color: rgb(243, 183, 72);
+  text-shadow: 1px 1px 1px teal;
+}
+.dates {
+  font-size: 1.5rem;
+}
+.names {
+}
+.scores {
+  font-size: 1.7rem;
+}

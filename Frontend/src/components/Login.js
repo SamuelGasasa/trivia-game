@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/Login.css";
 
-function Login() {
+function Login(props) {
   const [name, setName] = useState("");
   // useEffect(async () => {
   //   const question = await axios.get("/question/generate");
   //   console.log(question);
   // }, []);
   const handleSubmit = () => {
-    //need to add axios to leader board
+    props.setUser(name);
   };
 
   return (
@@ -22,11 +22,13 @@ function Login() {
         id="name"
         placeholder="Enter your name"
       />
-      <Link exact="true" to="/question">
-        <button id="submit" onClick={() => handleSubmit()}>
-          Log-in
-        </button>
-      </Link>
+      {name.length >= 1 && (
+        <Link exact="true" to="/quiz">
+          <button id="submit" onClick={() => handleSubmit()}>
+            Log-in
+          </button>
+        </Link>
+      )}
     </div>
   );
 }

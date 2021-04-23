@@ -1,0 +1,54 @@
+.question-page {
+  background-image: linear-gradient(
+    45deg,
+    rgb(68, 68, 173),
+    turquoise,
+    rgb(36, 168, 36)
+  );
+  height: 100vh;
+  align-items: center;
+  text-align: center;
+}
+#header {
+  display: block;
+  color: wheat;
+  padding: 2rem;
+  font-size: 5rem;
+  font-weight: 1000;
+  text-shadow: 1px 1px 0px tomato;
+}
+#question {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  padding: 1rem;
+  font-size: 2rem;
+  border-radius: 0.5rem;
+  background-color: rgb(120, 212, 212);
+  color: tomato;
+  font-weight: 800;
+}
+.answer {
+  margin: 2rem;
+  background-color: teal;
+  box-shadow: rgb(13, 70, 70);
+  padding: 3px;
+  color: rgb(120, 228, 228);
+  font-size: 2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.answer:hover {
+  background-color: rgb(120, 228, 228);
+  color: teal;
+  border: wheat;
+  transform: translateY(-7px);
+  padding: 3px;
+}
+
+#answer-container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

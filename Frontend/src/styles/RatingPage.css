@@ -1,0 +1,23 @@
+#rating-stars {
+  display: inline-block;
+}
+.star {
+  display: inline-block;
+  font-size: 2rem;
+  color: transparent;
+  text-shadow: 1px 1px 1px black;
+  cursor: pointer;
+}
+.star:hover {
+  color: yellow;
+  transform: translateY(-5px);
+}
+.rating-button {
+  font-size: 1.5rem;
+  color: wheat;
+  background-color: teal;
+  padding: 0.5rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  text-shadow: 1px 1px 1px tomato;
+}

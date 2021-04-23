@@ -1,33 +1,43 @@
-import React, { useEffect } from "react";
-// import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import "../styles/Scoreboard.css";
 
 function Scoreboard() {
-  const table = [
-    { name: "Omer", score: 200, createdAt: "22-04-2020" },
-    { name: "Yuval", score: 500, createdAt: "21-04-2020" },
-    { name: "Oren", score: 300, createdAt: "23-04-2020" },
-  ];
+  const [scores, setScores] = useState([]);
 
   useEffect(() => {
-    //add axios to get scoreboard
+    axios.get("/scoreboard").then(
+      (data) => {
+        setScores(data.data);
+      },
+      [scores]
+    );
   });
   return (
-    <table>
-      <tr>
-        <th>name</th>
-        <th>score</th>
-        <th>date</th>
-      </tr>
-      {table.map((user) => {
-        return (
-          <tr>
-            <td>{user.name}</td>
-            <td>{user.score}</td>
-            <td>{user.createdAt}</td>
+    <div id="scoreboard">
+      <table id="table">
+        <tbody>
+          <tr id="table-head">
+            <th>name</th>
+            <th>score</th>
+            <th>date</th>
           </tr>
-        );
-      })}
-    </table>
+          {scores.map((user, i) => {
+            return (
+              <tr key={i} className="table-row">
+                <td className="names">{user.player}</td>
+                <td className="scores">{user.score}</td>
+                <td className="dates">{user.date}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <Link exact="true" to="/" id="redirect">
+        Try Again
+      </Link>
+    </div>
   );
 }
 

@@ -2,7 +2,6 @@ const models = require("../models");
 const { Op } = require("sequelize");
 const Sequelize = require("sequelize");
 const express = require("express");
-const { QueryTypes } = require("sequelize");
 const question = express();
 require("dotenv").config();
 question.use(express.json());
@@ -14,11 +13,11 @@ const sequelize = new Sequelize(
   {
     host: "127.0.0.1",
     dialect: "mysql",
-  }
+  },
 );
 
 function shuffle(array) {
-  array.sort(() => Math.random() - 0.5);
+  return array.sort(() => Math.random() - 0.5);
 }
 
 question.get("/generate", async (req, res) => {
@@ -46,36 +45,110 @@ question.get("/generate", async (req, res) => {
 
   if (!isGeneral)
     answers = await Promise.all(
-      countries.map(async (country) => country["get" + table]())
+      countries.map(async (country) => country["get" + table]()),
     );
   else answers = countries;
 
   let filteredAnswers = answers.map((value) => {
-    return { country: value.country, field: value[field] };
+    return { country: value.country, field: value[field], type: typeNumber };
   });
   filteredAnswers = filteredAnswers.sort((a, b) =>
-    operator ? b.field - a.field : a.field - b.field
+    operator ? b.field - a.field : a.field - b.field,
   );
   filteredAnswers.forEach((value, index) =>
-    index === 0 ? (value.right = true) : (value.right = false)
+    index === 0 ? (value.right = true) : (value.right = false),
   );
+  if (typeNumber === 1) {
+    filteredAnswers = filteredAnswers.map((value) => {
+      return { answer: value.country, type: value.type, right: value.right };
+    });
+  }
   if (typeNumber === 2) {
     question = question.replace("XXX", filteredAnswers[0].country);
+    filteredAnswers = filteredAnswers.map((value) => {
+      return { answer: value.field, type: value.type, right: value.right };
+    });
   }
 
   if (typeNumber === 3) {
     shuffle(filteredAnswers);
-    const index = Math.floor(Math.random() * 2);
-    question = question.replace("XXX", filteredAnswers[index].country);
-    question = question.replace("YYY", filteredAnswers[1 - index].country);
+    const isStatementTrue = filteredAnswers[0].field > filteredAnswers[1].field;
+    question = question.replace("XXX", filteredAnswers[0].country);
+    question = question.replace("YYY", filteredAnswers[1].country);
+    filteredAnswers = filteredAnswers.map((value) => {
+      return {
+        right: isStatementTrue,
+        type: value.type,
+        field: value.field,
+        country: value.country,
+      };
+    });
+    filteredAnswers[0].answer = "true";
+    filteredAnswers[1].answer = "false";
   }
 
-  res.send({ question: question, answers: filteredAnswers });
+  res.send({
+    question: "questionsafsa",
+    answers: shuffle(filteredAnswers),
+  });
 });
 
-question.post("/save", (req, res) => {
-  const { body } = req.body;
-  models.SavedQuestion.findOne({}).then((data) => console.log(data));
+question.post("/save", async (req, res) => {
+  const body = req.body;
+  let savedQuestion = await models.SavedQuestion.findOne({
+    where: { question: body.question },
+  }).then((data) => {
+    return data;
+  });
+  console.log(savedQuestion);
+  if (!savedQuestion) {
+    models.SavedQuestion.create(
+      {
+        question: body.question,
+        type: body.type,
+        avg_rating: body.rating,
+        rating_count: 1,
+        right_answer: body.rightAnswer,
+        wrong_1: body.wrongOne,
+        wrong_2: body.wrongTwo,
+        wrong_3: body.wrongThree,
+      },
+      {
+        fields: [
+          "question",
+          "type",
+          "rating_count",
+          "avg_rating",
+          "right_answer",
+          "wrong_1",
+          "wrong_2",
+          "wrong_3",
+        ],
+      },
+    );
+    res.send("Added");
+  } else {
+    const avgRating =
+      (savedQuestion.avg_rating * savedQuestion.rating_count +
+        Number(body.rating)) /
+      (savedQuestion.rating_count + 1);
+    models.SavedQuestion.update(
+      {
+        avg_rating: avgRating,
+        rating_count: savedQuestion.rating_count + 1,
+      },
+      { where: { question: body.question } },
+    );
+    res.send("updated");
+  }
+});
+
+question.get("/savedQuestion", async (req, res) => {
+  const savedQuestion = await models.SavedQuestion.findAll({}).then((data) => {
+    return (data = data.map((question) => question.toJSON()));
+  });
+  console.log(9 % 3 == false);
+  res.send(savedQuestion);
 });
 
 question.put("/rank?id&rank", (req, res) => {
