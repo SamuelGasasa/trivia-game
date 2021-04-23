@@ -5,6 +5,7 @@ import Answer from "./Answer";
 import "../styles/QuestionPage.css";
 import { Redirect } from "react-router";
 import RatingPage from "./RatingPage";
+import Timer from "./Timer";
 
 function QuestionPage(props) {
   const [counter, setCounter] = useState(1);
@@ -13,6 +14,7 @@ function QuestionPage(props) {
   const [points, setPoints] = useState(0);
   const [lives, setLives] = useState(3);
   const [answered, setAnswered] = useState(false);
+  const [timer, setTimer] = useState(true);
 
   useEffect(() => {
     axios.get("/question/generate").then((allData) => {
@@ -27,6 +29,27 @@ function QuestionPage(props) {
     }
   }, [lives]);
 
+  // need to be fixed
+  useEffect(() => {
+    setTimeout(() => {
+      setAnswered(true);
+      setTimer(false);
+      setLives(lives - 1);
+      nextQuestion();
+    }, 20000);
+  }, [counter]);
+  // need to be fixed
+  useEffect(() => {
+    setTimer(true);
+  }, [question]);
+  const nextQuestion = () => {
+    if (!answered) {
+      setTimeout(() => {
+        answered || setCounter(counter + 1);
+        setAnswered(false);
+      }, 3000);
+    }
+  };
   const sendRate = (rating) => {
     setAnswered(false);
     setCounter(counter + 1);
@@ -63,8 +86,12 @@ function QuestionPage(props) {
     <div className="question-page">
       {lives === 0 && <Redirect to="/scoreboard" />}
       <h1 id="header">Question {counter}</h1>
-      <div>lives: {lives}</div>
-      <div>points: {points}</div>
+      {timer && <Timer />}
+      <div id="data">
+        <span className="player-data">lives: {lives}</span>
+        {"    "}
+        <span className="player-data">points: {points}</span>
+      </div>
       <Question question={question} />
       {!answered && (
         <div id="answer-container">
