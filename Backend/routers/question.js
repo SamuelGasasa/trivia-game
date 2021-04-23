@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
   {
     host: "127.0.0.1",
     dialect: "mysql",
-  },
+  }
 );
 
 function shuffle(array) {
@@ -45,7 +45,7 @@ question.get("/generate", async (req, res) => {
 
   if (!isGeneral)
     answers = await Promise.all(
-      countries.map(async (country) => country["get" + table]()),
+      countries.map(async (country) => country["get" + table]())
     );
   else answers = countries;
 
@@ -53,10 +53,10 @@ question.get("/generate", async (req, res) => {
     return { country: value.country, field: value[field], type: typeNumber };
   });
   filteredAnswers = filteredAnswers.sort((a, b) =>
-    operator ? b.field - a.field : a.field - b.field,
+    operator ? b.field - a.field : a.field - b.field
   );
   filteredAnswers.forEach((value, index) =>
-    index === 0 ? (value.right = true) : (value.right = false),
+    index === 0 ? (value.right = true) : (value.right = false)
   );
   if (typeNumber === 1) {
     filteredAnswers = filteredAnswers.map((value) => {
@@ -100,7 +100,6 @@ question.post("/save", async (req, res) => {
   }).then((data) => {
     return data;
   });
-  console.log(savedQuestion);
   if (!savedQuestion) {
     models.SavedQuestion.create(
       {
@@ -124,7 +123,7 @@ question.post("/save", async (req, res) => {
           "wrong_2",
           "wrong_3",
         ],
-      },
+      }
     );
     res.send("Added");
   } else {
@@ -137,23 +136,26 @@ question.post("/save", async (req, res) => {
         avg_rating: avgRating,
         rating_count: savedQuestion.rating_count + 1,
       },
-      { where: { question: body.question } },
+      { where: { question: body.question } }
     );
     res.send("updated");
   }
 });
 
 question.get("/savedQuestion", async (req, res) => {
-  const savedQuestion = await models.SavedQuestion.findAll({}).then((data) => {
-    return (data = data.map((question) => question.toJSON()));
-  });
+  const savedQuestion = await models.SavedQuestion.findOne({
+    where: { used: false },
+    order: [sequelize.random()],
+  }).then((question) => question.toJSON());
+  models.SavedQuestion.update(
+    { used: true },
+    { where: { id: savedQuestion.id } }
+  );
   res.send(savedQuestion);
 });
 
-question.put("/rank?id&rank", (req, res) => {
-  const { id } = req.query;
-  const { rank } = req.query;
-  models.SavedQuestion.find({}).then((data) => console.log(data));
+question.patch("/resetSaved", (req, res) => {
+  models.SavedQuestion.update({ used: false });
 });
 
 module.exports = question;
