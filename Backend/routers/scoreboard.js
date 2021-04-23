@@ -1,6 +1,7 @@
 const models = require("../models");
 const express = require("express");
 const scoreboard = express();
+
 scoreboard.use(express.json());
 
 scoreboard.get("/", async (req, res) => {
@@ -13,6 +14,19 @@ scoreboard.get("/", async (req, res) => {
     };
   });
   res.send(scoreToSend);
+});
+
+scoreboard.post("/", (req, res) => {
+  const scoreToSave = {
+    player: req.body.player,
+    score: req.body.score,
+    date: new Date(),
+    created_at: new Date(),
+    updated_at: new Date(),
+  };
+  models.Score.create(scoreToSave).then(() => {
+    res.send({ message: "score received" });
+  });
 });
 
 module.exports = scoreboard;
