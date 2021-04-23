@@ -58,15 +58,33 @@ question.get("/generate", async (req, res) => {
   filteredAnswers.forEach((value, index) =>
     index === 0 ? (value.right = true) : (value.right = false)
   );
+  if (typeNumber === 1) {
+    filteredAnswers = filteredAnswers.map((value) => {
+      return { answer: value.country, type: value.type, right: value.right };
+    });
+  }
   if (typeNumber === 2) {
     question = question.replace("XXX", filteredAnswers[0].country);
+    filteredAnswers = filteredAnswers.map((value) => {
+      return { answer: value.field, type: value.type, right: value.right };
+    });
   }
 
   if (typeNumber === 3) {
     shuffle(filteredAnswers);
-    const index = Math.floor(Math.random() * 2);
-    question = question.replace("XXX", filteredAnswers[index].country);
-    question = question.replace("YYY", filteredAnswers[1 - index].country);
+    const isStatementTrue = filteredAnswers[0].field > filteredAnswers[1].field;
+    question = question.replace("XXX", filteredAnswers[0].country);
+    question = question.replace("YYY", filteredAnswers[1].country);
+    filteredAnswers = filteredAnswers.map((value) => {
+      return {
+        right: isStatementTrue,
+        type: value.type,
+        field: value.field,
+        country: value.country,
+      };
+    });
+    filteredAnswers[0].answer = "true";
+    filteredAnswers[1].answer = "false";
   }
 
   res.send({ question: question, answers: shuffle(filteredAnswers) });

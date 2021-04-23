@@ -17,13 +17,7 @@ function Answer(props) {
         handleClick(props.answer);
       }}
     >
-      {props.answer.type === 1
-        ? props.answer.country
-        : props.answer.type === 2
-        ? props.answer.field
-        : props.answer.right
-        ? "TRUE"
-        : "FALSE"}
+      {props.answer.answer}
     </button>
   );
 }
