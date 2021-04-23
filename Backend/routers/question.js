@@ -87,53 +87,67 @@ question.get("/generate", async (req, res) => {
     filteredAnswers[1].answer = "false";
   }
 
-  res.send({ question: question, answers: shuffle(filteredAnswers) });
+  res.send({
+    question: "questionsafsa",
+    answers: shuffle(filteredAnswers),
+  });
 });
 
 question.post("/save", async (req, res) => {
   const body = req.body;
-  let savedQuestion = await models.SavedQuestion.findOne({}).then((data) => {
-    if (data) data.toJSON();
+  let savedQuestion = await models.SavedQuestion.findOne({
+    where: { question: body.question },
+  }).then((data) => {
+    return data;
   });
+  console.log(savedQuestion);
   if (!savedQuestion) {
-    savedQuestion = { avg_rating: 0, rating_count: 0 };
+    models.SavedQuestion.create(
+      {
+        question: body.question,
+        type: body.type,
+        avg_rating: body.rating,
+        rating_count: 1,
+        right_answer: body.rightAnswer,
+        wrong_1: body.wrongOne,
+        wrong_2: body.wrongTwo,
+        wrong_3: body.wrongThree,
+      },
+      {
+        fields: [
+          "question",
+          "type",
+          "rating_count",
+          "avg_rating",
+          "right_answer",
+          "wrong_1",
+          "wrong_2",
+          "wrong_3",
+        ],
+      },
+    );
+    res.send("Added");
+  } else {
+    const avgRating =
+      (savedQuestion.avg_rating * savedQuestion.rating_count +
+        Number(body.rating)) /
+      (savedQuestion.rating_count + 1);
+    models.SavedQuestion.update(
+      {
+        avg_rating: avgRating,
+        rating_count: savedQuestion.rating_count + 1,
+      },
+      { where: { question: body.question } },
+    );
+    res.send("updated");
   }
-  const avgRating =
-    (savedQuestion.avg_rating * savedQuestion.rating_count +
-      Number(body.rating)) /
-    (savedQuestion.rating_count + 1);
-
-  models.SavedQuestion.create(
-    {
-      question: body.question,
-      type: body.type,
-      avg_rating: avgRating,
-      rating_count: savedQuestion.rating_count + 1,
-      right_answer: body.rightAnswer,
-      wrong_1: body.wrongOne,
-      wrong_2: body.wrongTwo,
-      wrong_3: body.wrongThree,
-    },
-    {
-      fields: [
-        "question",
-        "type",
-        "rating_count",
-        "avg_rating",
-        "right_answer",
-        "wrong_1",
-        "wrong_2",
-        "wrong_3",
-      ],
-    },
-  );
-  res.send("Added");
 });
 
 question.get("/savedQuestion", async (req, res) => {
   const savedQuestion = await models.SavedQuestion.findAll({}).then((data) => {
     return (data = data.map((question) => question.toJSON()));
   });
+  console.log(9 % 3 == false);
   res.send(savedQuestion);
 });
 
