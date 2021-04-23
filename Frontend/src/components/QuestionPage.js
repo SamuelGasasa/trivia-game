@@ -10,6 +10,7 @@ import Timer from "./Timer";
 function QuestionPage(props) {
   const [counter, setCounter] = useState(1);
   const [answers, setAnswers] = useState([]);
+  const [rightAnswer, setRightAnswer] = useState("");
   const [question, setQuestion] = useState("");
   const [points, setPoints] = useState(0);
   const [lives, setLives] = useState(3);
@@ -39,20 +40,17 @@ function QuestionPage(props) {
     }
   }, [lives]);
 
-  // need to be fixed
-  useEffect(() => {
-    setTimeout(() => {
-      setAnswered(true);
-      setTimer(false);
+  const handleClick = async (selectedAnswer) => {
+    const savedAnswer = await axios.get(
+      `/question/check?answer=${selectedAnswer.answer}`
+    );
+    setAnswered(true);
+    if (savedAnswer.data.answer === selectedAnswer.answer) {
+      setPoints(points + 100);
+    } else {
       setLives(lives - 1);
-      nextQuestion();
-    }, 20000);
-  }, [counter]);
-  // need to be fixed
-  useEffect(() => {
-    setTimer(true);
-  }, [question]);
-  const nextQuestion = () => {
+    }
+    setRightAnswer(savedAnswer.data.answer);
     if (!answered) {
       setTimeout(() => {
         answered || setCounter(counter + 1);
@@ -64,37 +62,25 @@ function QuestionPage(props) {
     setAnswered(false);
     setCounter(counter + 1);
     let wrongAnswers = [];
-    let rightAnswer;
     answers.forEach((answer) => {
-      if (answer.type !== 3) {
-        if (answer.right) {
-          rightAnswer = answer;
-        } else {
-          wrongAnswers.push(answer);
-        }
-      } else {
-        if (answer.answer === String(answer.right)) {
-          rightAnswer = answer;
-        } else {
-          wrongAnswers.push(answer);
-          wrongAnswers[1] = { answer: null };
-          wrongAnswers[2] = { answer: null };
-        }
+      if (answer.answer !== rightAnswer) {
+        wrongAnswers.push(answer.answer);
       }
     });
+    if (wrongAnswers.length === 1) wrongAnswers = [...wrongAnswers, null, null];
     axios.post("/question/save", {
       question: question,
       type: answers[0].type,
       rating: rating,
-      rightAnswer: rightAnswer.answer,
-      wrongOne: wrongAnswers[0].answer,
-      wrongTwo: wrongAnswers[1].answer,
-      wrongThree: wrongAnswers[2].answer,
+      rightAnswer: rightAnswer,
+      wrongOne: wrongAnswers[0],
+      wrongTwo: wrongAnswers[1],
+      wrongThree: wrongAnswers[2],
     });
   };
   return (
     <div className="question-page">
-      {lives === 0 && <Redirect to="/scoreboard" />}
+      {lives === 0 && !answered && <Redirect to="/scoreboard" />}
       <h1 id="header">Question {counter}</h1>
       {timer && <Timer />}
       <div id="data">
@@ -106,20 +92,7 @@ function QuestionPage(props) {
       {!answered && (
         <div id="answer-container">
           {answers.map((answer, i) => {
-            return (
-              <Answer
-                key={i}
-                answer={answer}
-                counter={counter}
-                setCounter={setCounter}
-                points={points}
-                setPoints={setPoints}
-                lives={lives}
-                setLives={setLives}
-                setAnswered={setAnswered}
-                answered={answered}
-              />
-            );
+            return <Answer key={i} handleClick={handleClick} answer={answer} />;
           })}
         </div>
       )}
