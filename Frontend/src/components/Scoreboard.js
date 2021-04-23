@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
-// import axios from "axios";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function Scoreboard() {
-  const table = [
-    { name: "Omer", score: 200, createdAt: "22-04-2020" },
-    { name: "Yuval", score: 500, createdAt: "21-04-2020" },
-    { name: "Oren", score: 300, createdAt: "23-04-2020" },
-  ];
+  const [scores, setScores] = useState([]);
 
   useEffect(() => {
-    //add axios to get scoreboard
+    axios.get("/scoreboard").then(
+      (data) => {
+        setScores(data.data);
+      },
+      [scores]
+    );
   });
   return (
     <table>
@@ -19,12 +20,12 @@ function Scoreboard() {
           <th>score</th>
           <th>date</th>
         </tr>
-        {table.map((user, i) => {
+        {scores.map((user, i) => {
           return (
             <tr key={i}>
-              <td>{user.name}</td>
+              <td>{user.player}</td>
               <td>{user.score}</td>
-              <td>{user.createdAt}</td>
+              <td>{user.date}</td>
             </tr>
           );
         })}
