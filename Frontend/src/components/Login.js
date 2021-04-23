@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import "../styles/Login.css";
 
 function Login(props) {
   const [name, setName] = useState("");
-  useEffect(async () => {
-    axios.patch("/question/resetSaved").then((res) => console.log(res));
-  }, []);
   const handleSubmit = () => {
     props.setUser(name);
   };

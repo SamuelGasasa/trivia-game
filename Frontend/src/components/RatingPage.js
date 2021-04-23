@@ -8,7 +8,6 @@ function RatingPage({ setAnswered, counter, setCounter, sendRate }) {
   return (
     <div>
       <h1 id="questionHeader">would you like to rate this question?</h1>
-
       <br />
       <div id="rating-stars">
         <p id="one" className="star" onClick={() => sendRate(1)}>

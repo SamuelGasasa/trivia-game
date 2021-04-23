@@ -100,7 +100,6 @@ question.post("/save", async (req, res) => {
   }).then((data) => {
     return data;
   });
-  console.log(savedQuestion);
   if (!savedQuestion) {
     models.SavedQuestion.create(
       {
