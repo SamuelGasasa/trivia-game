@@ -16,6 +16,7 @@ function QuestionPage(props) {
   const [lives, setLives] = useState(3);
   const [answered, setAnswered] = useState(false);
   const [timer, setTimer] = useState(true);
+  const [answerTime, setAnswerTime] = useState(0);
 
   useEffect(() => {
     // if (counter % 3 == 0)
@@ -40,24 +41,44 @@ function QuestionPage(props) {
     }
   }, [lives]);
 
+  useEffect(() => {
+    setTimer(true);
+    setTimeout(() => {
+      setAnswered(true);
+      if (answered) {
+        setTimeout(() => {
+          answered || setCounter(counter + 1);
+          setAnswered(false);
+        }, 3000);
+      }
+    }, 20000);
+  }, [question]);
+
+  setInterval(() => {
+    setAnswerTime(answerTime + 1);
+  }, 1000);
+
   const handleClick = async (selectedAnswer) => {
+    console.log("hi");
+    setTimer(false);
+    setAnswered(true);
     const savedAnswer = await axios.get(
       `/question/check?answer=${selectedAnswer.answer}`
     );
-    setAnswered(true);
     if (savedAnswer.data.answer === selectedAnswer.answer) {
-      setPoints(points + 100);
+      setPoints(Math.round((1 - answerTime / 20000) * 70 + 30) + 1 + points);
     } else {
       setLives(lives - 1);
     }
     setRightAnswer(savedAnswer.data.answer);
-    if (!answered) {
+    if (answered) {
       setTimeout(() => {
         answered || setCounter(counter + 1);
         setAnswered(false);
       }, 3000);
     }
   };
+
   const sendRate = (rating) => {
     setAnswered(false);
     setCounter(counter + 1);
@@ -89,10 +110,18 @@ function QuestionPage(props) {
         <span className="player-data">points: {points}</span>
       </div>
       <Question question={question} />
+      <p>answered: {answered ? "true" : "false"}</p>
       {!answered && (
         <div id="answer-container">
           {answers.map((answer, i) => {
-            return <Answer key={i} handleClick={handleClick} answer={answer} />;
+            return (
+              <Answer
+                key={i}
+                handleClick={handleClick}
+                answer={answer}
+                setTimer={setTimer}
+              />
+            );
           })}
         </div>
       )}

@@ -1,6 +1,6 @@
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
-const Timer = () => (
+const Timer = (props) => (
   <div id="timer">
     <CountdownCircleTimer
       isPlaying
