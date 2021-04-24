@@ -134,7 +134,7 @@ function QuestionPage(props) {
         <div
           className="round-time-bar"
           data-style="smooth"
-          style={{ "--duration": String(intTime / 1000) }}
+          style={{ "--duration": String(intTime / 1000 ? intTime / 1000 : 5) }}
         >
           <div></div>
         </div>
