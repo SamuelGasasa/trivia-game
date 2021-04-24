@@ -19,17 +19,19 @@ function QuestionPage(props) {
   const [answerTime, setAnswerTime] = useState(0);
 
   useEffect(() => {
-    if (counter % 3 == 0)
+    if (counter % 3 === 0)
       axios.get("/question/savedQuestion").then((allData) => {
-        console.log(allData);
-        if (allData !== "empty") {
+        if (allData.data !== "empty") {
           setQuestion(allData.data.question);
           setAnswers(allData.data.answers);
-        }
+        } else
+          axios.get("/question/generate").then((allData) => {
+            setQuestion(allData.data.question);
+            setAnswers(allData.data.answers);
+          });
       });
     else
       axios.get("/question/generate").then((allData) => {
-        console.log(allData);
         setQuestion(allData.data.question);
         setAnswers(allData.data.answers);
       });
@@ -91,7 +93,6 @@ function QuestionPage(props) {
     if (wrongAnswers.length === 1) wrongAnswers = [...wrongAnswers, null, null];
     axios.post("/question/save", {
       question: question,
-      type: answers.type,
       rating: rating,
       rightAnswer: rightAnswer,
       wrongOne: wrongAnswers[0],

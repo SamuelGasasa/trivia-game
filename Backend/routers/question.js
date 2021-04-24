@@ -113,7 +113,6 @@ question.post("/save", async (req, res) => {
     models.SavedQuestion.create(
       {
         question: body.question,
-        type: body.type,
         avg_rating: body.rating,
         rating_count: 1,
         right_answer: body.rightAnswer,
@@ -124,7 +123,6 @@ question.post("/save", async (req, res) => {
       {
         fields: [
           "question",
-          "type",
           "rating_count",
           "avg_rating",
           "right_answer",
@@ -155,6 +153,7 @@ question.get("/savedQuestion", async (req, res) => {
     where: {},
     truncate: true,
   });
+  let chance = Math.floor(Math.random() * 15) + 1;
   let savedQuestion = await models.SavedQuestion.findOne({
     where: { used: false },
     order: [sequelize.random()],
@@ -185,7 +184,6 @@ question.get("/savedQuestion", async (req, res) => {
   res.send({
     question: savedQuestion.question,
     answers: shuffle(answers),
-    type: savedQuestion.type,
   });
 });
 

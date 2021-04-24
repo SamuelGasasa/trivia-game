@@ -11,9 +11,6 @@ module.exports = {
       question: {
         type: Sequelize.STRING,
       },
-      type: {
-        type: Sequelize.INTEGER,
-      },
       avg_rating: {
         type: Sequelize.FLOAT,
       },

@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
   SavedQuestion.init(
     {
       question: DataTypes.STRING,
-      type: DataTypes.INTEGER,
       avg_rating: DataTypes.FLOAT,
       rating_count: DataTypes.INTEGER,
       right_answer: DataTypes.STRING,
