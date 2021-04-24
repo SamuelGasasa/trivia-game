@@ -61,6 +61,39 @@ module.exports = {
           created_at: new Date(),
           updated_at: new Date(),
         },
+        {
+          question: "Which country is the safest?",
+          field: "safety_index",
+          table: "QualityOfLife",
+          operator: true,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          question: "Which country has the highest birthrate?",
+          field: "birthrate",
+          table: "CountriesGeneral",
+          operator: true,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          question: "Which country has the most amount of people below 15?",
+          field: "age_0_14_years",
+          table: "CountriesAgeStructure",
+          operator: true,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          question:
+            "Which country has the least amount of people between age 15 and 64?",
+          field: "age_15_64_years",
+          table: "CountriesAgeStructure",
+          operator: false,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
       ],
       {}
     );

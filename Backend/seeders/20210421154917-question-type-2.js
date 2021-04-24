@@ -26,6 +26,13 @@ module.exports = {
           created_at: new Date(),
           updated_at: new Date(),
         },
+        {
+          question: "In what continent is XXX?",
+          field: "continent",
+          table: "Capital",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
       ],
       {},
     );
