@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
   {
     host: "127.0.0.1",
     dialect: "mysql",
-  }
+  },
 );
 
 function shuffle(array) {
@@ -49,7 +49,7 @@ question.get("/generate", async (req, res) => {
 
   if (!isGeneral)
     answers = await Promise.all(
-      countries.map(async (country) => country["get" + table]())
+      countries.map(async (country) => country["get" + table]()),
     );
   else answers = countries;
 
@@ -57,10 +57,10 @@ question.get("/generate", async (req, res) => {
     return { country: value.country, field: value[field], type: typeNumber };
   });
   filteredAnswers = filteredAnswers.sort((a, b) =>
-    operator ? b.field - a.field : a.field - b.field
+    operator ? b.field - a.field : a.field - b.field,
   );
   filteredAnswers.forEach((value, index) =>
-    index === 0 ? (value.right = true) : (value.right = false)
+    index === 0 ? (value.right = true) : (value.right = false),
   );
   if (typeNumber === 1) {
     filteredAnswers = filteredAnswers.map((value) => {
@@ -129,7 +129,7 @@ question.post("/save", async (req, res) => {
           "wrong_answers",
           "used",
         ],
-      }
+      },
     );
     res.send("Added");
   } else {
@@ -142,7 +142,7 @@ question.post("/save", async (req, res) => {
         avg_rating: Math.round(avgRating),
         rating_count: savedQuestion.rating_count + 1,
       },
-      { where: { question: body.question } }
+      { where: { question: body.question } },
     );
     res.send("updated");
   }
@@ -153,25 +153,27 @@ question.get("/savedQuestion", async (req, res) => {
     where: {},
     truncate: true,
   });
-  let chance = Math.floor(Math.random() * 15) + 1;
   let ratings = await models.SavedQuestion.findAll({
-    attributes: ["avg_rating"],
     where: { used: false },
   });
+
   ratings = ratings.map((value) => value.toJSON().avg_rating);
   let sumRating = ratings.map((value, index, array) =>
-    array.slice(0, index + 1).reduce((acc, cur) => acc + cur)
+    array.slice(0, index + 1).reduce((acc, cur) => acc + cur),
   );
-  console.log(sumRating);
+  let chance = Math.floor(Math.random() * sumRating[sumRating.length - 1]) + 1;
+
+  const index = sumRating.findIndex((num) => num >= chance);
+
   let savedQuestion = await models.SavedQuestion.findOne({
-    where: { used: false },
-    order: [sequelize.random()],
-  });
-  if (!savedQuestion) return res.send("empty");
+    where: { avg_rating: ratings[index], used: false },
+  }).catch(() => "empty");
+
+  if (!savedQuestion || savedQuestion === "empty") return res.send("empty");
   savedQuestion = savedQuestion.toJSON();
   models.SavedQuestion.update(
     { used: true },
-    { where: { id: savedQuestion.id } }
+    { where: { id: savedQuestion.id } },
   );
   let answers = [
     {
@@ -183,7 +185,7 @@ question.get("/savedQuestion", async (req, res) => {
   answers = answers.concat(
     wrongAnswersArray.map((answer) => {
       return { answer: answer };
-    })
+    }),
   );
   models.TempRightAnswer.create({
     answer: answers[0].answer,
@@ -199,8 +201,9 @@ question.get("/savedQuestion", async (req, res) => {
 question.patch("/resetSaved", (req, res) => {
   models.SavedQuestion.update(
     { used: false },
-    { where: { used: { [Op.not]: false } } }
+    { where: { used: { [Op.not]: false } } },
   );
+  res.send("updated");
 });
 
 module.exports = question;

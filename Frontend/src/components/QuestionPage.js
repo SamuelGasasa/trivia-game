@@ -16,6 +16,7 @@ function QuestionPage(props) {
   const [answered, setAnswered] = useState(false);
   const [timer, setTimer] = useState(true);
   const [answerTime, setAnswerTime] = useState(0);
+  const [intTime, setintTime] = useState(20000);
 
   useEffect(() => {
     if (counter % 3 === 0)
@@ -80,7 +81,8 @@ function QuestionPage(props) {
       answerTime === 20 || setTimer(false);
       answerTime === 20 || setLives(lives - 1);
       answerTime === 20 || setAnswered(true);
-    }, 20000);
+      setintTime(intTime - 500);
+    }, intTime);
   };
 
   const sendRate = (rating) => {
@@ -132,7 +134,7 @@ function QuestionPage(props) {
         <div
           className="round-time-bar"
           data-style="smooth"
-          style={{ "--duration": "20" }}
+          style={{ "--duration": String(intTime / 1000 ? intTime / 1000 : 5) }}
         >
           <div></div>
         </div>
