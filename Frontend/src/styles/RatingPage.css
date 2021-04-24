@@ -17,7 +17,21 @@
   color: wheat;
   background-color: teal;
   padding: 0.5rem;
-  margin: 1rem;
+  margin: 3rem;
   border-radius: 0.5rem;
   text-shadow: 1px 1px 1px tomato;
+}
+
+#five[title]:hover::after,
+#four[title]:hover::after,
+#three[title]:hover::after,
+#two[title]:hover::after,
+#one[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  font-size: 1rem;
+  color: black;
+  font-weight: 700;
 }
