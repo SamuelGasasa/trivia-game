@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
   {
     host: "127.0.0.1",
     dialect: "mysql",
-  },
+  }
 );
 
 function shuffle(array) {
@@ -47,42 +47,45 @@ question.get("/generate", async (req, res) => {
   isGeneral && delete query.include;
   let countries = await models.CountryGeneral.findAll(query);
 
-  if (!isGeneral)
-    answers = await Promise.all(
-      countries.map(async (country) => country["get" + table]()),
-    );
-  else answers = countries;
+  answers = !isGeneral
+    ? await Promise.all(
+        countries.map(async (country) => country["get" + table]())
+      )
+    : countries;
 
   let filteredAnswers = answers.map((value) => {
     return { country: value.country, field: value[field], type: typeNumber };
   });
   filteredAnswers = filteredAnswers.sort((a, b) =>
-    operator ? b.field - a.field : a.field - b.field,
+    operator ? b.field - a.field : a.field - b.field
   );
   filteredAnswers.forEach((value, index) =>
-    index === 0 ? (value.right = true) : (value.right = false),
+    index === 0 ? (value.right = true) : (value.right = false)
   );
-  if (typeNumber === 1) {
-    filteredAnswers = filteredAnswers.map((value) => {
-      return { answer: value.country };
-    });
-  }
-  if (typeNumber === 2) {
-    question = question.replace("XXX", filteredAnswers[0].country);
-    filteredAnswers = filteredAnswers.map((value) => {
-      return { answer: value.field };
-    });
-  }
-  if (typeNumber === 3) {
-    shuffle(filteredAnswers);
-    const isStatementTrue = filteredAnswers[0].field > filteredAnswers[1].field;
-    question = question.replace("XXX", filteredAnswers[0].country);
-    question = question.replace("YYY", filteredAnswers[1].country);
-    filteredAnswers = filteredAnswers.map((value, i) => {
-      return {
-        answer: i === 0 ? String(isStatementTrue) : String(!isStatementTrue),
-      };
-    });
+  switch (typeNumber) {
+    case 1:
+      filteredAnswers = filteredAnswers.map((value) => {
+        return { answer: value.country };
+      });
+      break;
+    case 2:
+      question = question.replace("XXX", filteredAnswers[0].country);
+      filteredAnswers = filteredAnswers.map((value) => {
+        return { answer: value.field };
+      });
+      break;
+    case 3:
+      shuffle(filteredAnswers);
+      const isStatementTrue =
+        filteredAnswers[0].field > filteredAnswers[1].field;
+      question = question.replace("XXX", filteredAnswers[0].country);
+      question = question.replace("YYY", filteredAnswers[1].country);
+      filteredAnswers = filteredAnswers.map((value, i) => {
+        return {
+          answer: i === 0 ? String(isStatementTrue) : String(!isStatementTrue),
+        };
+      });
+      break;
   }
   models.TempRightAnswer.create({
     answer: filteredAnswers[0].answer,
@@ -93,7 +96,6 @@ question.get("/generate", async (req, res) => {
   res.send({
     question: question,
     answers: shuffle(filteredAnswers),
-    type: typeNumber,
   });
 });
 
@@ -103,11 +105,9 @@ question.get("/check", async (req, res) => {
 });
 
 question.post("/save", async (req, res) => {
-  const body = req.body;
+  const { body } = req;
   let savedQuestion = await models.SavedQuestion.findOne({
     where: { question: body.question },
-  }).then((data) => {
-    return data;
   });
   if (!savedQuestion) {
     models.SavedQuestion.create(
@@ -129,7 +129,7 @@ question.post("/save", async (req, res) => {
           "wrong_answers",
           "used",
         ],
-      },
+      }
     );
     res.send("Added");
   } else {
@@ -142,7 +142,7 @@ question.post("/save", async (req, res) => {
         avg_rating: Math.round(avgRating),
         rating_count: savedQuestion.rating_count + 1,
       },
-      { where: { question: body.question } },
+      { where: { question: body.question } }
     );
     res.send("updated");
   }
@@ -159,7 +159,7 @@ question.get("/savedQuestion", async (req, res) => {
 
   ratings = ratings.map((value) => value.toJSON().avg_rating);
   let sumRating = ratings.map((value, index, array) =>
-    array.slice(0, index + 1).reduce((acc, cur) => acc + cur),
+    array.slice(0, index + 1).reduce((acc, cur) => acc + cur)
   );
   let chance = Math.floor(Math.random() * sumRating[sumRating.length - 1]) + 1;
 
@@ -173,7 +173,7 @@ question.get("/savedQuestion", async (req, res) => {
   savedQuestion = savedQuestion.toJSON();
   models.SavedQuestion.update(
     { used: true },
-    { where: { id: savedQuestion.id } },
+    { where: { id: savedQuestion.id } }
   );
   let answers = [
     {
@@ -185,7 +185,7 @@ question.get("/savedQuestion", async (req, res) => {
   answers = answers.concat(
     wrongAnswersArray.map((answer) => {
       return { answer: answer };
-    }),
+    })
   );
   models.TempRightAnswer.create({
     answer: answers[0].answer,
@@ -201,7 +201,7 @@ question.get("/savedQuestion", async (req, res) => {
 question.patch("/resetSaved", (req, res) => {
   models.SavedQuestion.update(
     { used: false },
-    { where: { used: { [Op.not]: false } } },
+    { where: { used: { [Op.not]: false } } }
   );
   res.send("updated");
 });
