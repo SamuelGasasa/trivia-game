@@ -13,7 +13,7 @@ function Scoreboard() {
       },
       [scores]
     );
-  });
+  }, []);
   return (
     <div id="scoreboard">
       <table id="table">

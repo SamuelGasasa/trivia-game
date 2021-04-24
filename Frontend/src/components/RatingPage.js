@@ -34,7 +34,7 @@ function RatingPage({ setAnswered, counter, setCounter, sendRate, setTimer }) {
           dontSaveRate();
         }}
       >
-        no
+        No
       </button>
     </div>
   );

@@ -63,13 +63,15 @@ function QuestionPage(props) {
       `/question/check?answer=${selectedAnswer.answer}`
     );
     if (savedAnswer.data.answer === selectedAnswer.answer) {
-      setPoints(Math.round((1 - answerTime / 20) * 70 + 30) + 1 + points);
+      setPoints(
+        Math.round((1 - (answerTime * 1000) / intTime) * 70 + 30) + 1 + points
+      );
     } else {
       setLives(lives - 1);
     }
     setRightAnswer(savedAnswer.data.answer);
 
-    await setTimeout(() => {
+    setTimeout(() => {
       answered || setCounter(counter + 1);
       setTimer(true);
       setAnswered(false);
@@ -77,13 +79,16 @@ function QuestionPage(props) {
   };
   const startTimer = () => {
     setAnswerTime(0);
-    setTimeout(() => {
-      answerTime === 20 || setTimer(false);
-      answerTime === 20 || setLives(lives - 1);
-      answerTime === 20 || setAnswered(true);
-      setintTime(intTime - 500);
-    }, intTime);
   };
+  useEffect(() => {
+    if (intTime - answerTime * 1000 === 0) {
+      console.log("hi");
+      setTimer(false);
+      setAnswered(true);
+      setintTime(intTime - 500);
+    }
+    console.log("answerTime:", answerTime, "inttime:", intTime);
+  }, [answerTime]);
 
   const sendRate = (rating) => {
     setAnswered(false);
