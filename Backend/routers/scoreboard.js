@@ -17,9 +17,10 @@ scoreboard.get("/", async (req, res) => {
 });
 
 scoreboard.post("/", (req, res) => {
+  const { body } = req;
   const scoreToSave = {
-    player: req.body.player,
-    score: req.body.score,
+    player: body.player,
+    score: body.score,
     date: new Date(),
     created_at: new Date(),
     updated_at: new Date(),
