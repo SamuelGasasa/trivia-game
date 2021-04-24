@@ -139,7 +139,7 @@ question.post("/save", async (req, res) => {
       (savedQuestion.rating_count + 1);
     models.SavedQuestion.update(
       {
-        avg_rating: avgRating,
+        avg_rating: Math.round(avgRating),
         rating_count: savedQuestion.rating_count + 1,
       },
       { where: { question: body.question } }
@@ -154,6 +154,15 @@ question.get("/savedQuestion", async (req, res) => {
     truncate: true,
   });
   let chance = Math.floor(Math.random() * 15) + 1;
+  let ratings = await models.SavedQuestion.findAll({
+    attributes: ["avg_rating"],
+    where: { used: false },
+  });
+  ratings = ratings.map((value) => value.toJSON().avg_rating);
+  let sumRating = ratings.map((value, index, array) =>
+    array.slice(0, index + 1).reduce((acc, cur) => acc + cur)
+  );
+  console.log(sumRating);
   let savedQuestion = await models.SavedQuestion.findOne({
     where: { used: false },
     order: [sequelize.random()],
