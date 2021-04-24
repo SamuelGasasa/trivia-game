@@ -64,13 +64,13 @@ question.get("/generate", async (req, res) => {
   );
   if (typeNumber === 1) {
     filteredAnswers = filteredAnswers.map((value) => {
-      return { answer: value.country, type: value.type };
+      return { answer: value.country };
     });
   }
   if (typeNumber === 2) {
     question = question.replace("XXX", filteredAnswers[0].country);
     filteredAnswers = filteredAnswers.map((value) => {
-      return { answer: value.field, type: value.type };
+      return { answer: value.field };
     });
   }
   if (typeNumber === 3) {
@@ -81,7 +81,6 @@ question.get("/generate", async (req, res) => {
     filteredAnswers = filteredAnswers.map((value, i) => {
       return {
         answer: i === 0 ? String(isStatementTrue) : String(!isStatementTrue),
-        type: value.type,
       };
     });
   }
@@ -94,6 +93,7 @@ question.get("/generate", async (req, res) => {
   res.send({
     question: question,
     answers: shuffle(filteredAnswers),
+    type: typeNumber,
   });
 });
 
@@ -151,6 +151,10 @@ question.post("/save", async (req, res) => {
 });
 
 question.get("/savedQuestion", async (req, res) => {
+  await models.TempRightAnswer.destroy({
+    where: {},
+    truncate: true,
+  });
   let savedQuestion = await models.SavedQuestion.findOne({
     where: { used: false },
     order: [sequelize.random()],
@@ -164,18 +168,25 @@ question.get("/savedQuestion", async (req, res) => {
   let answers = [
     {
       answer: savedQuestion.right_answer,
-      type: savedQuestion.type,
-      right: true,
     },
   ];
   let wrongAnswersArray = savedQuestion.wrong_answers.split(",");
   wrongAnswersArray = wrongAnswersArray.filter((value) => value !== "null");
   answers = answers.concat(
     wrongAnswersArray.map((answer) => {
-      return { answer: answer, type: savedQuestion.type, right: false };
+      return { answer: answer };
     })
   );
-  res.send({ question: savedQuestion.question, answers: shuffle(answers) });
+  models.TempRightAnswer.create({
+    answer: answers[0].answer,
+    created_at: new Date(),
+    updated_at: new Date(),
+  });
+  res.send({
+    question: savedQuestion.question,
+    answers: shuffle(answers),
+    type: savedQuestion.type,
+  });
 });
 
 question.patch("/resetSaved", (req, res) => {
