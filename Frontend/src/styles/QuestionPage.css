@@ -57,12 +57,40 @@
   margin-left: auto;
   margin-right: auto;
 }
-#timer {
+/* #timer {
   display: flex;
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
   color: tomato;
   font-size: 2rem;
-  text-shadow: 1px 1px 1px black;
+  text-shadow: 1px 1px 1px black; */
+/* } */
+.round-time-bar {
+  margin: 1rem;
+  overflow: hidden;
+  height: 2rem;
+  font-size: 2rem;
+}
+.round-time-bar div {
+  height: 5px;
+  animation: roundtime calc(var(--duration) * 1s) steps(var(--duration))
+    forwards;
+  transform-origin: left center;
+  background: linear-gradient(
+    to right,
+    rgb(100, 15, 0),
+    rgb(255, 89, 117),
+    red
+  );
+  border: 1px tomato;
+}
+
+.round-time-bar[data-style="smooth"] div {
+  animation: roundtime calc(var(--duration) * 1s) linear forwards;
+}
+@keyframes roundtime {
+  to {
+    transform: scaleX(0);
+  }
 }
