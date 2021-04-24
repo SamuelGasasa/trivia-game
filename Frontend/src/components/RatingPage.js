@@ -1,9 +1,10 @@
 import React from "react";
 import "../styles/RatingPage.css";
-function RatingPage({ setAnswered, counter, setCounter, sendRate }) {
+function RatingPage({ setAnswered, counter, setCounter, sendRate, setTimer }) {
   const dontSaveRate = () => {
     setAnswered(false);
     setCounter(counter + 1);
+    setTimer(true);
   };
   return (
     <div>
