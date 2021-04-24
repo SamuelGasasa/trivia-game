@@ -69,7 +69,6 @@ function QuestionPage(props) {
     setRightAnswer(savedAnswer.data.answer);
 
     await setTimeout(() => {
-      console.log("im here!!");
       answered || setCounter(counter + 1);
       setTimer(true);
       setAnswered(false);
@@ -112,17 +111,8 @@ function QuestionPage(props) {
         {"    "}
         <span className="player-data">points: {points}</span>
       </div>
-      {timer && (
-        <div
-          className="round-time-bar"
-          data-style="smooth"
-          style={{ "--duration": "20" }}
-        >
-          <div></div>
-        </div>
-      )}
+
       <Question question={question} />
-      <p>answered: {answered ? "true" : "false"}</p>
       {!answered && (
         <div id="answer-container">
           {answers.map((answer, i) => {
@@ -138,12 +128,22 @@ function QuestionPage(props) {
           })}
         </div>
       )}
+      {timer && (
+        <div
+          className="round-time-bar"
+          data-style="smooth"
+          style={{ "--duration": "20" }}
+        >
+          <div></div>
+        </div>
+      )}
       {answered && (
         <RatingPage
           setAnswered={setAnswered}
           counter={counter}
           setCounter={setCounter}
           sendRate={sendRate}
+          setTimer={setTimer}
         />
       )}
     </div>
