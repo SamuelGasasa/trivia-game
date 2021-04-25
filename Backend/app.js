@@ -6,8 +6,4 @@ const app = express();
 app.use("/question", question);
 app.use("/scoreboard", scoreboard);
 
-app.get("/", (req, res) => {
-  res.send("this is the app");
-});
-
 module.exports = app;
