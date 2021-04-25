@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Question from "./Question";
 import Answer from "./Answer";
@@ -15,8 +15,9 @@ function QuestionPage(props) {
   const [lives, setLives] = useState(3);
   const [answered, setAnswered] = useState(false);
   const [timer, setTimer] = useState(true);
-  const [answerTime, setAnswerTime] = useState(0);
-  const [intTime, setintTime] = useState(20000);
+
+  const answerTime = useRef(0);
+  const intTime = useRef(20000);
 
   useEffect(() => {
     if (counter % 3 === 0)
@@ -44,55 +45,60 @@ function QuestionPage(props) {
   }, [lives]);
 
   useEffect(() => {
-    if (answered) {
-      setTimeout(() => {
-        setAnswered(false);
-        setCounter(counter + 1);
-      }, 3000);
-    }
-  }, [answered]);
+    console.log("hi");
+  }, [answerTime.current]);
 
   useEffect(() => {
-    timer && startTimer();
-  }, [timer]);
+    const interval = setInterval(() => {
+      answerTime.current = answerTime.current + 1;
+      console.log(
+        "answerTime:",
+        answerTime.current,
+        "intTime:",
+        intTime.current
+      );
+      if (intTime.current - answerTime.current * 1000 <= 0 || lives === 0) {
+        clearInterval(interval);
+        if (intTime.current > 5000) intTime.current = intTime.current - 500;
+        handleClick(false);
+        setLives(lives - 1);
+      }
+    }, 1000);
+  }, [counter]);
 
   const handleClick = async (selectedAnswer) => {
     setAnswered(true);
     setTimer(false);
-    const savedAnswer = await axios.get(
-      `/question/check?answer=${selectedAnswer.answer}`
-    );
-    if (savedAnswer.data.answer === selectedAnswer.answer) {
-      setPoints(
-        Math.round((1 - (answerTime * 1000) / intTime) * 70 + 30) + 1 + points
+    if (selectedAnswer) {
+      const savedAnswer = await axios.get(
+        `/question/check?answer=${selectedAnswer.answer}`
       );
-    } else {
-      setLives(lives - 1);
+      if (savedAnswer.data.answer === selectedAnswer.answer) {
+        setPoints(
+          Math.round(
+            (1 - (answerTime.current * 1000) / intTime.current) * 70 + 30
+          ) +
+            1 +
+            points
+        );
+      } else {
+        setLives(lives - 1);
+      }
+      setRightAnswer(savedAnswer.data.answer);
     }
-    setRightAnswer(savedAnswer.data.answer);
 
     setTimeout(() => {
       answered || setCounter(counter + 1);
       setTimer(true);
       setAnswered(false);
+      if (answerTime.current > 3) answerTime.current = 0;
     }, 3000);
   };
-  const startTimer = () => {
-    setAnswerTime(0);
-  };
-  useEffect(() => {
-    if (intTime - answerTime * 1000 === 0) {
-      console.log("hi");
-      setTimer(false);
-      setAnswered(true);
-      setintTime(intTime - 500);
-    }
-    console.log("answerTime:", answerTime, "inttime:", intTime);
-  }, [answerTime]);
 
   const sendRate = (rating) => {
     setAnswered(false);
     setCounter(counter + 1);
+
     let wrongAnswers = [];
     answers.forEach((answer) => {
       if (answer.answer !== rightAnswer) {
@@ -108,6 +114,8 @@ function QuestionPage(props) {
       wrongTwo: wrongAnswers[1],
       wrongThree: wrongAnswers[2],
     });
+    setTimer(true);
+    setCounter(counter);
   };
   return (
     <div className="question-page">
@@ -123,15 +131,7 @@ function QuestionPage(props) {
       {!answered && (
         <div id="answer-container">
           {answers.map((answer, i) => {
-            return (
-              <Answer
-                key={i}
-                handleClick={handleClick}
-                answer={answer}
-                answerTime={answerTime}
-                setAnswerTime={setAnswerTime}
-              />
-            );
+            return <Answer key={i} handleClick={handleClick} answer={answer} />;
           })}
         </div>
       )}
@@ -139,7 +139,11 @@ function QuestionPage(props) {
         <div
           className="round-time-bar"
           data-style="smooth"
-          style={{ "--duration": String(intTime / 1000 ? intTime / 1000 : 5) }}
+          style={{
+            "--duration": String(
+              intTime.current / 1000 >= 5 ? intTime.current / 1000 : 5
+            ),
+          }}
         >
           <div></div>
         </div>
