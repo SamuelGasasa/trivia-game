@@ -53,6 +53,23 @@ question.get("/generate", async (req, res) => {
       )
     : countries;
 
+  if (typeNumber === 2 && field === "continent") {
+    const unique = await models[table].findAll({
+      limit: 4,
+      group: field,
+      order: [sequelize.random()],
+    });
+    const arr = unique.map((value) => value[field]);
+    answers = await Promise.all(
+      arr.map((value) =>
+        models[table].findOne({
+          where: { continent: value },
+          order: [sequelize.random()],
+        })
+      )
+    );
+  }
+
   let filteredAnswers = answers.map((value) => {
     return { country: value.country, field: value[field], type: typeNumber };
   });
