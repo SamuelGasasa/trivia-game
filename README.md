@@ -14,5 +14,10 @@ Created a database called temp-right-answer that caches the right answer in a da
 Also created a database for storing the score of the players.
 
 Server:
+We separated the api into two different routers depending on the request.
+Question router:
+shuffle- a side function that helps us to randomize the answers so it won't follow the same pattern and prevent the answers from being predicted.
+
+/generate request- gets a random question from our question-template databases and 
 
 Frontend functionality:
