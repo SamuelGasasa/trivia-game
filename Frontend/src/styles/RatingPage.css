@@ -21,7 +21,11 @@
   border-radius: 0.5rem;
   text-shadow: 1px 1px 1px tomato;
 }
-
+.rating-button:hover {
+  color: teal;
+  background-color: wheat;
+  transform: scale(1.2);
+}
 #five[title]:hover::after,
 #four[title]:hover::after,
 #three[title]:hover::after,
@@ -32,6 +36,6 @@
   top: 30%;
   left: 40%;
   font-size: 1rem;
-  color: black;
+  color: rgb(83, 0, 0);
   font-weight: 700;
 }
