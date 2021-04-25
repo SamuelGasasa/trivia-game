@@ -17,7 +17,7 @@ function QuestionPage(props) {
   const [timer, setTimer] = useState(true);
 
   const answerTime = useRef(0);
-  const intTime = useRef(10000);
+  const intTime = useRef(20000);
 
   useEffect(() => {
     if (counter % 3 === 0)
@@ -51,17 +51,20 @@ function QuestionPage(props) {
         "answerTime:",
         answerTime.current,
         "intTime:",
-        intTime.current
+        intTime.current,
       );
       if (intTime.current - answerTime.current * 1000 <= 0 || answered) {
         clearInterval(interval);
         setAnswered(false);
-        if (intTime.current > 5000) intTime.current = intTime.current - 500;
         handleClick(false, interval);
         setLives(lives - 1);
       }
       if (lives === 0) clearInterval(interval);
     }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, [counter]);
 
   const handleClick = async (selectedAnswer, interval) => {
@@ -70,15 +73,15 @@ function QuestionPage(props) {
     clearInterval(interval);
     if (selectedAnswer) {
       const savedAnswer = await axios.get(
-        `/question/check?answer=${selectedAnswer.answer}`
+        `/question/check?answer=${selectedAnswer.answer}`,
       );
       if (savedAnswer.data.answer === selectedAnswer.answer) {
         setPoints(
           Math.round(
-            (1 - (answerTime.current * 1000) / intTime.current) * 70 + 30
+            (1 - (answerTime.current * 1000) / intTime.current) * 70 + 30,
           ) +
             1 +
-            points
+            points,
         );
       } else {
         setLives(lives - 1);
@@ -109,10 +112,12 @@ function QuestionPage(props) {
         wrongThree: wrongAnswers[2],
       });
     }
+
+    if (intTime.current > 5000) intTime.current = intTime.current - 500;
     setTimer(true);
     setCounter(counter);
     setAnswered(false);
-    if (answerTime.current > 3) answerTime.current = 0;
+    answerTime.current = 0;
     setCounter(counter + 1);
   };
   return (
@@ -139,7 +144,7 @@ function QuestionPage(props) {
           data-style="smooth"
           style={{
             "--duration": String(
-              intTime.current / 1000 >= 5 ? intTime.current / 1000 : 5
+              intTime.current / 1000 >= 5 ? intTime.current / 1000 : 5,
             ),
           }}
         >
