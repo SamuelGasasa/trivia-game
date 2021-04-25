@@ -17,7 +17,7 @@ function QuestionPage(props) {
   const [timer, setTimer] = useState(true);
 
   const answerTime = useRef(0);
-  const intTime = useRef(20000);
+  const intTime = useRef(10000);
 
   useEffect(() => {
     if (counter % 3 === 0)
@@ -45,10 +45,6 @@ function QuestionPage(props) {
   }, [lives]);
 
   useEffect(() => {
-    console.log("hi");
-  }, [answerTime.current]);
-
-  useEffect(() => {
     const interval = setInterval(() => {
       answerTime.current = answerTime.current + 1;
       console.log(
@@ -57,18 +53,21 @@ function QuestionPage(props) {
         "intTime:",
         intTime.current
       );
-      if (intTime.current - answerTime.current * 1000 <= 0 || lives === 0) {
+      if (intTime.current - answerTime.current * 1000 <= 0 || answered) {
         clearInterval(interval);
+        setAnswered(false);
         if (intTime.current > 5000) intTime.current = intTime.current - 500;
-        handleClick(false);
+        handleClick(false, interval);
         setLives(lives - 1);
       }
+      if (lives === 0) clearInterval(interval);
     }, 1000);
   }, [counter]);
 
-  const handleClick = async (selectedAnswer) => {
+  const handleClick = async (selectedAnswer, interval) => {
     setAnswered(true);
     setTimer(false);
+    clearInterval(interval);
     if (selectedAnswer) {
       const savedAnswer = await axios.get(
         `/question/check?answer=${selectedAnswer.answer}`
@@ -86,36 +85,35 @@ function QuestionPage(props) {
       }
       setRightAnswer(savedAnswer.data.answer);
     }
-
-    setTimeout(() => {
-      answered || setCounter(counter + 1);
-      setTimer(true);
-      setAnswered(false);
-      if (answerTime.current > 3) answerTime.current = 0;
-    }, 3000);
   };
 
   const sendRate = (rating) => {
     setAnswered(false);
     setCounter(counter + 1);
 
-    let wrongAnswers = [];
-    answers.forEach((answer) => {
-      if (answer.answer !== rightAnswer) {
-        wrongAnswers.push(answer.answer);
-      }
-    });
-    if (wrongAnswers.length === 1) wrongAnswers = [...wrongAnswers, null, null];
-    axios.post("/question/save", {
-      question: question,
-      rating: rating,
-      rightAnswer: rightAnswer,
-      wrongOne: wrongAnswers[0],
-      wrongTwo: wrongAnswers[1],
-      wrongThree: wrongAnswers[2],
-    });
+    if (rating) {
+      let wrongAnswers = [];
+      answers.forEach((answer) => {
+        if (answer.answer !== rightAnswer) {
+          wrongAnswers.push(answer.answer);
+        }
+      });
+      if (wrongAnswers.length === 1)
+        wrongAnswers = [...wrongAnswers, null, null];
+      axios.post("/question/save", {
+        question: question,
+        rating: rating,
+        rightAnswer: rightAnswer,
+        wrongOne: wrongAnswers[0],
+        wrongTwo: wrongAnswers[1],
+        wrongThree: wrongAnswers[2],
+      });
+    }
     setTimer(true);
     setCounter(counter);
+    setAnswered(false);
+    if (answerTime.current > 3) answerTime.current = 0;
+    setCounter(counter + 1);
   };
   return (
     <div className="question-page">
