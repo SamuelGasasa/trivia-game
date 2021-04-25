@@ -19,9 +19,10 @@
 
 ## Server:
 
-Server:
 We separated the api into two different routers depending on the request.
-Question router:
+
+### Question router:
+
 shuffle- a side function that helps us to randomize the answers so it won't follow the same pattern and prevent the answers from being predicted.
 
 get question/generate request- gets a random question from our question-template databases and uses it's data to search for the wanted column and table.
@@ -35,7 +36,8 @@ get question/savedQuestion - checks for the questions that hasn't been used in t
 
 patch question/resetSaved - sets all the "used" attribute of the saved questions to false to enable using them in the next session
 
-Scoreboard router:
+### Scoreboard router:
+
 get /scoreboard - gets all the registered players in the scoreboard, orders them by their score and sends them to the client.
 
 post /scoreboard - posts a new player to the scoreboard.
