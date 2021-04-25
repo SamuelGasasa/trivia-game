@@ -23,24 +23,23 @@ We separated the api into two different routers depending on the request.
 
 ### Question router:
 
-shuffle- a side function that helps us to randomize the answers so it won't follow the same pattern and prevent the answers from being predicted.
+- shuffle- a side function that helps us to randomize the answers so it won't follow the same pattern and prevent the answers from being predicted.
 
-get question/generate request- gets a random question from our question-template databases and uses it's data to search for the wanted column and table.
-gets 4 answers, sends the correct one to temp right answer, shuffles the answer and generates the question according to the answers.
+- get question/generate request- gets a random question from our question-template databases and uses it's data to search for the wanted column and table. Gets 4 answers, sends the correct one to temp right answer, shuffles the answer and generates the question according to the answers.
 
-get question/check - sends the client the correct answer after he clicks on an answer to prevent cheating by saving the correct answer in the server.
+- get question/check - sends the client the correct answer after he clicks on an answer to prevent cheating by saving the correct answer in the server.
 
-post question/save - saves a question in the scoreboard table after the client decided to rate it or updates its current rate its already saved
+- post question/save - saves a question in the scoreboard table after the client decided to rate it or updates its current rate its already saved
 
-get question/savedQuestion - checks for the questions that hasn't been used in the current session and calculates the chance for any question to appear according to it's rating and returns to the client a saved question with the chosen type
+- get question/savedQuestion - checks for the questions that hasn't been used in the current session and calculates the chance for any question to appear according to it's rating and returns to the client a saved question with the chosen type
 
-patch question/resetSaved - sets all the "used" attribute of the saved questions to false to enable using them in the next session
+- patch question/resetSaved - sets all the "used" attribute of the saved questions to false to enable using them in the next session
 
 ### Scoreboard router:
 
-get /scoreboard - gets all the registered players in the scoreboard, orders them by their score and sends them to the client.
+- get /scoreboard - gets all the registered players in the scoreboard, orders them by their score and sends them to the client.
 
-post /scoreboard - posts a new player to the scoreboard.
+- post /scoreboard - posts a new player to the scoreboard.
 
 # Frontend Functionality:
 
