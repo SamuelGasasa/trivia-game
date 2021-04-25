@@ -59,11 +59,10 @@ question.get("/generate", async (req, res) => {
       group: field,
       order: [sequelize.random()],
     });
-    const arr = unique.map((value) => value[field]);
     answers = await Promise.all(
-      arr.map((value) =>
+      unique.map((value) =>
         models[table].findOne({
-          where: { continent: value },
+          where: { continent: value[field] },
           order: [sequelize.random()],
         })
       )
