@@ -5,7 +5,9 @@ const scoreboard = express();
 scoreboard.use(express.json());
 
 scoreboard.get("/", async (req, res) => {
-  const scores = await models.Score.findAll();
+  const scores = await models.Score.findAll({
+    order: [["score", "DESC"]],
+  });
   const scoreToSend = scores.map((score) => {
     return {
       player: score.player,
