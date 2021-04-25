@@ -19,24 +19,13 @@ function QuestionPage(props) {
   const answerTime = useRef(0);
   const intTime = useRef(20000);
 
-  useEffect(() => {
-    if (counter % 3 === 0)
-      axios.get("/question/savedQuestion").then((allData) => {
-        if (allData.data !== "empty") {
-          setQuestion(allData.data.question);
-          setAnswers(allData.data.answers);
-        } else
-          axios.get("/question/generate").then((allData) => {
-            setQuestion(allData.data.question);
-            setAnswers(allData.data.answers);
-          });
-      });
-    else
-      axios.get("/question/generate").then((allData) => {
-        setQuestion(allData.data.question);
-        setAnswers(allData.data.answers);
-      });
-  }, [counter]);
+  async function getData() {
+    let allData = await axios.get("/question/savedQuestion");
+    if (!(allData.data !== "empty" && counter % 3 === 0))
+      allData = await axios.get("/question/generate");
+    setQuestion(allData.data.question);
+    setAnswers(allData.data.answers);
+  }
 
   useEffect(() => {
     if (lives === 0) {
@@ -45,14 +34,9 @@ function QuestionPage(props) {
   }, [lives]);
 
   useEffect(() => {
+    getData();
     const interval = setInterval(() => {
       answerTime.current = answerTime.current + 1;
-      console.log(
-        "answerTime:",
-        answerTime.current,
-        "intTime:",
-        intTime.current,
-      );
       if (intTime.current - answerTime.current * 1000 <= 0 || answered) {
         clearInterval(interval);
         setAnswered(false);
@@ -73,15 +57,15 @@ function QuestionPage(props) {
     clearInterval(interval);
     if (selectedAnswer) {
       const savedAnswer = await axios.get(
-        `/question/check?answer=${selectedAnswer.answer}`,
+        `/question/check?answer=${selectedAnswer.answer}`
       );
       if (savedAnswer.data.answer === selectedAnswer.answer) {
         setPoints(
           Math.round(
-            (1 - (answerTime.current * 1000) / intTime.current) * 70 + 30,
+            (1 - (answerTime.current * 1000) / intTime.current) * 70 + 30
           ) +
             1 +
-            points,
+            points
         );
       } else {
         setLives(lives - 1);
@@ -115,7 +99,6 @@ function QuestionPage(props) {
 
     if (intTime.current > 5000) intTime.current = intTime.current - 500;
     setTimer(true);
-    setCounter(counter);
     setAnswered(false);
     answerTime.current = 0;
     setCounter(counter + 1);
@@ -144,22 +127,14 @@ function QuestionPage(props) {
           data-style="smooth"
           style={{
             "--duration": String(
-              intTime.current / 1000 >= 5 ? intTime.current / 1000 : 5,
+              intTime.current / 1000 >= 5 ? intTime.current / 1000 : 5
             ),
           }}
         >
           <div></div>
         </div>
       )}
-      {answered && (
-        <RatingPage
-          setAnswered={setAnswered}
-          counter={counter}
-          setCounter={setCounter}
-          sendRate={sendRate}
-          setTimer={setTimer}
-        />
-      )}
+      {answered && <RatingPage sendRate={sendRate} />}
     </div>
   );
 }

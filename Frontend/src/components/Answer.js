@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-function Answer(props) {
+function Answer({ answer, handleClick }) {
   return (
     <button
       className="answer"
       onClick={() => {
-        props.handleClick(props.answer);
+        handleClick(answer);
       }}
     >
-      {props.answer.answer}
+      {answer.answer}
     </button>
   );
 }

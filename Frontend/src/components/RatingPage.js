@@ -1,11 +1,6 @@
 import React from "react";
 import "../styles/RatingPage.css";
-function RatingPage({ setAnswered, counter, setCounter, sendRate, setTimer }) {
-  // const dontSaveRate = () => {
-  //   setAnswered(false);
-  //   setCounter(counter + 1);
-  //   setTimer(true);
-  // };
+function RatingPage({ sendRate }) {
   return (
     <div>
       <h1 id="questionHeader">would you like to rate this question?</h1>
@@ -31,7 +26,6 @@ function RatingPage({ setAnswered, counter, setCounter, sendRate, setTimer }) {
       <button
         className="rating-button"
         onClick={() => {
-          // dontSaveRate();
           sendRate(false);
         }}
       >
