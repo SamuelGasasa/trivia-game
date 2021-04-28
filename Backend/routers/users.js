@@ -12,7 +12,15 @@ users.use(express.json());
 let refreshTokens = [];
 
 users.post("/register", async (req, res) => {
+  const reg = "[a-zA-Z0-9]$";
   const { username, password } = req.body;
+  if (
+    username === "" ||
+    password === "" ||
+    !username.match(reg) ||
+    !password.match(reg)
+  )
+    return res.status(400).send("Invalid username or password");
   const exists = await models.User.findOne({ where: { username: username } });
   if (exists) return res.status(400).send("User Exists");
   const newPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
