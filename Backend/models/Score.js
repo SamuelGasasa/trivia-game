@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Score.init(
     {
-      player: DataTypes.STRING,
+      username: DataTypes.STRING,
       score: DataTypes.INTEGER,
       date: DataTypes.DATE,
     },
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Score",
       tableName: "scores",
       underscored: true,
-    },
+    }
   );
   return Score;
 };

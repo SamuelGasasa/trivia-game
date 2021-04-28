@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      player: {
+      username: {
         type: Sequelize.STRING,
       },
       score: {

@@ -17,14 +17,15 @@ module.exports = (sequelize, DataTypes) => {
   }
   Users.init(
     {
-      user_name: DataTypes.STRING,
+      username: DataTypes.STRING,
       password: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: "Users",
+      tableName: "users",
       underscored: true,
-    },
+    }
   );
   return Users;
 };
