@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Score, {
+      this.hasMany(models.Score, {
         foreignKey: "username",
-        targetKey: "username",
+        sourceKey: "username",
       });
     }
   }
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Users",
+      modelName: "User",
       tableName: "users",
       underscored: true,
     }

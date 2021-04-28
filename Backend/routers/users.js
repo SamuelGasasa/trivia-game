@@ -6,9 +6,10 @@ const express = require("express");
 const users = express();
 users.use(express.json());
 
-// users.get("/test", async (req, res) => {
-//   const player = await models.Score.findOne({});
-//   res.send(player);
-// });
+users.get("/test", async (req, res) => {
+  const user = await models.User.findOne({});
+  const score = await user.getScores();
+  res.send({ user, score });
+});
 
 module.exports = users;
