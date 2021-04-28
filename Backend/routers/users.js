@@ -25,7 +25,7 @@ users.post("/register", async (req, res) => {
   if (exists) return res.status(400).send("User Exists");
   const newPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   models.User.create({ username, password: newPassword }).then(() =>
-    res.status(201).send(username + " registered")
+    res.status(201).send(username + " registered"),
   );
 });
 

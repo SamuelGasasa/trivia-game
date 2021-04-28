@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import "../styles/Login.css";
 
 function Login({ setRefreshToken, setAccessToken, setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+  const [redirect, setRedirect] = useState(false);
 
   const handleSubmit = () => {
     axios
@@ -17,7 +18,7 @@ function Login({ setRefreshToken, setAccessToken, setUser }) {
         setRefreshToken(data.data.refreshToken);
         setAccessToken(data.data.accessToken);
         setUser(username);
-        history.push("/home");
+        setRedirect(true);
       })
       .catch((err) => console.log(err.message.slice(-3)));
   };
@@ -41,6 +42,7 @@ function Login({ setRefreshToken, setAccessToken, setUser }) {
       <button id="submit" onClick={() => handleSubmit()}>
         Log-in
       </button>
+      {redirect ? <Redirect to="/home" /> : null}
     </div>
   );
 }
