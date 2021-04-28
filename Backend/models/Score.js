@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models.Users, {
+        foreignKey: "user_name",
+        sourceKey: "user_name",
+      });
     }
   }
   Score.init(
@@ -22,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Score",
       tableName: "scores",
       underscored: true,
-    }
+    },
   );
   return Score;
 };
