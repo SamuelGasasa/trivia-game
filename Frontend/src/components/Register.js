@@ -1,14 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
   const handleSubmit = () => {
     axios
       .post("/users/register", { username, password })
-      .then(() => console.log("user registered"));
+      .then(() => {
+        console.log("user registered");
+        history.push("/login");
+      })
+      .catch((err) => console.log(err.message.slice(-3)));
   };
   return (
     <div className="register-page">
