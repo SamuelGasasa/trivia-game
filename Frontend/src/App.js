@@ -14,10 +14,10 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Route exact path="/">
-          <Home user={user} />
-        </Route>
         <Switch>
+          <Route exact path="/">
+            <Home user={user} />
+          </Route>
           <Route exact path="/login">
             <Login
               setRefreshToken={setRefreshToken}
