@@ -18,7 +18,8 @@ function Login({ setRefreshToken, setAccessToken, setUser }) {
         setRefreshToken(data.data.refreshToken);
         setAccessToken(data.data.accessToken);
         setUser(username);
-        setRedirect(true);
+        history.push("/");
+        // setRedirect(true);
       })
       .catch((err) => console.log(err.message.slice(-3)));
   };
@@ -42,7 +43,7 @@ function Login({ setRefreshToken, setAccessToken, setUser }) {
       <button id="submit" onClick={() => handleSubmit()}>
         Log-in
       </button>
-      {redirect ? <Redirect to="/home" /> : null}
+      {/* {redirect ? <Redirect to="/" /> : null} */}
     </div>
   );
 }
