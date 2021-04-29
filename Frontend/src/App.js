@@ -5,6 +5,7 @@ import QuestionPage from "./components/QuestionPage";
 import { useState } from "react";
 import Register from "./components/Register";
 import Home from "./components/Home";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [user, setUser] = useState("guest");
@@ -14,6 +15,13 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <Navbar
+          refreshToken={refreshToken}
+          accessToken={accessToken}
+          setRefreshToken={setRefreshToken}
+          setAccessToken={setAccessToken}
+          setUser={setUser}
+        />
         <Switch>
           <Route exact path="/">
             <Home user={user} />
