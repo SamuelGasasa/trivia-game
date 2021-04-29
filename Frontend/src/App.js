@@ -28,7 +28,9 @@ function App() {
           <Route exact path="/login">
             <Login setUser={setUser} />
           </Route>
-          <Route exact path="/quiz" component={QuestionPage} />
+          <Route exact path="/quiz">
+            <QuestionPage user={user} />
+          </Route>
           <Route exact path="/scoreboard" component={Scoreboard} />
           <Route exact path="/register" component={Register} />
         </Switch>
