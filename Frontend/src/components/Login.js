@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import "../styles/Login.css";
+import { createCookie } from "../utils/cookies";
 
 function Login({ setRefreshToken, setAccessToken, setUser }) {
   const [username, setUsername] = useState("");
@@ -19,6 +20,8 @@ function Login({ setRefreshToken, setAccessToken, setUser }) {
         setAccessToken(data.data.accessToken);
         setUser(username);
         history.push("/");
+        createCookie("refreshToken", data.data.refreshToken);
+        createCookie("accessToken", data.data.accessToken, 1);
         // setRedirect(true);
       })
       .catch((err) => console.log(err.message.slice(-3)));
