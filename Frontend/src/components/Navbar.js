@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 import { eraseCookie, readCookie } from "../utils/cookies";
+import "../styles/NavBar.css";
 
 function Navbar({ setUser, user }) {
   function logout() {
@@ -19,24 +20,24 @@ function Navbar({ setUser, user }) {
   }
   return (
     <div className="navbar">
-      <h1>Navbar</h1>
+      <h1 id="nav-header">Navbar</h1>
       <nav className="nav-items">
-        <Link to="/">
-          <h2>Home Page</h2>
+        <Link className="nav-links" to="/">
+          <h2>Home-Page</h2>
         </Link>
-        <Link to="/scoreboard">
+        <Link className="nav-links" to="/scoreboard">
           <h2>Scoreboard</h2>
         </Link>
         {user !== "guest" ? (
-          <Link to="/">
+          <Link className="nav-links" to="/">
             <h2 onClick={() => logout()}>Logout</h2>
           </Link>
         ) : (
           <>
-            <Link to="/login">
+            <Link className="nav-links" to="/login">
               <h2>Login</h2>
             </Link>
-            <Link to="/register">
+            <Link className="nav-links" to="/register">
               <h2>Register</h2>
             </Link>
           </>

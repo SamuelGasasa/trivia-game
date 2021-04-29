@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import "../styles/Register.css";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -19,12 +20,14 @@ function Register() {
     <div className="register-page">
       <h1 id="form-headline">Register</h1>
       <input
+        className="input"
         value={username}
         onChange={(event) => setUsername(event.target.value)}
         id="username"
         placeholder="Enter your username"
       />
       <input
+        className="input"
         value={password}
         onChange={(event) => setPassword(event.target.value)}
         id="password"

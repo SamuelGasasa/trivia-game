@@ -1,0 +1,17 @@
+.navbar {
+  background-color: rgb(114, 45, 131);
+  display: inline-flex;
+}
+.nav-items {
+  display: inline-flex;
+  width: 100vw;
+}
+.nav-links {
+  color: wheat;
+  padding-top: 2px;
+  padding-left: 10px;
+}
+
+#nav-header {
+  color: teal;
+}

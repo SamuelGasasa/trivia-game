@@ -27,12 +27,14 @@ function Login({ setUser }) {
     <div className="login-page">
       <h1 id="form-headline">LOG-IN</h1>
       <input
+        className="input"
         value={username}
         onChange={(event) => setUsername(event.target.value)}
         id="username"
         placeholder="Enter your username"
       />
       <input
+        className="input"
         value={password}
         onChange={(event) => setPassword(event.target.value)}
         id="password"

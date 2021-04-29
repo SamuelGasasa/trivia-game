@@ -6,28 +6,28 @@ module.exports = {
       "scores",
       [
         {
-          username: "Omer Botbol",
+          player: "Omer Botbol",
           score: 400,
           date: new Date(),
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
-          username: "Yuval Nakav",
+          player: "Yuval Nakav",
           score: 600,
           date: new Date(),
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
-          username: "Samuel Gasasa",
+          player: "Samuel Gasasa",
           score: 700,
           date: new Date(),
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
-          username: "Oren Bachar",
+          player: "Oren Bachar",
           score: 500,
           date: new Date(),
           created_at: new Date(),
