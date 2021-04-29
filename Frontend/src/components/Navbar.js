@@ -1,22 +1,17 @@
 import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
+import { eraseCookie, readCookie } from "../utils/cookies";
 
-function Navbar({
-  setRefreshToken,
-  setAccessToken,
-  setUser,
-  user,
-  accessToken,
-}) {
+function Navbar({ setUser, user }) {
   function logout() {
     axios
       .post("/users/logout", "body", {
-        headers: { authorization: "Bearer " + accessToken },
+        headers: { authorization: "Bearer " + readCookie("accessToken") },
       })
       .then((data) => {
-        setAccessToken("");
-        setRefreshToken("");
+        eraseCookie("accessToken");
+        eraseCookie("refreshToken");
         setUser("guest");
         console.log(data);
       })
@@ -32,8 +27,10 @@ function Navbar({
         <Link to="/scoreboard">
           <h2>Scoreboard</h2>
         </Link>
-        {user ? (
-          <h2 onClick={() => logout()}>Logout</h2>
+        {user !== "guest" ? (
+          <Link to="/">
+            <h2 onClick={() => logout()}>Logout</h2>
+          </Link>
         ) : (
           <>
             <Link to="/login">

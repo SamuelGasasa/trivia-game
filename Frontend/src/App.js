@@ -10,8 +10,6 @@ import { getHttp } from "./utils/networkWrapper";
 
 function App() {
   const [user, setUser] = useState("guest");
-  const [refreshToken, setRefreshToken] = useState("");
-  const [accessToken, setAccessToken] = useState("");
 
   useEffect(() => {
     getHttp("/information/user", "accessToken").then((res) => {
@@ -22,30 +20,15 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar
-          user={user}
-          accessToken={accessToken}
-          setRefreshToken={setRefreshToken}
-          setAccessToken={setAccessToken}
-          setUser={setUser}
-        />
+        <Navbar user={user} setUser={setUser} />
         <Switch>
           <Route exact path="/">
             <Home user={user} />
           </Route>
           <Route exact path="/login">
-            <Login
-              setRefreshToken={setRefreshToken}
-              setAccessToken={setAccessToken}
-              setUser={setUser}
-            />
+            <Login setUser={setUser} />
           </Route>
-          <Route exact path="/quiz">
-            <QuestionPage
-              refreshToken={refreshToken}
-              accessToken={accessToken}
-            />
-          </Route>
+          <Route exact path="/quiz" component={QuestionPage} />
           <Route exact path="/scoreboard" component={Scoreboard} />
           <Route exact path="/register" component={Register} />
         </Switch>
