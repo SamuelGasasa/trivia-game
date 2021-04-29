@@ -2,15 +2,22 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Scoreboard from "./components/Scoreboard";
 import QuestionPage from "./components/QuestionPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
+import { getHttp } from "./utils/networkWrapper";
 
 function App() {
   const [user, setUser] = useState("guest");
   const [refreshToken, setRefreshToken] = useState("");
   const [accessToken, setAccessToken] = useState("");
+
+  useEffect(() => {
+    getHttp("/information/user", "accessToken").then((res) => {
+      setUser(res.data.username);
+    });
+  }, []);
 
   return (
     <Router>

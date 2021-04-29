@@ -1,5 +1,5 @@
 import axios from "axios";
-import { readCookie } from "./Cookies";
+import { readCookie } from "./cookies";
 
 const getHttp = (url, tokenName) => {
   return axios.get(url, {

@@ -6,6 +6,7 @@ const { Op } = require("sequelize");
 const Sequelize = require("sequelize");
 const express = require("express");
 const User = require("../models/User");
+const validateToken = require("../utils");
 const users = express();
 users.use(express.json());
 
@@ -25,7 +26,7 @@ users.post("/register", async (req, res) => {
   if (exists) return res.status(400).send("User Exists");
   const newPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   models.User.create({ username, password: newPassword }).then(() =>
-    res.status(201).send(username + " registered"),
+    res.status(201).send(username + " registered")
   );
 });
 
@@ -69,16 +70,5 @@ users.post("/token", (req, res) => {
     res.send({ authorization: `Bearer ${accessToken}` });
   });
 });
-
-function validateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (!token) return res.status(401).send("Access Token Required");
-  jwt.verify(token, process.env.ACCESS_TOKEN, (err, decoded) => {
-    if (err) return res.status(403).send("Invalid Access Token");
-    req.user = decoded;
-    next();
-  });
-}
 
 module.exports = users;
