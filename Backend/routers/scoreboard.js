@@ -10,7 +10,7 @@ scoreboard.get("/", async (req, res) => {
   });
   const scoreToSend = scores.map((score) => {
     return {
-      player: score.player,
+      player: score.username,
       score: score.score,
       date: score.date.toLocaleString(),
     };
@@ -18,18 +18,34 @@ scoreboard.get("/", async (req, res) => {
   res.send(scoreToSend);
 });
 
-scoreboard.post("/", (req, res) => {
+scoreboard.post("/", async (req, res) => {
   const { body } = req;
-  const scoreToSave = {
-    player: body.player,
-    score: body.score,
-    date: new Date(),
-    created_at: new Date(),
-    updated_at: new Date(),
-  };
-  models.Score.create(scoreToSave).then(() => {
-    res.send({ message: "score received" });
+  const currentUserScore = await models.Score.findOne({
+    where: { username: body.player },
   });
+  if (currentUserScore) {
+    if (body.score > currentUserScore.score) {
+      models.Score.update(
+        { score: body.score },
+        { where: { username: body.player } }
+      ).then(() => {
+        res.send({ message: "score updated" });
+      });
+    } else {
+      res.send({ message: "last score saved" });
+    }
+  } else {
+    const scoreToSave = {
+      username: body.player,
+      score: body.score,
+      date: new Date(),
+      created_at: new Date(),
+      updated_at: new Date(),
+    };
+    models.Score.create(scoreToSave).then(() => {
+      res.send({ message: "score received" });
+    });
+  }
 });
 
 module.exports = scoreboard;

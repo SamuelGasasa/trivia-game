@@ -23,7 +23,7 @@ function App() {
     <Router>
       <div className="App">
         <Navbar
-          refreshToken={refreshToken}
+          user={user}
           accessToken={accessToken}
           setRefreshToken={setRefreshToken}
           setAccessToken={setAccessToken}

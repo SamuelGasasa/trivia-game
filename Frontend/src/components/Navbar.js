@@ -6,7 +6,7 @@ function Navbar({
   setRefreshToken,
   setAccessToken,
   setUser,
-  refreshToken,
+  user,
   accessToken,
 }) {
   function logout() {
@@ -32,7 +32,7 @@ function Navbar({
         <Link to="/scoreboard">
           <h2>Scoreboard</h2>
         </Link>
-        {refreshToken ? (
+        {user ? (
           <h2 onClick={() => logout()}>Logout</h2>
         ) : (
           <>
