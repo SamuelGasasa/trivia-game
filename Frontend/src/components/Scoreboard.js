@@ -6,13 +6,10 @@ function Scoreboard() {
   const [scores, setScores] = useState([]);
 
   useEffect(() => {
-    axios.get("/scoreboard").then(
-      (data) => {
-        setScores(data.data);
-      },
-      [scores]
-    );
-  }, []);
+    axios.get("/scoreboard").then((data) => {
+      setScores(data.data);
+    });
+  }, [scores]);
   return (
     <div id="scoreboard" className="page">
       {scores.length === 0 ? (

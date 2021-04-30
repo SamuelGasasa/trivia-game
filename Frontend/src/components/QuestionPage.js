@@ -32,7 +32,7 @@ function QuestionPage(props) {
   useEffect(() => {
     if (lives === 0) {
       getHttp("/information/user", "accessToken").then((res) => {
-        axios.post("/scoreboard", { player: res, score: points });
+        axios.post("/scoreboard", { player: res.data.username, score: points });
       });
     }
   }, [lives]);
@@ -55,7 +55,7 @@ function QuestionPage(props) {
       axios
         .post("/users/token", { refreshToken: readCookie("refreshToken") })
         .then((res) => {
-          createCookie("accessToken", res.data.authorization, 5000);
+          createCookie("accessToken", res.data.authorization, 10000);
         })
         .catch(() => {
           setRedirect(true);
