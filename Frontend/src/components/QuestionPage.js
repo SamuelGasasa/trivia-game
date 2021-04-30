@@ -4,7 +4,7 @@ import Question from "./Question";
 import Answer from "./Answer";
 import { Redirect } from "react-router";
 import RatingPage from "./RatingPage";
-import { getHttp, postHttp } from "../utils/networkWrapper";
+import { getHttp } from "../utils/networkWrapper";
 import { createCookie, readCookie } from "../utils/cookies";
 
 function QuestionPage(props) {
@@ -52,7 +52,8 @@ function QuestionPage(props) {
 
     let user = readCookie("accessToken");
     if (!user) {
-      postHttp("/users/token", "refreshToken")
+      axios
+        .post("/users/token", { refreshToken: readCookie("refreshToken") })
         .then((res) => {
           createCookie("accessToken", res.data.authorization, 5000);
         })
