@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "../styles/Register.css";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
   const handleSubmit = () => {
     axios
@@ -14,7 +15,16 @@ function Register() {
         console.log("user registered");
         history.push("/login");
       })
-      .catch((err) => console.log(err.message.slice(-3)));
+      .catch((err) => {
+        const errorNumber = Number(err.message.slice(-3));
+        console.log(err);
+        if (errorNumber === 400) {
+          setErrorMessage("Invalid username or password");
+        }
+        if (errorNumber === 409) {
+          setErrorMessage("user is already exists");
+        }
+      });
   };
   return (
     <div className="register-page">
@@ -37,6 +47,7 @@ function Register() {
       <button id="submit" onClick={() => handleSubmit()}>
         Register
       </button>
+      <div id="error message">{errorMessage}</div>
     </div>
   );
 }

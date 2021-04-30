@@ -14,7 +14,6 @@ function Navbar({ setUser, user }) {
         eraseCookie("accessToken");
         eraseCookie("refreshToken");
         setUser("guest");
-        console.log(data);
       })
       .catch((err) => console.log(err));
   }

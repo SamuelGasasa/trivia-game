@@ -21,10 +21,10 @@ users.post("/register", async (req, res) => {
     !username.match(reg) ||
     !password.match(reg)
   )
-    return res.status(400).send("Invalid username or password");
+    return res.status(400);
   const exists = await models.User.findOne({ where: { username: username } });
-  if (exists) return res.status(400).send("User Exists");
-  const newPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+  if (exists) return res.status(409);
+  const newPassword = await bcrypt.hash(password, bcrypt.genSaltSync(10));
   models.User.create({ username, password: newPassword }).then(() =>
     res.status(201).send(username + " registered")
   );

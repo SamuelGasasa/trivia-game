@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "../styles/Login.css";
 import { createCookie } from "../utils/cookies";
 
@@ -13,7 +13,6 @@ function Login({ setUser }) {
     axios
       .post("/users/login", { username, password })
       .then((data) => {
-        console.log(data);
         console.log("Login successfully");
         setUser(username);
         history.push("/");

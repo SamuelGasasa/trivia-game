@@ -18,6 +18,18 @@ scoreboard.get("/", async (req, res) => {
   res.send(scoreToSend);
 });
 
+scoreboard.get("/:username", async (req, res) => {
+  const { username } = req.params;
+  try {
+    const userScore = await models.Score.findOne({
+      where: { username: username },
+    });
+    res.json(userScore.score);
+  } catch (err) {
+    res.json(undefined);
+  }
+});
+
 scoreboard.post("/", async (req, res) => {
   const { body } = req;
   try {
