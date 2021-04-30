@@ -15,7 +15,7 @@ scoreboard.get("/", async (req, res) => {
       date: score.date.toLocaleString(),
     };
   });
-  res.send(scoreToSend);
+  res.status(200).send(scoreToSend);
 });
 
 scoreboard.get("/:username", async (req, res) => {
@@ -24,9 +24,9 @@ scoreboard.get("/:username", async (req, res) => {
     const userScore = await models.Score.findOne({
       where: { username: username },
     });
-    res.json(userScore.score);
+    res.status(200).json(userScore.score);
   } catch (err) {
-    res.json(undefined);
+    res.status(404).json(undefined);
   }
 });
 
@@ -42,10 +42,10 @@ scoreboard.post("/", async (req, res) => {
           { score: body.score },
           { where: { username: body.player } }
         ).then(() => {
-          res.send({ message: "score updated" });
+          res.status(200).send({ message: "score updated" });
         });
       } else {
-        res.send({ message: "last score saved" });
+        res.status(200).send({ message: "last score saved" });
       }
     } else {
       const scoreToSave = {
@@ -56,7 +56,7 @@ scoreboard.post("/", async (req, res) => {
         updated_at: new Date(),
       };
       models.Score.create(scoreToSave).then(() => {
-        res.send({ message: "score received" });
+        res.status(201).send({ message: "score received" });
       });
     }
   } catch (err) {
