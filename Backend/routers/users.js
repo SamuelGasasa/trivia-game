@@ -21,9 +21,9 @@ users.post("/register", async (req, res) => {
     !username.match(reg) ||
     !password.match(reg)
   )
-    return res.status(400);
+    return res.status(400).send("Invalid username or password");
   const exists = await models.User.findOne({ where: { username: username } });
-  if (exists) return res.status(409);
+  if (exists) return res.status(409).send("User exists");
   const newPassword = await bcrypt.hash(password, bcrypt.genSaltSync(10));
   models.User.create({ username, password: newPassword }).then(() =>
     res.status(201).send(username + " registered")
@@ -35,7 +35,7 @@ users.post("/login", async (req, res) => {
   const user = await models.User.findOne({ where: { username: username } });
   if (!user) return res.status(400).send("User doesn't exists");
   const isPasswordCorrect = bcrypt.compareSync(password, user.password);
-  if (!isPasswordCorrect) return res.status("401").send("Incorrect password");
+  if (!isPasswordCorrect) return res.status(401).send("Incorrect password");
   const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN);
   const refreshToken = jwt.sign({ username }, process.env.REFRESH_TOKEN);
   refreshTokens.push(refreshToken);
@@ -71,9 +71,4 @@ users.post("/token", (req, res) => {
   });
 });
 
-users.get("/test", async (req, res) => {
-  const password = "1234";
-  console.log(await bcrypt.hash(password, bcrypt.genSaltSync(10)));
-  res.send("yes");
-});
 module.exports = users;

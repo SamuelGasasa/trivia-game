@@ -6,7 +6,7 @@ import "../styles/Register.css";
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [err, setError] = useState("");
   const history = useHistory();
   const handleSubmit = () => {
     axios
@@ -16,14 +16,10 @@ function Register() {
         history.push("/login");
       })
       .catch((err) => {
-        const errorNumber = Number(err.message.slice(-3));
         console.log(err);
-        if (errorNumber === 400) {
-          setErrorMessage("Invalid username or password");
-        }
-        if (errorNumber === 409) {
-          setErrorMessage("user is already exists");
-        }
+        const status = err.message.slice(-3);
+        if (status === "400") setError("Invalid username or password");
+        else setError("User already exists");
       });
   };
   return (
@@ -47,7 +43,7 @@ function Register() {
       <button id="submit" onClick={() => handleSubmit()}>
         Register
       </button>
-      <div id="error message">{errorMessage}</div>
+      <h1 className="error-text">{err}</h1>
     </div>
   );
 }

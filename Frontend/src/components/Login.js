@@ -8,7 +8,7 @@ function Login({ setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
-
+  const [err, setError] = useState("");
   const handleSubmit = () => {
     axios
       .post("/users/login", { username, password })
@@ -19,7 +19,12 @@ function Login({ setUser }) {
         createCookie("refreshToken", data.data.refreshToken);
         createCookie("accessToken", data.data.accessToken, 1);
       })
-      .catch((err) => console.log(err.message.slice(-3)));
+      .catch((err) => {
+        console.log(err);
+        const status = err.message.slice(-3);
+        if (status === "400") setError("User doesn't exist");
+        else setError("Incorrect password");
+      });
   };
 
   return (
@@ -43,6 +48,7 @@ function Login({ setUser }) {
       <button id="submit" onClick={() => handleSubmit()}>
         Log-in
       </button>
+      <h1 className="error-text">{err}</h1>
     </div>
   );
 }
