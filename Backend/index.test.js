@@ -10,7 +10,7 @@ describe("Scoreboard tests", () => {
   test("If fetches the scoreboard", async () => {
     const req = await request(server).get("/scoreboard");
     expect(req.status).toBe(200);
-    expect(req.body.length).toBeGreaterThanOrEqual(4);
+    expect(req.body.length).toBe(4);
   });
 
   test("If posts a new player score", async () => {
@@ -18,7 +18,7 @@ describe("Scoreboard tests", () => {
     expect(req.status).toBe(201);
     userScoreMock.score = 600;
     const req2 = await request(server).post("/scoreboard").send(userScoreMock);
-    expect(req.status).toBe(200);
+    expect(req2.status).toBe(200);
   });
 
   test("If fetches a specific player score", async () => {

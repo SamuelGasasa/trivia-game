@@ -1,4 +1,4 @@
 Shit To Do
 remove the date from the scores table and use the createdAt column
-tests (with a new db)
+tests 
 remove the navbar from the quiz component

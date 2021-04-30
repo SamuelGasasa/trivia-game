@@ -12,7 +12,7 @@ module.exports = {
   test: {
     username: "root",
     password: process.env.password,
-    database: process.env.database,
+    database: process.env.test_database,
     seederStorage: "sequelize",
     host: "127.0.0.1",
     dialect: "mysql",
