@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 function Home({ user }) {
   const [score, setScore] = useState();
   useEffect(() => {
-    axios.get(`/scoreboard/${user}`).then((res) => {
-      if (res) {
-        setScore(res.data);
-      }
-    });
+    if (user !== "guest") {
+      axios.get(`/scoreboard/${user}`).then((res) => {
+        if (res) {
+          setScore(res.data);
+        }
+      });
+    }
   }, [user]);
 
   return (

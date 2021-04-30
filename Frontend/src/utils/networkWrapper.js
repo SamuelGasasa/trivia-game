@@ -13,18 +13,18 @@ const intercept = () => {
   axios.interceptors.response.use(
     (response) => response,
     (err) => {
-      if (err.message.slice(-3) === "403") {
-        const cookie = readCookie("accessToken");
-        if (!cookie)
+      const refreshToken = readCookie("refreshToken");
+      if (err.message.slice(-3) === "403" && refreshToken) {
+        const accessToken = readCookie("accessToken");
+        if (!accessToken)
           return axios
             .post("/users/token", {
-              refreshToken: readCookie("refreshToken"),
+              refreshToken: refreshToken,
             })
             .then((data) => {
               createCookie("accessToken", data.data.authorization, 5000);
               err.config.headers["authorization"] =
                 "Bearer " + data.data.authorization;
-              console.log(err.config);
               return axios.request(err.config);
             });
       }

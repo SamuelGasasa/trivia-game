@@ -38,7 +38,7 @@ function Scoreboard() {
         </table>
       )}
 
-      <Link exact="true" to="/" id="redirect" >
+      <Link exact="true" to="/" id="redirect">
         Try Again
       </Link>
     </div>

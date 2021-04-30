@@ -13,7 +13,6 @@ function App() {
 
   useEffect(() => {
     intercept();
-
     getHttp("/information/user", "accessToken").then((res) => {
       setUser(res.data.username);
     });

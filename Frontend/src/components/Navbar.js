@@ -7,9 +7,12 @@ function Navbar({ setUser, user }) {
   function logout() {
     axios
       .post("/users/logout", "body", {
-        headers: { authorization: "Bearer " + readCookie("accessToken") },
+        headers: {
+          authorization: "Bearer " + readCookie("accessToken"),
+          refreshToken: readCookie("refreshToken"),
+        },
       })
-      .then((data) => {
+      .then(() => {
         eraseCookie("accessToken");
         eraseCookie("refreshToken");
         setUser("guest");

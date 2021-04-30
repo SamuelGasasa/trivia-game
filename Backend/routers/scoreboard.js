@@ -12,7 +12,7 @@ scoreboard.get("/", async (req, res) => {
     return {
       player: score.username,
       score: score.score,
-      date: score.date.toLocaleString(),
+      date: score.createdAt.toLocaleString(),
     };
   });
   res.status(200).send(scoreToSend);
@@ -24,9 +24,9 @@ scoreboard.get("/:username", async (req, res) => {
     const userScore = await models.Score.findOne({
       where: { username: username },
     });
-    res.status(200).json(userScore.score);
+    res.json(userScore.score);
   } catch (err) {
-    res.status(404).json(undefined);
+    res.json(undefined);
   }
 });
 
