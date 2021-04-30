@@ -67,7 +67,7 @@ users.post("/token", (req, res) => {
     const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN, {
       expiresIn: "10s",
     });
-    res.send({ authorization: `Bearer ${accessToken}` });
+    res.send({ authorization: accessToken, username: username });
   });
 });
 

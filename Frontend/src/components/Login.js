@@ -16,7 +16,7 @@ function Login({ setUser }) {
         setUser(username);
         history.push("/");
         createCookie("refreshToken", data.data.refreshToken);
-        createCookie("accessToken", data.data.accessToken, 1);
+        createCookie("accessToken", data.data.accessToken, 5000);
       })
       .catch((err) => {
         console.log(err);

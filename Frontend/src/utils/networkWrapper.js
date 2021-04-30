@@ -9,4 +9,8 @@ const getHttp = (url, tokenName) => {
   });
 };
 
-export { getHttp };
+const postHttp = (url, tokenName) => {
+  return axios.post(url, { refreshToken: readCookie(tokenName) });
+};
+
+export { getHttp, postHttp };
