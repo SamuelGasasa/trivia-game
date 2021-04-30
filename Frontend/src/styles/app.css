@@ -1,0 +1,262 @@
+#home-page {
+  background-image: linear-gradient(45deg, #4444ad, turquoise, #24a824);
+  min-height: 100vh;
+  text-align: center;
+}
+
+#links {
+  margin-top: 10rem;
+  text-align: center;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid tomato;
+  border-radius: 0.5rem;
+  background-color: rgba(143, 13, 13, 0.384);
+  padding: 15px;
+}
+
+#register-question {
+  color: #004280;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.link {
+  font-family: fantasy;
+  padding-bottom: 20px;
+  font-size: 5rem;
+  color: wheat;
+  font-weight: 400;
+}
+
+.link:hover {
+  color: tomato;
+}
+
+.login-page {
+  background-image: linear-gradient(45deg, #4444ad, turquoise, #24a824);
+  min-height: 100vh;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+.input {
+  display: inline-block;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  font-size: 2rem;
+  border-radius: 0.5rem;
+  background-color: #78d4d4;
+  color: tomato;
+  font-weight: 800;
+}
+
+#form-headline {
+  display: block;
+  color: wheat;
+  padding: 2rem;
+  font-size: 5rem;
+  font-weight: 1000;
+  text-shadow: 1px 1px 0px tomato;
+}
+
+a {
+  text-decoration: none;
+}
+
+#submit {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  background-color: teal;
+  -webkit-box-shadow: #0d4646;
+          box-shadow: #0d4646;
+  padding: 3px;
+  color: #78e4e4;
+  font-size: 2rem;
+  border-radius: 0.5rem;
+}
+
+#submit:hover {
+  background-color: #78e4e4;
+  color: teal;
+  border: wheat;
+}
+
+.navbar {
+  background-color: #722d83;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.nav-items {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  width: 100vw;
+}
+
+.nav-links {
+  color: wheat;
+  padding-top: 2px;
+  padding-left: 10px;
+}
+
+#nav-header {
+  color: teal;
+}
+
+.question-page {
+  background-image: linear-gradient(45deg, #4444ad, turquoise, #24a824);
+  min-height: 100vh;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+.answer {
+  margin: 2rem;
+  background-color: teal;
+  -webkit-box-shadow: #0d4646;
+          box-shadow: #0d4646;
+  padding: 3px;
+  color: #78e4e4;
+  font-size: 2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.answer:hover {
+  background-color: #78e4e4;
+  color: teal;
+  border: wheat;
+  -webkit-transform: translateY(-7px);
+          transform: translateY(-7px);
+  padding: 3px;
+}
+
+.player-data {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ee5f5f;
+}
+
+.round-time-bar {
+  margin: 1rem;
+  overflow: hidden;
+  height: 2rem;
+  font-size: 2rem;
+}
+
+.round-time-bar div {
+  height: 15px;
+  -webkit-animation: roundtime calc(var(--duration) * 1s) steps(var(--duration)) forwards;
+          animation: roundtime calc(var(--duration) * 1s) steps(var(--duration)) forwards;
+  -webkit-transform-origin: left center;
+          transform-origin: left center;
+  background: linear-gradient(45deg, #640f00, #ff5975, red);
+  border: 1px tomato;
+}
+
+.round-time-bar[data-style="smooth"] div {
+  -webkit-animation: roundtime calc(var(--duration) * 1s) linear forwards;
+          animation: roundtime calc(var(--duration) * 1s) linear forwards;
+}
+
+@-webkit-keyframes roundtime {
+  to {
+    -webkit-transform: scaleX(0);
+            transform: scaleX(0);
+  }
+}
+
+@keyframes roundtime {
+  to {
+    -webkit-transform: scaleX(0);
+            transform: scaleX(0);
+  }
+}
+
+#header {
+  display: block;
+  color: wheat;
+  padding: 2rem;
+  font-size: 5rem;
+  font-weight: 1000;
+  text-shadow: 1px 1px 0px tomato;
+}
+
+#question {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  padding: 1rem;
+  font-size: 2rem;
+  border-radius: 0.5rem;
+  background-color: #78d4d4;
+  color: tomato;
+  font-weight: 800;
+}
+
+#answer-container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.register-page {
+  background-image: linear-gradient(45deg, #4444ad, turquoise, #24a824);
+  min-height: 100vh;
+  text-align: center;
+}
+
+#scoreboard {
+  background-image: linear-gradient(45deg, #4444ad, turquoise, #24a824);
+  min-height: 100vh;
+  text-align: center;
+  font-size: 2rem;
+}
+
+#table {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5%;
+  color: black;
+}
+
+.table-row:nth-child(even) {
+  background-color: rgba(0, 128, 128, 0.233);
+}
+
+.table-row {
+  text-align: left;
+}
+
+#table-head {
+  text-align: center;
+}
+
+#redirect {
+  font-weight: 1000;
+  font-size: 3rem;
+  color: #f3b748;
+  text-shadow: 1px 1px 1px teal;
+}
+
+.dates {
+  font-size: 1.5rem;
+}
+
+.scores {
+  font-size: 1.7rem;
+}
+/*# sourceMappingURL=app.css.map */

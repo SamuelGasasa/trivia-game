@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/RatingPage.css";
 function RatingPage({ sendRate }) {
   return (
     <div>

@@ -7,7 +7,7 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import { getHttp } from "./utils/networkWrapper";
-
+import "./styles/app.css";
 function App() {
   const [user, setUser] = useState("guest");
 

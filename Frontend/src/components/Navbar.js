@@ -2,7 +2,6 @@ import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 import { eraseCookie, readCookie } from "../utils/cookies";
-import "../styles/NavBar.css";
 
 function Navbar({ setUser, user }) {
   function logout() {

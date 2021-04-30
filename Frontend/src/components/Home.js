@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../styles/Home.css";
 
 function Home({ user }) {
   const [score, setScore] = useState();

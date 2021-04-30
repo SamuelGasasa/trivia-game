@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Question from "./Question";
 import Answer from "./Answer";
-import "../styles/QuestionPage.css";
 import { Redirect } from "react-router";
 import RatingPage from "./RatingPage";
 
