@@ -27,7 +27,7 @@ function Login({ setUser }) {
   };
 
   return (
-    <div className="login-page">
+    <div className="login page">
       <h1 id="form-headline">LOG-IN</h1>
       <input
         className="input"

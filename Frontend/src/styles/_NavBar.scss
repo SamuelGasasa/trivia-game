@@ -1,6 +1,8 @@
 .navbar {
   background-color: rgb(114, 45, 131);
   display: inline-flex;
+  height: 7vh;
+  width: 100vw;
 }
 .nav-items {
   display: inline-flex;
@@ -10,6 +12,10 @@
   color: wheat;
   padding-top: 2px;
   padding-left: 10px;
+  font-size: 25px;
+  &:hover {
+    color: tomato;
+  }
 }
 
 #nav-header {

@@ -14,7 +14,7 @@ function Home({ user }) {
   }, []);
 
   return (
-    <div id="home-page">
+    <div id="home-page" className="page">
       <h1 id="header">HELLO {user}</h1>
       {user === "guest" ? (
         <div id="links">

@@ -22,7 +22,7 @@ function Register() {
       });
   };
   return (
-    <div className="register-page">
+    <div className="register page">
       <h1 id="form-headline">Register</h1>
       <input
         className="input"

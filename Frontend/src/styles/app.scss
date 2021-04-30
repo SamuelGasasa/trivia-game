@@ -2,5 +2,16 @@
 @import "./Login";
 @import "./NavBar";
 @import "./QuestionPage";
-@import "./Register";
 @import "./Scoreboard";
+.page {
+  background-image: linear-gradient(
+    45deg,
+    rgb(68, 68, 173),
+    turquoise,
+    rgb(36, 168, 36)
+  );
+  align-items: center;
+  text-align: center;
+  width: 100vw;
+  height: 93vh;
+}

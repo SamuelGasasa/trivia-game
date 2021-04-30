@@ -14,7 +14,7 @@ function Scoreboard() {
     );
   }, []);
   return (
-    <div id="scoreboard">
+    <div id="scoreboard" className="page">
       <table id="table">
         <tbody>
           <tr id="table-head">

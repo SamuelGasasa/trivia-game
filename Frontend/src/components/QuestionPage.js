@@ -103,7 +103,7 @@ function QuestionPage(props) {
     setCounter(counter + 1);
   };
   return (
-    <div className="question-page">
+    <div className="question page">
       {lives === 0 && !answered && <Redirect to="/scoreboard" />}
       <h1 id="header">Question {counter}</h1>
       <div id="data">
