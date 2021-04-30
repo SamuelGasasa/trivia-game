@@ -28,6 +28,22 @@
   color: tomato;
 }
 
+.home-info {
+  font-size: 1.8em;
+  text-transform: capitalize;
+  color: #004280;
+}
+
+.home-info > .start-link {
+  color: #023361;
+  font-size: 1.5em;
+}
+
+.home-info > .start-link:hover {
+  font-size: 1.8em;
+  color: tomato;
+}
+
 .input {
   display: inline-block;
   margin-left: 1rem;

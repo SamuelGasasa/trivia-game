@@ -27,12 +27,12 @@ function Home({ user }) {
           </Link>
         </div>
       ) : (
-        <>
-          <Link exact="true" to="/quiz">
-            Let's start
+        <div className="home-info">
+          <Link exact="true" to="/quiz" className="start-link">
+            <h1>{"> Let's start <"}</h1>
           </Link>
-          <div>your highest score is: {score ? score : 0}</div>
-        </>
+          <h1>your highest score is: {score ? score : 0}</h1>
+        </div>
       )}
     </div>
   );

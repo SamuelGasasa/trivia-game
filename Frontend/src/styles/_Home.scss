@@ -24,3 +24,16 @@
 .link:hover {
   color: tomato;
 }
+.home-info {
+  font-size: 1.8em;
+  text-transform: capitalize;
+  color: rgb(0, 66, 128);
+  & > .start-link {
+    color: rgb(2, 51, 97);
+    font-size: 1.5em;
+    &:hover {
+      font-size: 1.8em;
+      color: tomato;
+    }
+  }
+}
