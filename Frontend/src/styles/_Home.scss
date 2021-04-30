@@ -30,9 +30,10 @@
   color: rgb(0, 66, 128);
   & > .start-link {
     color: rgb(2, 51, 97);
-    font-size: 1.5em;
+    font-size: 3em;
+    font-weight: bolder;
     &:hover {
-      font-size: 1.8em;
+      font-size: 3.5em;
       color: tomato;
     }
   }

@@ -36,11 +36,12 @@
 
 .home-info > .start-link {
   color: #023361;
-  font-size: 1.5em;
+  font-size: 3em;
+  font-weight: bolder;
 }
 
 .home-info > .start-link:hover {
-  font-size: 1.8em;
+  font-size: 3.5em;
   color: tomato;
 }
 

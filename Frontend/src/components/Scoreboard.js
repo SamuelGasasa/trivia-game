@@ -15,25 +15,30 @@ function Scoreboard() {
   }, []);
   return (
     <div id="scoreboard" className="page">
-      <table id="table">
-        <tbody>
-          <tr id="table-head">
-            <th>name</th>
-            <th>score</th>
-            <th>date</th>
-          </tr>
-          {scores.map((user, i) => {
-            return (
-              <tr key={i} className="table-row">
-                <td className="names">{user.player}</td>
-                <td className="scores">{user.score}</td>
-                <td className="dates">{user.date}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <Link exact="true" to="/" id="redirect">
+      {scores.length === 0 ? (
+        <h1>Loading...</h1>
+      ) : (
+        <table id="table">
+          <tbody>
+            <tr id="table-head">
+              <th>name</th>
+              <th>score</th>
+              <th>date</th>
+            </tr>
+            {scores.map((user, i) => {
+              return (
+                <tr key={i} className="table-row">
+                  <td className="names">{user.player}</td>
+                  <td className="scores">{user.score}</td>
+                  <td className="dates">{user.date}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+
+      <Link exact="true" to="/" id="redirect" >
         Try Again
       </Link>
     </div>
