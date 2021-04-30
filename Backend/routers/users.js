@@ -71,4 +71,9 @@ users.post("/token", (req, res) => {
   });
 });
 
+users.get("/test", async (req, res) => {
+  const password = "1234";
+  console.log(await bcrypt.hash(password, bcrypt.genSaltSync(10)));
+  res.send("yes");
+});
 module.exports = users;

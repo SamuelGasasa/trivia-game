@@ -19,7 +19,6 @@ function Navbar({ setUser, user }) {
   }
   return (
     <div className="navbar">
-      <h1 id="nav-header">Navbar</h1>
       <nav className="nav-items">
         <Link className="nav-links" to="/">
           <h2>Home-Page</h2>
