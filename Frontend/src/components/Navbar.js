@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { eraseCookie, readCookie } from "../utils/cookies";
 
 function Navbar({ setUser, user }) {
@@ -19,24 +19,37 @@ function Navbar({ setUser, user }) {
   return (
     <div className="navbar">
       <nav className="nav-items">
-        <Link className="nav-links" to="/">
+        <NavLink className="nav-links" to="/" exact activeClassName="active">
           <h2>Home-Page</h2>
-        </Link>
-        <Link className="nav-links" to="/scoreboard">
+        </NavLink>
+        <NavLink
+          className="nav-links"
+          to="/scoreboard"
+          activeClassName="active"
+        >
           <h2>Scoreboard</h2>
-        </Link>
+        </NavLink>
         {user !== "guest" ? (
-          <Link className="nav-links" to="/">
+          <NavLink
+            className="nav-links"
+            exact
+            to="/"
+            activeClassName="inactive"
+          >
             <h2 onClick={() => logout()}>Logout</h2>
-          </Link>
+          </NavLink>
         ) : (
           <>
-            <Link className="nav-links" to="/login">
+            <NavLink className="nav-links" to="/login" activeClassName="active">
               <h2>Login</h2>
-            </Link>
-            <Link className="nav-links" to="/register">
+            </NavLink>
+            <NavLink
+              className="nav-links"
+              to="/register"
+              activeClassName="active"
+            >
               <h2>Register</h2>
-            </Link>
+            </NavLink>
           </>
         )}
       </nav>
