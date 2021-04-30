@@ -21,7 +21,7 @@ function Login({ setUser }) {
       .catch((err) => {
         console.log(err);
         const status = err.message.slice(-3);
-        if (status === "400") setError("User doesn't exist");
+        if (status === "404") setError("User doesn't exist");
         else setError("Incorrect password");
       });
   };

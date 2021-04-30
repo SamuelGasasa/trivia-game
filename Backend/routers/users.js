@@ -33,7 +33,7 @@ users.post("/register", async (req, res) => {
 users.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await models.User.findOne({ where: { username: username } });
-  if (!user) return res.status(400).send("User doesn't exists");
+  if (!user) return res.status(404).send("User doesn't exists");
   const isPasswordCorrect = bcrypt.compareSync(password, user.password);
   if (!isPasswordCorrect) return res.status(401).send("Incorrect password");
   const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN);
