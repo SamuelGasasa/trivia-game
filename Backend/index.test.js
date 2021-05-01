@@ -15,6 +15,8 @@ let errUserMock = {
   password: "2q13123",
 };
 
+let refreshToken;
+let accessToken;
 describe("Scoreboard tests", () => {
   test("If fetches the scoreboard", async () => {
     const req = await request(server).get("/scoreboard");
@@ -54,6 +56,11 @@ describe("User tests", () => {
   test("If can login", async () => {
     const req = await request(server).post("/users/login").send(userMock);
     expect(req.status).toBe(200);
+    refreshToken = req.body.refreshToken;
+    accessToken = req.body.accessToken;
+    expect(refreshToken.length).toBeGreaterThan(50);
+    expect(accessToken.length).toBeGreaterThan(50);
+
     userMock.password = "incorrectPassword";
     const reqInvalid = await request(server)
       .post("/users/login")
@@ -64,5 +71,8 @@ describe("User tests", () => {
       .post("/users/login")
       .send(userMock);
     expect(reqNotFound.status).toBe(404);
+  });
+  test("If can logout", async (req, res) => {
+    
   });
 });
