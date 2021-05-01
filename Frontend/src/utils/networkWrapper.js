@@ -1,5 +1,5 @@
 import axios from "axios";
-import { readCookie, createCookie } from "./cookies";
+import { readCookie, createCookie, eraseCookie } from "./cookies";
 
 const getHttp = (url, tokenName) => {
   return axios.get(url, {
@@ -26,6 +26,10 @@ const intercept = () => {
               err.config.headers["authorization"] =
                 "Bearer " + data.data.authorization;
               return axios.request(err.config);
+            })
+            .catch((err) => {
+              console.log(err);
+              eraseCookie("refreshToken");
             });
       }
       return Promise.reject(err);

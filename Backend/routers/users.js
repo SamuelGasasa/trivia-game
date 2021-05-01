@@ -10,6 +10,8 @@ const validateToken = require("../utils");
 const users = express();
 users.use(express.json());
 
+let refreshTokens = [];
+
 users.post("/register", async (req, res) => {
   const reg = "[a-zA-Z0-9]$";
   const { username, password } = req.body;
@@ -36,24 +38,29 @@ users.post("/login", async (req, res) => {
   if (!isPasswordCorrect) return res.status(401).send("Incorrect password");
   const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN);
   const refreshToken = jwt.sign({ username }, process.env.REFRESH_TOKEN);
-  await models.RefreshToken.create({ token: refreshToken });
+  refreshTokens.push(refreshToken);
 
   res.status(200).send({ refreshToken, accessToken });
 });
 
-users.post("/logout", validateToken, async (req, res) => {
-  const refreshToken = req.get("refreshToken");
-  await models.RefreshToken.destroy({ where: { token: refreshToken } });
+users.post("/logout", validateToken, (req, res) => {
+  const { user } = req;
+  refreshTokens = refreshTokens.filter((token) => {
+    return jwt.verify(token, process.env.REFRESH_TOKEN, (err, decoded) => {
+      console.log(user.username, decoded.username);
+      if (err) return res.send(err);
+      if (decoded.username === user.username) return false;
+      else return true;
+    });
+  });
   res.status(200).send("Logout Successfully");
 });
 
 users.post("/token", async (req, res) => {
   const { refreshToken } = req.body;
   if (!refreshToken) return res.status(401).send("Refresh Token Required");
-  const isValid = await models.RefreshToken.findOne({
-    where: { token: refreshToken },
-  });
-  if (!isValid) return res.status(403).send("Invalid Refresh Token");
+  if (!refreshTokens.includes(refreshToken))
+    return res.status(403).send("Invalid Refresh Token");
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, decoded) => {
     if (err) return res.status(403).send("Invalid Refresh Token");
     const { username } = decoded;
