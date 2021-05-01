@@ -72,7 +72,4 @@ describe("User tests", () => {
       .send(userMock);
     expect(reqNotFound.status).toBe(404);
   });
-  test("If can logout", async (req, res) => {
-    
-  });
 });
