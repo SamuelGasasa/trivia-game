@@ -17,9 +17,6 @@ module.exports = {
     host: process.env.HOST,
     dialect: "mysql",
     logging: false,
-    dialectOptions: {
-      socketPath: `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
-    },
   },
   production: {
     username: "root",
