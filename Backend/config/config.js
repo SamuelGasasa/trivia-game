@@ -5,7 +5,7 @@ module.exports = {
     password: process.env.password,
     database: process.env.database,
     seederStorage: "sequelize",
-    host: "127.0.0.1",
+    host: process.env.HOST,
     dialect: "mysql",
     logging: false,
   },
@@ -14,15 +14,20 @@ module.exports = {
     password: process.env.password,
     database: process.env.test_database,
     seederStorage: "sequelize",
-    host: "127.0.0.1",
+    host: process.env.HOST,
     dialect: "mysql",
     logging: false,
+    dialectOptions: {
+      socketPath: `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
+    },
   },
   production: {
     username: "root",
-    password: null,
-    database: "database_production",
-    host: "127.0.0.1",
+    password: process.env.password,
+    database: process.env.database,
     dialect: "mysql",
+    dialectOptions: {
+      socketPath: `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
+    },
   },
 };
