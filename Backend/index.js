@@ -4,4 +4,5 @@ const PORT = process.env.PORT || 3001 || process.env.DEVELOPMENT_PORT;
 
 app.listen(PORT, () => {
   console.log(`Listening to PORT ${PORT}`);
+  console.log(process.env.NODE_ENV);
 });
