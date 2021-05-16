@@ -1,0 +1,40 @@
+#links {
+  margin-top: 10rem;
+  text-align: center;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid tomato;
+  border-radius: 0.5rem;
+  background-color: rgba(143, 13, 13, 0.384);
+  padding: 15px;
+}
+#register-question {
+  color: rgb(0, 66, 128);
+  font-size: 2rem;
+  font-weight: 700;
+}
+.link {
+  font-family: fantasy;
+  padding-bottom: 20px;
+  font-size: 5rem;
+  color: wheat;
+  font-weight: 400;
+}
+.link:hover {
+  color: tomato;
+}
+.home-info {
+  font-size: 1.8em;
+  text-transform: capitalize;
+  color: rgb(0, 66, 128);
+  & > .start-link {
+    color: rgb(2, 51, 97);
+    font-size: 3em;
+    font-weight: bolder;
+    &:hover {
+      font-size: 3.5em;
+      color: tomato;
+    }
+  }
+}

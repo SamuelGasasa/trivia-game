@@ -2,9 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Question from "./Question";
 import Answer from "./Answer";
-import "../styles/QuestionPage.css";
 import { Redirect } from "react-router";
 import RatingPage from "./RatingPage";
+import { getHttp } from "../utils/networkWrapper";
+import { createCookie, readCookie } from "../utils/cookies";
 
 function QuestionPage(props) {
   const [counter, setCounter] = useState(1);
@@ -15,6 +16,7 @@ function QuestionPage(props) {
   const [lives, setLives] = useState(3);
   const [answered, setAnswered] = useState(false);
   const [timer, setTimer] = useState(true);
+  const [redirect, setRedirect] = useState(false);
 
   const answerTime = useRef(0);
   const intTime = useRef(20000);
@@ -29,7 +31,9 @@ function QuestionPage(props) {
 
   useEffect(() => {
     if (lives === 0) {
-      axios.post("/scoreboard", { player: props.user, score: points });
+      getHttp("/information/user", "accessToken").then((res) => {
+        axios.post("/scoreboard", { player: res.data.username, score: points });
+      });
     }
   }, [lives]);
 
@@ -46,6 +50,17 @@ function QuestionPage(props) {
       if (lives === 0) clearInterval(interval);
     }, 1000);
 
+    let user = readCookie("accessToken");
+    if (!user) {
+      axios
+        .post("/users/token", { refreshToken: readCookie("refreshToken") })
+        .then((res) => {
+          createCookie("accessToken", res.data.authorization, 10000);
+        })
+        .catch(() => {
+          setRedirect(true);
+        });
+    }
     return () => {
       clearInterval(interval);
     };
@@ -103,39 +118,45 @@ function QuestionPage(props) {
     answerTime.current = 0;
     setCounter(counter + 1);
   };
-  return (
-    <div className="question-page">
-      {lives === 0 && !answered && <Redirect to="/scoreboard" />}
-      <h1 id="header">Question {counter}</h1>
-      <div id="data">
-        <span className="player-data">lives: {lives}</span>
-        {"    "}
-        <span className="player-data">points: {points}</span>
-      </div>
 
-      <Question question={question} />
-      {!answered && (
-        <div id="answer-container">
-          {answers.map((answer, i) => {
-            return <Answer key={i} handleClick={handleClick} answer={answer} />;
-          })}
+  return (
+    <>
+      {redirect && <Redirect to="/" />}
+      <div className="question page">
+        {lives === 0 && !answered && <Redirect to="/scoreboard" />}
+        <h1 id="header">Question {counter}</h1>
+        <div id="data">
+          <span className="player-data">lives: {lives}</span>
+          {"    "}
+          <span className="player-data">points: {points}</span>
         </div>
-      )}
-      {timer && (
-        <div
-          className="round-time-bar"
-          data-style="smooth"
-          style={{
-            "--duration": String(
-              intTime.current / 1000 >= 5 ? intTime.current / 1000 : 5
-            ),
-          }}
-        >
-          <div></div>
-        </div>
-      )}
-      {answered && <RatingPage sendRate={sendRate} />}
-    </div>
+
+        <Question question={question} />
+        {!answered && (
+          <div id="answer-container">
+            {answers.map((answer, i) => {
+              return (
+                <Answer key={i} handleClick={handleClick} answer={answer} />
+              );
+            })}
+          </div>
+        )}
+        {timer && (
+          <div
+            className="round-time-bar"
+            data-style="smooth"
+            style={{
+              "--duration": String(
+                intTime.current / 1000 >= 5 ? intTime.current / 1000 : 5
+              ),
+            }}
+          >
+            <div></div>
+          </div>
+        )}
+        {answered && <RatingPage sendRate={sendRate} />}
+      </div>
+    </>
   );
 }
 

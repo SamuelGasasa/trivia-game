@@ -1,34 +1,29 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createCookie } from "../utils/cookies";
 
-function Login({ setUser }) {
+function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
   const [err, setError] = useState("");
+  const history = useHistory();
   const handleSubmit = () => {
     axios
-      .post("/users/login", { username, password })
-      .then((data) => {
-        console.log("Login successfully");
-        setUser(username);
-        history.push("/");
-        createCookie("refreshToken", data.data.refreshToken);
-        createCookie("accessToken", data.data.accessToken, 10000);
+      .post("/users/register", { username, password })
+      .then(() => {
+        console.log("user registered");
+        history.push("/login");
       })
       .catch((err) => {
         console.log(err);
         const status = err.message.slice(-3);
-        if (status === "404") setError("User doesn't exist");
-        else setError("Incorrect password");
+        if (status === "400") setError("Invalid username or password");
+        else setError("User already exists");
       });
   };
-
   return (
-    <div className="login page">
-      <h1 id="form-headline">LOG-IN</h1>
+    <div className="register page">
+      <h1 id="form-headline">Register</h1>
       <input
         className="input"
         value={username}
@@ -45,11 +40,11 @@ function Login({ setUser }) {
         placeholder="Enter your password"
       />
       <button id="submit" onClick={() => handleSubmit()}>
-        Log-in
+        Register
       </button>
       <h1 className="error-text">{err}</h1>
     </div>
   );
 }
 
-export default Login;
+export default Register;

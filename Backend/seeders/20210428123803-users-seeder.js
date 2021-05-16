@@ -3,29 +3,33 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert(
-      "scores",
+      "users",
       [
         {
           username: "Omer Botbol",
-          score: 400,
+          password:
+            "$2b$10$3J/fiFMsh/ZaA6PwneiADeg1CoNaPQ14ShJhgMwuVhQpP3O9GpApG",
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
           username: "Yuval Nakav",
-          score: 600,
+          password:
+            "$2b$10$2EUS8V1XiBPmufBt1KJVp.2LWoJ68lNeypEpjfVU0klESacwUHzTe",
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
           username: "Samuel Gasasa",
-          score: 700,
+          password:
+            "$2b$10$Ifuh8I4nWoiwuHI0SWKFdeKGdUFZ/9xIvpQH43JmxAKwMoBA/oUXq",
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
           username: "Oren Bachar",
-          score: 500,
+          password:
+            "$2b$10$9xWtMUcoP206s5WnebcVgu98SSa2ZOVNUxmZQnbp/O.g1FNMRj0tW",
           created_at: new Date(),
           updated_at: new Date(),
         },
@@ -35,6 +39,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("scores", null, {});
+    await queryInterface.bulkDelete("users", null, {});
   },
 };

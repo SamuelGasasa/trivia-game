@@ -1,19 +1,9 @@
-#scoreboard {
-  background-image: linear-gradient(
-    45deg,
-    rgb(68, 68, 173),
-    turquoise,
-    rgb(36, 168, 36)
-  );
-  min-height: 100vh;
-  text-align: center;
-  font-size: 2rem;
-}
 #table {
   margin-left: auto;
   margin-right: auto;
   padding: 5%;
   color: black;
+  font-size: 2rem;
 }
 .table-row:nth-child(even) {
   background-color: rgba(0, 128, 128, 0.233);
@@ -33,7 +23,6 @@
 .dates {
   font-size: 1.5rem;
 }
-
 .scores {
   font-size: 1.7rem;
 }

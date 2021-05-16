@@ -46,3 +46,21 @@ We separated the api into two different routers depending on the request.
 - LOGIN: you can enter youre name and watch youre score on the scoreboard
 - MAIN PAGE: - Choose the right answer. you have 20 seconds for the first question, and afterwards every question gets 0/5 second less then it's preveious. - You can rate each question after answering it, questions with high rank will apear more! - Every question's score will determine by the speed of your answers, be quick! - There's 3 types of questions: - True\false questions. - compare questions. - General knowledge.
 - SCOREBOARD: You can see all of the scores, ranked from highest to lowest.
+
+# Running locally:
+
+- run npm i on the backend dir
+- run npm i on the frontend dir
+- run npm build in the frontend dir and move the build dir the the repo
+- create .env file with the following information:
+- - database="trivia-game"
+- - test_database="trivia-game-test"
+- - password=(enter your password)
+- - PORT = 3001
+- - HOST = (enter your host)
+- - ACCESS_TOKEN = ourAccessToken123456
+- - REFRESH_TOKEN = ourRefreshToken78945123
+- create a database in the sql workbench called "trivia-game"
+- run npx sequelize db:migrate and npx sequelize:db:seed:all in the backend dir
+- run npm start and open http://localhost:3001 on your browser
+- start playing!
