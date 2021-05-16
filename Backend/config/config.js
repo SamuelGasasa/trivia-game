@@ -24,8 +24,6 @@ module.exports = {
     database: process.env.database,
     host: process.env.HOST,
     dialect: "mysql",
-    dialectOptions: {
-      socketPath: `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
-    },
+    logging: false,
   },
 };

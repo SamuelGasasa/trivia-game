@@ -9,7 +9,7 @@
     "test-migrate": "cross-env NODE_ENV=test npx sequelize db:migrate ",
     "test-seed": "cross-env NODE_ENV=test npx sequelize db:seed:all",
     "post-test": "cross-env NODE_ENV=test npx sequelize db:drop trivia-game-test",
-    "start": "node index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
     "dev": "nodemon index.js"
   },
   "keywords": [],
